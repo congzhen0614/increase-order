@@ -1,0 +1,92 @@
+.increase-shoppingCar-list
+  .shoppingCar-shade
+    width 100%
+    background rgba(0, 0, 0, 0.5)
+    position fixed
+    top 0
+    left 0
+    z-index 2
+    box-shadow 0px -2px 5px 0px rgba(0, 0, 0, 0.1)
+  section
+    position fixed
+    bottom 1rem
+    left 0
+    width 100%
+    z-index 3
+    background-color #fff
+    overflow auto
+    .shoppingCar-head
+      padding 0.3rem
+      overflow hidden
+      border-bottom 1px solid #E6E6E6
+      .delete-button
+        padding 0.1rem 0.2rem
+        border 1px solid #BEBBB5
+        border-radius 3px
+        float right
+        overflow hidden
+        > img
+          width 0.28rem
+          height 0.28rem
+          margin-right 0.1rem
+        > span
+          font-size 0.28rem
+          color #523F1A
+      .list-title
+        margin-top 0.19rem
+        > span
+          display block
+          font-size 0.28rem
+          color #BEBBB5
+          border-left 2px solid #F8BD48
+          padding-left 0.1rem
+          height 0.28rem
+          line-height 0.28rem
+    .shoppingCar-list
+      > li
+        overflow hidden
+        padding 0.4rem 0.3rem
+        border-bottom 1px solid #E6E6E6
+        .list-img
+          width 0.6rem
+          height 0.6rem
+          float left
+          margin-right 0.1rem
+          > img
+            display block
+            height 100%
+            margin 0 auto
+        .list-title
+          float left
+          width 2.4rem
+          height 0.6rem
+          line-height 0.6rem
+          font-size 0.32rem
+          color #523F1A
+          white-space nowrap
+          overflow hidden
+          text-overflow ellipsis
+          margin-right 0.4rem
+        .list-price
+          color #333
+          float left
+          height 0.6rem
+          font-size 0.24rem
+          line-height 0.6rem
+          .big
+            font-size 0.32rem
+            vertical-align baseline
+        .list-quantity
+          float right
+          > img
+            margin-top 0.06rem
+            width 0.48rem
+            height 0.48rem
+          > span
+            display inline-block
+            width 0.6rem
+            height 0.6rem
+            line-height 0.6rem
+            text-align center
+            font-size 0.34rem
+            color #523F1A
