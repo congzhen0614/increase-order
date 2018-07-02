@@ -32,7 +32,7 @@
       <img src="http://pic.58pic.com/58pic/13/71/22/35T58PICrEk_1024.jpg"/>
     </div>
     <footer>
-      <v-footer :quantity="quantity" :total="total" :shopList="shopList" :shoppingCarFlag="shoppingCarFlag" @showShoppingCar="showShoppingCar"></v-footer>
+      <v-footer :quantity="quantity" :total="total" @shopChange="shopChange"></v-footer>
     </footer>
   </div>
 </template>
