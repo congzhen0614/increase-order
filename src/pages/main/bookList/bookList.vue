@@ -1,5 +1,9 @@
 <template>
   <div class="increase-order-book">
+    <div class="book-seek">
+      <p @click="selectGrad"><span>年级区间</span></p>
+      <p @click="selectType"><span>图书类别</span></p>
+    </div>
     <ul :class="{'list-left': index===0, 'list-right': index===1}" v-for="(list, index) in lists" :key="index">
       <li v-for="(item, index) in list" :key="index" @click.stop="toDetail(item)">
         <div class="list-img">
@@ -46,6 +50,16 @@ export default {
   },
   computed: {},
   methods: {
+    selectGrad () {
+      this.$router.push({
+        path: '/gradeSeek'
+      })
+    },
+    selectType () {
+      this.$router.push({
+        path: '/bookSeek'
+      })
+    },
     clickAdd (param, id) {
       param.quantity += 1
       this.totalQuantity += 1

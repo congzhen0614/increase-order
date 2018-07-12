@@ -1,5 +1,11 @@
 <template>
   <div class="increase-order-voice">
+    <div class="voice-seek">
+      <p>
+        <input type="text">
+        <img src="../../../assets/seek-logo.png">
+      </p>
+    </div>
     <ul class="order-voice-menu">
       <li :class="{active: type===0}" @click.stop="type=0">全部</li>
       <li :class="{active: type===1}" @click.stop="type=1">音频</li>

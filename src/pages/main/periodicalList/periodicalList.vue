@@ -1,5 +1,9 @@
 <template>
   <div class="increase-order-periodical">
+    <div class="periodical-seek">
+      <p @click="selectGrad"><span>年级区间</span></p>
+      <p @click="selectType"><span>杂志类型</span></p>
+    </div>
     <ul>
       <li v-for="(item, index) in listData" :key="index" @click.stop="toDetail(item)">
         <div class="list-img">
@@ -45,6 +49,16 @@ export default {
   computed: {
   },
   methods: {
+    selectGrad () {
+      this.$router.push({
+        path: '/gradeSeek'
+      })
+    },
+    selectType () {
+      this.$router.push({
+        path: '/perioditalSeek'
+      })
+    },
     clickAdd (param, id) {
       param.quantity += 1
       this.totalQuantity += 1

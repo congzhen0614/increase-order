@@ -21,6 +21,9 @@ import paySuccess from '@/pages/pay/success/success.vue' // 支付成功页面
 import payFailed from '@/pages/pay/failed/failed.vue' // 支付成功页面
 import voiceDetail from '@/pages/details/vioceDetail/vioceDetail.vue' // 媒体详情页
 import chapters from '@/pages/details/vioceDetail/chapters/chapters.vue' // 媒体章节页面
+import bookSeek from '@/components/seek/book-seek.vue' // 选择图书类型页面
+import gradeSeek from '@/components/seek/grade-seek.vue' // 选择年级页面
+import perioditalSeek from '@/components/seek/periodital-seek.vue' // 选择书刊类型页面
 
 // 路由返回上一页
 Router.prototype.goBack = function () {
@@ -91,6 +94,18 @@ export default new Router({
       path: '/chapters',
       name: 'chapters',
       component: chapters
+    }, {
+      path: '/bookSeek',
+      name: 'bookSeek',
+      component: bookSeek
+    }, {
+      path: '/gradeSeek',
+      name: 'gradeSeek',
+      component: gradeSeek
+    }, {
+      path: '/perioditalSeek',
+      name: 'perioditalSeek',
+      component: perioditalSeek
     }
   ]
 })
