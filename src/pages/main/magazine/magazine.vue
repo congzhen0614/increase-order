@@ -5,23 +5,23 @@
       <p><span>杂志类别</span><img src="../../../assets/pull-down-icon.png"></p>
     </header>
     <ul class="magazine-list">
-      <li v-for="item in list" :key="item">
+      <li v-for="item in lists" :key="item.id">
         <div class="picture">
-          <img src="./4.jpg">
+          <img :src="item.logo">
         </div>
         <div class="content">
-          <p class="title">刊物名称刊物名称</p>
+          <p class="title">{{ item.name }}</p>
           <p class="gift">
             <img src="../../../assets/gift-icon.png">
-            益智DIY万变串珠+弹射飞机+益智DIY万变串珠+弹射飞机
+            {{ item.giftName }}
           </p>
-          <p class="units">半年12期(2018.1~2018.6)</p>
+          <p class="units">{{ item.feeUnit }}</p>
           <p class="amount">
             <img src="../../../assets/minus-icon.png">
             <span>0</span>
             <img src="../../../assets/add-icon.png">
           </p>
-          <p class="price">￥<span class="big">500</span>.00</p>
+          <p class="price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
         </div>
       </li>
     </ul>
@@ -33,12 +33,17 @@ export default {
   name: 'solicit-subscription-magazine',
   data () {
     return {
-      list: [1, 2, 3, 4, 5, 6]
+    }
+  },
+  props: {
+    lists: {
+      type: Array
     }
   },
   mounted () {
   },
-  methods: {}
+  methods: {},
+  watch: {}
 }
 </script>
 

@@ -4,21 +4,21 @@
       <div class="content" ref="content">
         <main :style="{minHeight: windowHeight, overflow: 'hidden'}">
           <header>
-            <p class="title">书单名称</p>
+            <p class="title">{{ catalogue.title }}</p>
             <p class="creator">
-              <span>撸老师</span>
-              <span>18768188565</span>
+              <span>{{ catalogue.linkman }}</span>
+              <span>{{ catalogue.linkmobile }}</span>
             </p>
-            <p class="explain">说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明</p>
+            <p class="explain">{{ catalogue.tip }}</p>
           </header>
           <nav>
-            <span :class="{activity: navType === 0}" @click="navType = 0">刊物</span>
-            <span :class="{activity: navType === 1}" @click="navType = 1">图书</span>
-            <span :class="{activity: navType === 2}" @click="navType = 2">电子读物</span>
+            <span :class="{activity: navType === 1}" @click="navType = 1">刊物</span>
+            <span :class="{activity: navType === 2}" @click="navType = 2">图书</span>
+            <span :class="{activity: navType === 54}" @click="navType = 54">电子读物</span>
           </nav>
-          <v-magazine v-if="navType === 0"></v-magazine>
-          <v-book v-if="navType === 1"></v-book>
-          <v-audio v-if="navType === 2"></v-audio>
+          <v-magazine v-if="navType === 1" :lists="lists"></v-magazine>
+          <v-book v-if="navType === 2" :lists="lists"></v-book>
+          <v-audio v-if="navType === 54" :lists="lists"></v-audio>
         </main>
       </div>
     </div>
@@ -47,20 +47,49 @@ export default {
       },
       windowHeight: window.innerHeight - 80 + 'px',
       scroller: '',
-      navType: 0
+      navType: 1,
+      catalogue: {},
+      lists: []
     }
   },
-  created () {
-  },
   mounted () {
-    this.initializeScroll()
+    this.loadItempackList()
   },
   computed: {
+    params () {
+      let param = {
+        pageNum: 1,
+        pageSize: 10,
+        itemPackId: 22,
+        cls: this.navType
+      }
+      return param
+    },
     toTop () {
       return this.scrollHeight > window.innerHeight
     }
   },
   methods: {
+    loadItempackList () {
+      this.$axios.itempackList(this.params).then(res => {
+        if (res.data.code === '0') {
+          this.catalogue.title = res.data.data.title
+          this.catalogue.linkman = res.data.data.linkman
+          this.catalogue.linkmobile = res.data.data.linkmobile
+          this.catalogue.tip = res.data.data.tip
+          this.lists = res.data.data.page.list
+          this.$nextTick(() => {
+            this.initializeScroll()
+          })
+        } else {
+          this.$message.error(res.data.data.msg)
+        }
+      }, err => {
+        this.$message.error(err)
+      }).catch(err => {
+        this.$message.error(err)
+      })
+    },
     initializeScroll () {
       if (this.scroller === '') {
         this.scroller = new BScroll(this.$refs.wrapper, {
@@ -88,6 +117,9 @@ export default {
         this.loadMore = false
         // this.loadData()
       }
+    },
+    navType () {
+      this.loadItempackList()
     }
   }
 }

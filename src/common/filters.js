@@ -26,7 +26,11 @@ let getFixed2 = value => {
 
 // 截取长度30个字符
 let cutStr = (value, len) => {
-  return value.substring(0, len) + '...'
+  if (value.length > len) {
+    return value.substring(0, len) + '...'
+  } else {
+    return value
+  }
 }
 
 export {

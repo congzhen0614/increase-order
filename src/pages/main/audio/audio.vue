@@ -6,15 +6,15 @@
         <img src="../../../assets/seek-logo.png">
       </p>
     </div>
-    <ul>
-      <li class="order-voice-list" v-for="(item, index) in listData" :key="index">
+    <ul v-if="lists.length > 0">
+      <li class="order-voice-list" v-for="(item, index) in lists" :key="index">
         <div class="voice-list-left">
-          <img src="../../../assets/books/1.png"/>
+          <img :src="item.logo"/>
         </div>
         <div class="voice-list-right">
           <p class="voice-list-title">{{ item.name }}</p>
-          <p class="voice-list-descr">包简介包简介包简介包简介包简介</p>
-          <p class="voice-list-price">￥<span class="big">{{ item.price | getInteger }}</span>{{ item.price | getFixed1 }}</p>
+          <p class="voice-list-descr">{{ item.introductions }}</p>
+          <p class="voice-list-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
           <div class="voice-list-button">
             <span>购买</span>
             <span>加入购物车</span>
@@ -23,6 +23,7 @@
         </div>
       </li>
     </ul>
+    <p  v-if="lists.length === 0">暂无内容</p>
   </div>
 </template>
 
@@ -31,14 +32,11 @@ export default {
   name: 'solicit-subscription-audio',
   components: {},
   data () {
-    return {
-      listData: [{
-        name: '标题标题标题标题标题标题',
-        price: '120.00'
-      }, {
-        name: '标题标题标题标题标题标题',
-        price: '120.00'
-      }]
+    return {}
+  },
+  props: {
+    lists: {
+      type: Array
     }
   },
   created () {
