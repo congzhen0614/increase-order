@@ -7,7 +7,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import api from './api/api'
-import * as custom from './common/js/filters.js'
+import * as custom from './common/filters.js'
 
 // axios请求api
 Vue.prototype.$axios = api

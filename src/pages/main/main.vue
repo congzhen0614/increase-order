@@ -1,71 +1,59 @@
 <template>
-  <div class="increase-order-main">
+  <div class="solicit-subscription-main">
     <div class="wrapper" ref="wrapper" :style="secollHeight">
       <div class="content" ref="content">
-        <img class="top-icon" src="../../assets/book-top-icon.png">
-        <section :style="{'min-height': sectionHeight}">
-          <p class="about-us" @click.stop="aboutUs()">
-            <img src="../../assets/aboutUs-icon.png">
-            关于我们
-          </p>
-          <p class="increase-order-title">书单名称书单名称书单名称</p>
-          <div class="increase-order-menu">
-            <span :class="{active: menu===0}" @click.stop="menu = 0">刊物</span>
-            <span :class="{active: menu===1}" @click.stop="menu = 1">图书</span>
-            <span :class="{active: menu===2}" @click.stop="menu = 2">电子读物</span>
-          </div>
-          <v-periodicalList v-if="menu===0" :listData="listData" @shoppingCar="shoppingCar"></v-periodicalList>
-          <v-voiceList v-if="menu===2" :listData="listData" @shoppingCar="shoppingCar"></v-voiceList>
-          <v-bookList v-if="menu===1" :listData="listData" @shoppingCar="shoppingCar"></v-bookList>
-          <p class="no-more">没有更多了哦~</p>
-        </section>
+        <main :style="{minHeight: windowHeight, overflow: 'hidden'}">
+          <header>
+            <p class="title">书单名称</p>
+            <p class="creator">
+              <span>撸老师</span>
+              <span>18768188565</span>
+            </p>
+            <p class="explain">说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明说明</p>
+          </header>
+          <nav>
+            <span :class="{activity: navType === 0}" @click="navType = 0">刊物</span>
+            <span :class="{activity: navType === 1}" @click="navType = 1">图书</span>
+            <span :class="{activity: navType === 2}" @click="navType = 2">电子读物</span>
+          </nav>
+          <v-magazine v-if="navType === 0"></v-magazine>
+          <v-book v-if="navType === 1"></v-book>
+          <v-audio v-if="navType === 2"></v-audio>
+        </main>
       </div>
     </div>
-    <footer>
-      <v-footer :quantity="quantity" :total="total" @shopChange="shopChange"></v-footer>
-    </footer>
-    <img class="to-top" v-if="toTop" @click.stop="clickToTop()" src="../../assets/toTop-icon.png">
-    <a href="tel:4008808888"><img class="contact-service" src="../../assets/service_icon.png"></a>
+    <v-nav :navName="'首页'"></v-nav>
   </div>
 </template>
 
 <script>
-import footer from '@/components/footer/footer.vue'
-import periodicalList from './periodicalList/periodicalList.vue'
-import voiceList from './voiceList/voiceList.vue'
-import bookList from './bookList/bookList.vue'
-import reserve from '@/store/reserve.js'
-import shoppingCar from '@/store/shoppingCar.js'
+import nav from '@/components/nav/nav.vue'
+import magazine from './magazine/magazine.vue'
+import book from './book/book.vue'
+import audio from './audio/audio.vue'
 import BScroll from 'better-scroll'
 export default {
-  name: '',
+  name: 'solicit-subscription-main',
   components: {
-    'v-footer': footer,
-    'v-periodicalList': periodicalList,
-    'v-voiceList': voiceList,
-    'v-bookList': bookList
+    'v-nav': nav,
+    'v-magazine': magazine,
+    'v-book': book,
+    'v-audio': audio
   },
   data () {
     return {
       secollHeight: {
-        height: window.innerHeight - 50 + 'px'
+        height: window.innerHeight - 80 + 'px'
       },
-      sectionHeight: window.innerHeight - 100 + 'px',
-      menu: reserve.listType,
-      quantity: 0,
-      total: 0,
-      listData: [],
+      windowHeight: window.innerHeight - 80 + 'px',
       scroller: '',
-      scrollHeight: '',
-      loadMore: false,
-      shoppingCarFlag: false
+      navType: 0
     }
   },
   created () {
   },
   mounted () {
-    this.loadData()
-    this.getShoppingCarList()
+    this.initializeScroll()
   },
   computed: {
     toTop () {
@@ -73,33 +61,6 @@ export default {
     }
   },
   methods: {
-    getShoppingCarList () {
-      let total = 0
-      let quantity = 0
-      let list = shoppingCar.bookList.concat(shoppingCar.videoList).concat(shoppingCar.periodicalList)
-      list.forEach(item => {
-        quantity += parseInt(item.quantity)
-        total += parseFloat(item.price) * parseInt(item.quantity)
-      })
-      this.total = total
-      this.quantity = quantity
-    },
-    loadData () {
-      this.$axios.shoppingList().then(res => {
-        this.listData = res.data.data
-        this.loadMore = true
-        this.$nextTick(() => {
-          this.initializeScroll()
-        })
-      }, err => {
-        console.log(err)
-      })
-    },
-    aboutUs () {
-      this.$router.push({
-        path: '/aboutUs'
-      })
-    },
     initializeScroll () {
       if (this.scroller === '') {
         this.scroller = new BScroll(this.$refs.wrapper, {
@@ -119,22 +80,6 @@ export default {
         }
         this.scrollHeight = -pos.y
       })
-    },
-    shoppingCar () {
-      this.total = 0
-      this.quantity = 0
-      let shoppingCarList = shoppingCar.bookList.concat(shoppingCar.videoList).concat(shoppingCar.periodicalList)
-      shoppingCarList.forEach(item => {
-        this.quantity += parseInt(item.quantity)
-        this.total += parseInt(item.quantity) * parseFloat(item.price)
-      })
-    },
-    clickToTop () {
-      this.scroller.scrollTo(0, 0, 500) // scrollTo(x, y, time)
-    },
-    shopChange () {
-      this.getShoppingCarList()
-      this.loadData()
     }
   },
   watch: {
@@ -143,10 +88,6 @@ export default {
         this.loadMore = false
         // this.loadData()
       }
-    },
-    menu (val) {
-      reserve.listType = val
-      this.loadData()
     }
   }
 }
