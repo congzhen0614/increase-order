@@ -23,6 +23,8 @@
       </div>
     </div>
     <v-nav :navName="'首页'"></v-nav>
+    <img class="to-top" v-if="toTop" @click.stop="clickToTop()" src="../../assets/toTop-icon.png">
+    <a href="tel:4008808888"><img class="contact-service" src="../../assets/service_icon.png"></a>
   </div>
 </template>
 
@@ -47,6 +49,7 @@ export default {
       },
       windowHeight: window.innerHeight - 80 + 'px',
       scroller: '',
+      scrollHeight: '',
       navType: 1,
       catalogue: {},
       lists: []
@@ -109,6 +112,9 @@ export default {
         }
         this.scrollHeight = -pos.y
       })
+    },
+    clickToTop () {
+      this.scroller.scrollTo(0, 0, 500) // scrollTo(x, y, time)
     }
   },
   watch: {

@@ -10,7 +10,8 @@ import main from '@/pages/main/main.vue' // 首页
 import shoppingCar from '@/pages/shoppingcar/shoppingcar.vue' // 购物车
 import myOrder from '@/pages/myorder/myorder.vue' // 我的订单
 import aboutUs from '@/pages/aboutus/aboutus.vue' // 关于我们
-
+import ageList from '@/pages/main/seekList/ageList/ageList.vue' // 年龄列表
+import typeList from '@/pages/main/seekList/typeList/typeList.vue' // 年龄列表
 // 路由返回上一页
 Router.prototype.goBack = function () {
   this.go(-1)
@@ -36,6 +37,14 @@ export default new Router({
       path: '/aboutUs',
       name: '关于我们',
       component: aboutUs
+    }, {
+      path: '/ageList',
+      name: '年龄列表',
+      component: ageList
+    }, {
+      path: '/typeList',
+      name: '类别列表',
+      component: typeList
     }
   ]
 })

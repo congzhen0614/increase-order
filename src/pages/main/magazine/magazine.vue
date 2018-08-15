@@ -1,8 +1,8 @@
 <template>
   <div class="solicit-subscription-magazine">
     <header class="magazine-seek">
-      <p><span>年龄区间</span><img src="../../../assets/pull-down-icon.png"></p>
-      <p><span>杂志类别</span><img src="../../../assets/pull-down-icon.png"></p>
+      <p @click="toAgelist"><span>年龄区间</span><img src="../../../assets/pull-down-icon.png"></p>
+      <p @click="toTypelist"><span>杂志类别</span><img src="../../../assets/pull-down-icon.png"></p>
     </header>
     <ul class="magazine-list">
       <li v-for="item in lists" :key="item.id">
@@ -11,7 +11,7 @@
         </div>
         <div class="content">
           <p class="title">{{ item.name }}</p>
-          <p class="gift">
+          <p class="gift" v-if="item.giftName">
             <img src="../../../assets/gift-icon.png">
             {{ item.giftName }}
           </p>
@@ -42,7 +42,18 @@ export default {
   },
   mounted () {
   },
-  methods: {},
+  methods: {
+    toAgelist () {
+      this.$router.push({
+        path: '/ageList'
+      })
+    },
+    toTypelist () {
+      this.$router.push({
+        path: '/typeList'
+      })
+    }
+  },
   watch: {}
 }
 </script>

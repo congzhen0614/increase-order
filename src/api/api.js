@@ -5,9 +5,7 @@
  */
 import axios from 'axios'
 import qs from 'qs'
-import Vue from 'vue'
-let obj = new Vue()
-axios.defaults.baseURL = location.protocol + '//192.168.0.230:8081'
+axios.defaults.baseURL = location.protocol + '//192.168.0.230:8081/qrzd'
 
 // 设置headers
 axios.interceptors.request.use(config => {
@@ -25,7 +23,7 @@ axios.interceptors.response.use(response => {
     localStorage.clear()
     window.location.reload()
   } else if (response.data.code < '0') {
-    obj.$message.error(response.data.msg)
+    console.log(response)
   }
   return response
 }, err => {
@@ -35,6 +33,12 @@ axios.interceptors.response.use(response => {
 export default {
   itempackList (params) { // 登录
     let param = qs.stringify(params)
-    return axios.get(`/qrzd/itempack/list/open?${param}`)
+    return axios.get(`/itempack/list/open?${param}`)
+  },
+  itemtypeList () {
+    return axios.get('/sys/itemtype/list/open')
+  },
+  itemageList () {
+    return axios.get('/sys/itemage/list/open')
   }
 }
