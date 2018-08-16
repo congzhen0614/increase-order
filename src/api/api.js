@@ -5,40 +5,43 @@
  */
 import axios from 'axios'
 import qs from 'qs'
-axios.defaults.baseURL = location.protocol + '//192.168.0.230:8081/qrzd'
 
 // 设置headers
-axios.interceptors.request.use(config => {
-  if (JSON.parse(localStorage.getItem('user'))) {
-    config.headers.Authorization = JSON.parse(localStorage.getItem('user')).authorization
-  }
-  return config
-}, err => {
-  return Promise.reject(err)
-})
-
+// axios.interceptors.request.use(config => {
+//   if (JSON.parse(localStorage.getItem('user'))) {
+//     config.headers.Authorization = JSON.parse(localStorage.getItem('user')).authorization
+//   }
+//   return config
+// }, err => {
+//   return Promise.reject(err)
+// })
+//
 // 设置重定向
-axios.interceptors.response.use(response => {
-  if (response.data.code === '-6') {
-    localStorage.clear()
-    window.location.reload()
-  } else if (response.data.code < '0') {
-    console.log(response)
-  }
-  return response
-}, err => {
-  return Promise.reject(err)
-})
+// axios.interceptors.response.use(response => {
+//   if (response.data.code === '-6') {
+//     localStorage.clear()
+//     window.location.reload()
+//   } else if (response.data.code < '0') {
+//     console.log(response)
+//   }
+//   return response
+// }, err => {
+//   return Promise.reject(err)
+// })
 
 export default {
-  itempackList (params) { // 登录
+  login (params) { // 登录
     let param = qs.stringify(params)
-    return axios.get(`/itempack/list/open?${param}`)
+    return axios.get(`api/user/login?${param}`)
   },
-  itemtypeList () {
-    return axios.get('/sys/itemtype/list/open')
+  itempackList (params) { // 首页数据
+    let param = qs.stringify(params)
+    return axios.get(`/qrzd/itempack/list/open?${param}`)
   },
-  itemageList () {
-    return axios.get('/sys/itemage/list/open')
+  itemtypeList () { // 类型列表
+    return axios.get('/qrzd/sys/itemtype/list/open')
+  },
+  itemageList () { // 年龄列表
+    return axios.get('/qrzd/sys/itemage/list/open')
   }
 }

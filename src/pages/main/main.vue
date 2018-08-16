@@ -16,8 +16,8 @@
             <span :class="{activity: navType === 2}" @click="navType = 2">图书</span>
             <span :class="{activity: navType === 54}" @click="navType = 54">电子读物</span>
           </nav>
-          <v-magazine v-if="navType === 1" :lists="lists"></v-magazine>
-          <v-book v-if="navType === 2" :lists="lists"></v-book>
+          <v-magazine v-if="navType === 1" :lists="lists" @ageChange="ageChange" @typeChange="typeChange"></v-magazine>
+          <v-book v-if="navType === 2" :lists="lists" @ageChange="ageChange" @typeChange="typeChange"></v-book>
           <v-audio v-if="navType === 54" :lists="lists"></v-audio>
         </main>
       </div>
@@ -34,6 +34,7 @@ import magazine from './magazine/magazine.vue'
 import book from './book/book.vue'
 import audio from './audio/audio.vue'
 import BScroll from 'better-scroll'
+import store from '@/store/store.js'
 export default {
   name: 'solicit-subscription-main',
   components: {
@@ -50,9 +51,18 @@ export default {
       windowHeight: window.innerHeight - 80 + 'px',
       scroller: '',
       scrollHeight: '',
-      navType: 1,
+      navType: store.navType,
+      ageId: '',
+      typeId: '',
       catalogue: {},
-      lists: []
+      lists: [],
+      reload: false,
+      loadMore: false,
+      pages: {
+        pageNum: 1,
+        pageSize: 10,
+        total: 10
+      }
     }
   },
   mounted () {
@@ -61,10 +71,12 @@ export default {
   computed: {
     params () {
       let param = {
-        pageNum: 1,
-        pageSize: 10,
         itemPackId: 22,
-        cls: this.navType
+        pageNum: this.pages.pageNum,
+        pageSize: this.pages.pageSize,
+        cls: this.navType,
+        ageId: this.ageId,
+        typeId: this.typeId
       }
       return param
     },
@@ -73,6 +85,14 @@ export default {
     }
   },
   methods: {
+    ageChange (val) {
+      this.ageId = val
+      this.loadItempackList()
+    },
+    typeChange (val) {
+      this.typeId = val
+      this.loadItempackList()
+    },
     loadItempackList () {
       this.$axios.itempackList(this.params).then(res => {
         if (res.data.code === '0') {
@@ -80,17 +100,24 @@ export default {
           this.catalogue.linkman = res.data.data.linkman
           this.catalogue.linkmobile = res.data.data.linkmobile
           this.catalogue.tip = res.data.data.tip
-          this.lists = res.data.data.page.list
+          this.pages.total = res.data.data.page.total
+          res.data.data.page.list.forEach(item => {
+            this.lists.push(item)
+          })
+          // this.reload = true
+          this.loadMore = true
           this.$nextTick(() => {
-            this.initializeScroll()
+            setTimeout(() => {
+              this.initializeScroll()
+            }, 500)
           })
         } else {
-          this.$message.error(res.data.data.msg)
+          console.log(res.data.data.msg)
         }
       }, err => {
-        this.$message.error(err)
+        console.log(err)
       }).catch(err => {
-        this.$message.error(err)
+        console.log(err)
       })
     },
     initializeScroll () {
@@ -107,7 +134,7 @@ export default {
     listenScroll () {
       this.scroller.on('scroll', pos => {
         if (pos.y >= 100 && this.reload) {
-          console.log('上拉刷新页面!')
+          this.loadItempackList()
           this.reload = false
         }
         this.scrollHeight = -pos.y
@@ -121,10 +148,15 @@ export default {
     scrollHeight (val) { // 下拉到最下面加载更多
       if (val > this.$refs.content.offsetHeight - window.innerHeight && this.loadMore) {
         this.loadMore = false
-        // this.loadData()
+        this.pages.pageNum += 1
+        if (parseInt(this.pages.total / this.pages.pageSize) < this.pages.pageNum) return false
+        this.loadItempackList()
       }
     },
     navType () {
+      this.pages.pageNum = 1
+      this.lists = []
+      store.navType = this.navType
       this.loadItempackList()
     }
   }

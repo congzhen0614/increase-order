@@ -1,11 +1,11 @@
 <template>
   <div class="solicit-subscription-magazine">
     <header class="magazine-seek">
-      <p @click="toAgelist"><span>年龄区间</span><img src="../../../assets/pull-down-icon.png"></p>
-      <p @click="toTypelist"><span>杂志类别</span><img src="../../../assets/pull-down-icon.png"></p>
+      <p @click="toAgelist"><span>{{ ageContent }}</span><img src="../../../assets/pull-down-icon.png"></p>
+      <p @click="toTypelist"><span>{{ typeContent }}</span><img src="../../../assets/pull-down-icon.png"></p>
     </header>
     <ul class="magazine-list">
-      <li v-for="item in lists" :key="item.id">
+      <li v-for="(item, index) in lists" :key="index">
         <div class="picture">
           <img :src="item.logo">
         </div>
@@ -25,14 +25,18 @@
         </div>
       </li>
     </ul>
+    <p class="noContent" v-if="lists.length === 0">暂无内容</p>
   </div>
 </template>
 
 <script>
+import store from '@/store/store.js'
 export default {
   name: 'solicit-subscription-magazine',
   data () {
     return {
+      ageContent: '年龄区间',
+      typeContent: '杂志类别'
     }
   },
   props: {
@@ -41,20 +45,67 @@ export default {
     }
   },
   mounted () {
+    this.setMagazineAge()
+    this.setMagazineType()
   },
   methods: {
+    setMagazineAge () {
+      if (store.magazineAge.length > 0) {
+        let str = ''
+        store.magazineAge.forEach((item, index) => {
+          if (index > 0) {
+            str += ','
+          }
+          str += item.name
+        })
+        this.ageContent = str
+      }
+    },
+    setMagazineType () {
+      if (store.magazineType.length > 0) {
+        let str = ''
+        store.magazineType.forEach((item, index) => {
+          if (index > 0) {
+            str += ','
+          }
+          str += item.name
+        })
+        this.typeContent = str
+      }
+    },
     toAgelist () {
       this.$router.push({
-        path: '/ageList'
+        path: '/ageList',
+        query: {
+          name: 'maga'
+        }
       })
     },
     toTypelist () {
       this.$router.push({
-        path: '/typeList'
+        path: '/typeList',
+        query: {
+          name: 'maga'
+        }
       })
     }
   },
-  watch: {}
+  watch: {
+    ageContent () {
+      let ageArr = []
+      store.magazineAge.forEach(item => {
+        ageArr.push(item.id)
+      })
+      this.$emit('ageChange', ageArr.join(','))
+    },
+    typeContent () {
+      let typeArr = []
+      store.magazineType.forEach(item => {
+        typeArr.push(item.id)
+      })
+      this.$emit('typeChange', typeArr.join(','))
+    }
+  }
 }
 </script>
 

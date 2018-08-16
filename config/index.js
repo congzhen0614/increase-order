@@ -10,7 +10,18 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/qrzd': {
+        target: 'http://192.168.0.230:8081/qrzd',
+        changeOrigin: true,
+        pathRewrite: {'^/qrzd': ''}
+      },
+      '/api': {// 正式: http://app.51weixiao.com/app-api/api 测试: http://192.168.0.231:8080/app-api/api
+        target: 'http://app.51weixiao.com/app-api/api',
+        changeOrigin: true,
+        pathRewrite: {'^/api': ''}
+      }
+    },
 
     // Various Dev Server settings
     host: '192.168.0.48', // can be overwritten by process.env.HOST

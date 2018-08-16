@@ -23,7 +23,7 @@
         </div>
       </li>
     </ul>
-    <p  v-if="lists.length === 0">暂无内容</p>
+    <p class="noContent" v-if="lists.length === 0">暂无内容</p>
   </div>
 </template>
 
