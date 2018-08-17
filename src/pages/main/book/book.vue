@@ -18,9 +18,9 @@
             <span class="original-price" v-if="item.originalFee">￥{{ item.originalFee | getFixed2 }}</span>
           </p>
           <div class="list-number">
-            <img v-if="item.quantity > 0" src="../../../assets/minus-icon.png">
+            <img @click="onReduce(item)" v-if="item.quantity > 0" src="../../../assets/minus-icon.png">
             <span v-if="item.quantity > 0">{{ item.quantity }}</span>
-            <img src="../../../assets/add-icon.png">
+            <img @click="onAdd(item)" src="../../../assets/add-icon.png">
           </div>
         </div>
       </li>
@@ -39,9 +39,9 @@
             <span class="original-price" v-if="item.originalFee">￥{{ item.originalFee | getFixed2 }}</span>
           </p>
           <div class="list-number">
-            <img v-if="item.quantity > 0" src="../../../assets/minus-icon.png">
+            <img @click="onReduce(item)" v-if="item.quantity > 0" src="../../../assets/minus-icon.png">
             <span v-if="item.quantity > 0">{{ item.quantity }}</span>
-            <img src="../../../assets/add-icon.png">
+            <img @click="onAdd(item)" src="../../../assets/add-icon.png">
           </div>
         </div>
       </li>
@@ -109,6 +109,29 @@ export default {
           name: 'book'
         }
       })
+    },
+    onReduce (item) {
+      item.quantity -= 1
+      store.shoppingcarBook.forEach(obj => {
+        if (item.id === obj.id) {
+          obj = item
+        }
+      })
+    },
+    onAdd (item) {
+      item.quantity += 1
+      let exist = false
+      if (store.shoppingcarBook.length > 0) {
+        store.shoppingcarBook.forEach(obj => {
+          if (item.id === obj.id) {
+            exist = true
+            obj = item
+          }
+        })
+        if (!exist) store.shoppingcarBook.push(item)
+      } else {
+        store.shoppingcarBook.push(item)
+      }
     }
   },
   watch: {

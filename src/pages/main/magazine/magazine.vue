@@ -15,11 +15,11 @@
             <img src="../../../assets/gift-icon.png">
             {{ item.giftName }}
           </p>
-          <p class="units">{{ item.feeUnit }}</p>
+          <p class="units" v-if="item.feeUnit">{{ item.feeUnit }}</p>
           <p class="amount">
-            <img src="../../../assets/minus-icon.png">
-            <span>0</span>
-            <img src="../../../assets/add-icon.png">
+            <img @click="onReduce(item)" v-if="item.quantity > 0" src="../../../assets/minus-icon.png">
+            <span v-if="item.quantity > 0">{{ item.quantity }}</span>
+            <img @click="onAdd(item)" src="../../../assets/add-icon.png">
           </p>
           <p class="price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
         </div>
@@ -88,6 +88,29 @@ export default {
           name: 'maga'
         }
       })
+    },
+    onReduce (item) {
+      item.quantity -= 1
+      store.shoppingcarMage.forEach(obj => {
+        if (item.id === obj.id) {
+          obj = item
+        }
+      })
+    },
+    onAdd (item) {
+      item.quantity += 1
+      let exist = false
+      if (store.shoppingcarMage.length > 0) {
+        store.shoppingcarMage.forEach(obj => {
+          if (item.id === obj.id) {
+            exist = true
+            obj = item
+          }
+        })
+        if (!exist) store.shoppingcarMage.push(item)
+      } else {
+        store.shoppingcarMage.push(item)
+      }
     }
   },
   watch: {

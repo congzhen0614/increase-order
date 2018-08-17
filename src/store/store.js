@@ -6,5 +6,8 @@ export default {
   magazineAge: [],
   magazineType: [],
   bookAge: [],
-  bookType: []
+  bookType: [],
+  shoppingcarMage: [],
+  shoppingcarBook: [],
+  shoppingcarspyp: []
 }

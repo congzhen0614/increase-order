@@ -17,7 +17,7 @@
           <p class="voice-list-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
           <div class="voice-list-button">
             <span>购买</span>
-            <span>加入购物车</span>
+            <span @click="toShoppingcar(item)">加入购物车</span>
             <span>列表</span>
           </div>
         </div>
@@ -28,9 +28,9 @@
 </template>
 
 <script>
+import store from '@/store/store.js'
 export default {
   name: 'solicit-subscription-audio',
-  components: {},
   data () {
     return {}
   },
@@ -39,12 +39,25 @@ export default {
       type: Array
     }
   },
-  created () {
-  },
   mounted () {
   },
-  computed: {},
-  methods: {},
+  methods: {
+    toShoppingcar (item) {
+      let exist = false
+      if (store.shoppingcarspyp.length > 0) {
+        store.shoppingcarspyp.forEach(obj => {
+          if (item.id === obj.id) {
+            exist = true
+          }
+        })
+        if (!exist) {
+          store.shoppingcarspyp.push(item)
+        }
+      } else {
+        store.shoppingcarspyp.push(item)
+      }
+    }
+  },
   watch: {}
 }
 </script>
