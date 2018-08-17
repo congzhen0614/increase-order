@@ -102,6 +102,7 @@ export default {
           this.catalogue.tip = res.data.data.tip
           this.pages.total = res.data.data.page.total
           res.data.data.page.list.forEach(item => {
+            item.select = false
             item.quantity = 0
             this.lists.push(item)
           })

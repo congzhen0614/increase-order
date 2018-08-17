@@ -9,5 +9,7 @@ export default {
   bookType: [],
   shoppingcarMage: [],
   shoppingcarBook: [],
-  shoppingcarspyp: []
+  shoppingcarspyp: [],
+  accounts: 0,
+  total: 0
 }
