@@ -17,6 +17,10 @@ import typeList from '@/pages/main/seekList/typeList/typeList.vue' // 年龄列�
 import magaDetail from '@/pages/details/magaDetail/magaDetail.vue' // 杂志详情页
 import bookDetail from '@/pages/details/bookDetail/bookDetail.vue' // 图书详情页
 import spypDetail from '@/pages/details/spypDetail/spypDetail.vue' // 视听详情页
+import detail from '@/pages/details/bookDetail/detail/detail.vue' // 图书详情信息
+import directory from '@/pages/details/bookDetail/directory/directory.vue' // 图书目录信息
+import published from '@/pages/details/bookDetail/published/published.vue' // 图书出版信息
+
 // 路由返回上一页
 Router.prototype.goBack = function () {
   this.go(-1)
@@ -70,6 +74,18 @@ export default new Router({
       path: '/spypDetail',
       name: '视听详情',
       component: spypDetail
+    }, {
+      path: '/detail',
+      name: '图书详情信息',
+      component: detail
+    }, {
+      path: '/directory',
+      name: '图书目录信息',
+      component: directory
+    }, {
+      path: '/published',
+      name: '图书出版信息',
+      component: published
     }
   ]
 })

@@ -1,42 +1,47 @@
 <template>
   <div class="comment">
-    <p class="comment-title">商品评价(100)</p>
+    <p class="comment-title">商品评价({{ bookComment.total }})</p>
     <ul class="comment-list">
       <li v-for="(item, index) in commentList" :key="index">
         <div class="comment-left">
-          <img src="../../assets/avatar.jpg"/>
+          <img :src="item.avatar"/>
         </div>
         <div class="comment-right">
           <div class="comment-star">
-            <img src="../../assets/start-icon.png">
-            <img src="../../assets/started-icon.png">
+            <img v-for="(star, index) in 5 - item.score" :key="index"  src="../../assets/start-icon.png">
+            <img v-for="(star, index) in item.score" :key="index" src="../../assets/started-icon.png">
           </div>
-          <p class="comment-username">谁家陌上青年郎</p>
-          <p class="comment-content">这书质量真不错！</p>
-          <span class="comment-time">3天前</span>
+          <p class="comment-username">{{ item.name }}</p>
+          <p class="comment-content">{{ item.content }}</p>
+          <div class="comment-images" v-for="img in item.imgs">
+            <img :src="img"/>
+          </div>
+          <span class="comment-time">{{ item.createdAt }}</span>
         </div>
       </li>
     </ul>
-    <div class="check-comment">查看全部评论</div>
+    <div class="check-comment" v-if="bookComment.total > 10">查看全部评论</div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'comment',
-  components: {},
   data () {
     return {
-      commentList: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      commentList: []
     }
   },
-  created () {
+  props: {
+    bookComment: {
+      type: Object
+    }
   },
-  mounted () {
-  },
-  computed: {},
-  methods: {},
-  watch: {}
+  watch: {
+    bookComment (val) {
+      this.commentList = val.list
+    }
+  }
 }
 </script>
 

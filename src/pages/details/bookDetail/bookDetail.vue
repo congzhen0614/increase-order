@@ -3,28 +3,26 @@
     <v-swiper :listImg="listImg" :style="{height: bannerHeight}"></v-swiper>
     <section>
       <p class="detail-title">
-        <span>名称名称名称名称</span>
-        <img src="../../../assets/hardback-icon.png"/>
+        <span>{{ detail.name }}</span>
+        <img v-if="detail.hardcover === '精装'" src="../../../assets/hardback-icon.png"/>
       </p>
-      <p class="age-bracket">
-        适读年龄（3至6岁儿童）
-      </p>
+      <p class="age-bracket">{{ detail.ageNames }}</p>
       <p class="detail-price">
         <span class="price-red">
-          ￥<span class="big">500</span>.00
+          ￥<span class="big">{{ detail.lastFee | getInteger }}</span>{{ detail.lastFee | getFixed1 }}
         </span>
-        <span class="price-black">(8.5折)</span>
+        <!--<span class="price-black">(8.5折)</span>-->
       </p>
       <div class="shoppingCar-quantity">
-        <img src="../../../assets/minus-icon.png" @click.stop="clickReduce()"/>
-        <span>0</span>
-        <img src="../../../assets/add-icon.png" @click.stop="clickAdd()"/>
+        <img src="../../../assets/minus-icon.png" @click.stop="clickReduce(query)"/>
+        <span>{{ query.quantity }}</span>
+        <img src="../../../assets/add-icon.png" @click.stop="clickAdd(query)"/>
       </div>
-      <p class="original-price">原价: ¥300.50</p>
-      <p class="detail-points">
-        <img src="../../../assets/points-icon.png"/>
-        <span>100积分=0.10元 (最多可用500积分)</span>
-      </p>
+      <p class="original-price">原价: {{ detail.originalFee | getInteger }}{{  detail.originalFee | getFixed1 }}</p>
+      <!--<p class="detail-points">-->
+        <!--<img src="../../../assets/points-icon.png"/>-->
+        <!--<span>100积分=0.10元 (最多可用500积分)</span>-->
+      <!--</p>-->
     </section>
     <div class="title-bottom">
       <p>运费:<span>免运费</span></p>
@@ -41,22 +39,16 @@
       <p @click="toProductDetail(2)">内容目录<span></span></p>
       <p @click="toProductDetail(3)">出版信息<span></span></p>
     </div>
-    <div class="book-content">
-      <p>
-        内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
-        文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字
-        内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容
-        文字内容文字内容文字内容文字内容文字
-      </p>
-      <img src="http://pic.58pic.com/58pic/13/71/06/63J58PIC2FC_1024.jpg"/>
+    <div class="book-content" v-html="detail.html">
     </div>
-    <v-comment></v-comment>
+    <v-comment :bookComment="comment"></v-comment>
   </div>
 </template>
 
 <script>
 import swiper from '@/components/swiper/swiper.vue'
 import comment from '@/components/comment/comment.vue'
+import store from '@/store/store.js'
 export default {
   name: '',
   components: {
@@ -65,16 +57,105 @@ export default {
   },
   data () {
     return {
+      bannerHeight: window.innerWidth * 0.6 + 'px',
+      query: JSON.parse(this.$route.query.item),
+      detail: {},
       listImg: [],
-      bannerHeight: window.innerWidth * 0.6 + 'px'
+      comment: {}
     }
   },
-  created () {
-  },
   mounted () {
+    console.log(this.query)
+    this.loadBookDetail()
+    this.loadComment()
   },
-  computed: {},
-  methods: {},
+  methods: {
+    loadBookDetail () {
+      this.$axios.bookDetail(this.query.id).then(res => {
+        if (res.data.code === '0') {
+          this.listImg = res.data.data.detailImgs
+          this.detail = res.data.data
+        } else {
+          this.Toast.fail(res.data.data.msg)
+        }
+      }, err => {
+        this.Toast.fail(err)
+      }).catch(err => {
+        this.Toast.fail(err)
+      })
+    },
+    loadComment () {
+      let params = {
+        pageNum: 1,
+        pageSize: 10,
+        bookId: this.query.id
+      }
+      this.$axios.bookComment(params).then(res => {
+        if (res.data.code === '0') {
+          this.comment = res.data.data
+        } else {
+          this.Toast.fail(res.data.data.msg)
+        }
+      }, err => {
+        this.Toast.fail(err)
+      }).catch(err => {
+        this.Toast.fail(err)
+      })
+    },
+    toProductDetail (type) {
+      if (type === 1) {
+        this.$router.push({
+          path: '/detail',
+          query: {
+            item: JSON.stringify(this.detail)
+          }
+        })
+      } else if (type === 2) {
+        this.$router.push({
+          path: '/directory',
+          query: {
+            item: JSON.stringify(this.detail)
+          }
+        })
+      } else {
+        this.$router.push({
+          path: '/published',
+          query: {
+            item: JSON.stringify(this.detail)
+          }
+        })
+      }
+    },
+    clickReduce (item) {
+      item.quantity -= 1
+      if (item.quantity === 0) {
+        store.shoppingcarBook.forEach((items, index) => {
+          if (items.id === item.id) {
+            store.shoppingcarBook.splice(index, 1)
+          }
+        })
+      } else {
+        store.shoppingcarBook.forEach(items => {
+          if (items.id === item.id) {
+            items.quantity = item.quantity
+          }
+        })
+      }
+    },
+    clickAdd (item) {
+      item.quantity += 1
+      let exist = false
+      store.shoppingcarBook.forEach(items => {
+        if (items.id === item.id) {
+          items.quantity = item.quantity
+          exist = true
+        }
+      })
+      if (!exist) {
+        store.shoppingcarBook.push(item)
+      }
+    }
+  },
   watch: {}
 }
 </script>

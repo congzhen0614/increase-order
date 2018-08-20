@@ -46,5 +46,12 @@ export default {
   },
   magazineDetail (id) {
     return axios.get(`/qrzd/magazine/qrzditem/detail/${id}/open`)
+  },
+  bookDetail (id) {
+    return axios.get(`/qrzd/book/detail/${id}/open`)
+  },
+  bookComment (params) {
+    let param = qs.stringify(params)
+    return axios.get(`/qrzd/book/comment/open?${param}`)
   }
 }
