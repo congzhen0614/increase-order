@@ -5,7 +5,7 @@
       <p @click="toTypelist"><span>{{ typeContent }}</span><img src="../../../assets/pull-down-icon.png"></p>
     </header>
     <ul class="list-right" v-if="lists.length > 0">
-      <li v-for="(item, index) in lists" :key="index" v-if="index % 2 === 0">
+      <li v-for="(item, index) in lists" :key="index" v-if="index % 2 === 0" @click="toDetail(item)">
         <div class="list-img">
           <img :src="item.logo">
         </div>
@@ -26,7 +26,7 @@
       </li>
     </ul>
     <ul class="list-left" v-if="lists.length > 0">
-      <li v-for="(item, index) in lists" :key="index" v-if="index % 2 === 1">
+      <li v-for="(item, index) in lists" :key="index" v-if="index % 2 === 1" @click="toDetail(item)">
         <div class="list-img">
           <img :src="item.logo">
         </div>
@@ -132,6 +132,14 @@ export default {
       } else {
         store.shoppingcarBook.push(item)
       }
+    },
+    toDetail (item) {
+      this.$router.push({
+        path: '/bookDetail',
+        query: {
+          item: item
+        }
+      })
     }
   },
   watch: {

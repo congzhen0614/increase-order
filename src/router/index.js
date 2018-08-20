@@ -14,7 +14,9 @@ import myOrder from '@/pages/myorder/myorder.vue' // 我的订单
 import aboutUs from '@/pages/aboutus/aboutus.vue' // 关于我们
 import ageList from '@/pages/main/seekList/ageList/ageList.vue' // 年龄列表
 import typeList from '@/pages/main/seekList/typeList/typeList.vue' // 年龄列表
-
+import magaDetail from '@/pages/details/magaDetail/magaDetail.vue' // 杂志详情页
+import bookDetail from '@/pages/details/bookDetail/bookDetail.vue' // 图书详情页
+import spypDetail from '@/pages/details/spypDetail/spypDetail.vue' // 视听详情页
 // 路由返回上一页
 Router.prototype.goBack = function () {
   this.go(-1)
@@ -56,6 +58,18 @@ export default new Router({
       path: '/typeList',
       name: '类别列表',
       component: typeList
+    }, {
+      path: '/magaDetail',
+      name: '杂志详情',
+      component: magaDetail
+    }, {
+      path: '/bookDetail',
+      name: '图书详情',
+      component: bookDetail
+    }, {
+      path: '/spypDetail',
+      name: '视听详情',
+      component: spypDetail
     }
   ]
 })

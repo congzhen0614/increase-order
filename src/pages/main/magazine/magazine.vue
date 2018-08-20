@@ -5,7 +5,7 @@
       <p @click="toTypelist"><span>{{ typeContent }}</span><img src="../../../assets/pull-down-icon.png"></p>
     </header>
     <ul class="magazine-list">
-      <li v-for="(item, index) in lists" :key="index">
+      <li v-for="(item, index) in lists" :key="index" @click="todDetail(item)">
         <div class="picture">
           <img :src="item.logo">
         </div>
@@ -111,6 +111,14 @@ export default {
       } else {
         store.shoppingcarMage.push(item)
       }
+    },
+    todDetail (item) {
+      this.$router.push({
+        path: '/magaDetail',
+        query: {
+          item: item
+        }
+      })
     }
   },
   watch: {
