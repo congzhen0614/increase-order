@@ -1,7 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="(str, index) in listImg" :style="{ backgroundImage: 'url(' + str.url + ')' }" @click.prevent.stop="chooseItem(index)" :key="index"></div>
+      <div class="swiper-slide" v-for="(str, index) in listImg" :style="{ backgroundImage: 'url(' + str + ')' }" @click.prevent.stop="chooseItem(index)" :key="index"></div>
     </div>
     <div class="swiper-pagination swiper-pagination-white"></div>
   </div>
@@ -60,6 +60,7 @@ export default {
   .swiper-container
     width: 100%
     height: 100%
+    background-color #ffffff
     .swiper-wrapper
       width: 100%
       height: 100%

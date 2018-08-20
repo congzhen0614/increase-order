@@ -17,9 +17,9 @@
           </p>
           <p class="units" v-if="item.feeUnit">{{ item.feeUnit }}</p>
           <p class="amount">
-            <img @click="onReduce(item)" v-if="item.quantity > 0" src="../../../assets/minus-icon.png">
+            <img @click.stop="onReduce(item)" v-if="item.quantity > 0" src="../../../assets/minus-icon.png">
             <span v-if="item.quantity > 0">{{ item.quantity }}</span>
-            <img @click="onAdd(item)" src="../../../assets/add-icon.png">
+            <img @click.stop="onAdd(item)" src="../../../assets/add-icon.png">
           </p>
           <p class="price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
         </div>
@@ -116,7 +116,7 @@ export default {
       this.$router.push({
         path: '/magaDetail',
         query: {
-          item: item
+          item: JSON.stringify(item)
         }
       })
     }

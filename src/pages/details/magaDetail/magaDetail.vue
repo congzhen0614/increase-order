@@ -2,61 +2,102 @@
   <div class="maga-detail">
     <v-swiper :listImg="listImg" :style="{height: bannerHeight}"></v-swiper>
     <div class="periodical-head">
-      <p class="periodical-title">名称名称名称</p>
+      <p class="periodical-title">{{ detail.name }}</p>
       <p class="periodical-suitable">
-        <span>半年12期</span>
-        <span>2~6年级适读</span>
+        <span>{{ detail.feeUnitType }} {{ detail.feeUnitNum }} {{ detail.feeUnitName }}</span>
+        <span class="age" v-if="detail.ageNames !== ''">{{ detail.ageNames }}</span>
       </p>
       <p class="transport-costs">运费: <span>免运费</span></p>
       <div class="shoppingCar-quantity">
-        <img src="../../../assets/minus-icon.png" @click.stop="clickReduce()"/>
-        <span>0</span>
-        <img src="../../../assets/add-icon.png" @click.stop="clickAdd()"/>
+        <img src="../../../assets/minus-icon.png" v-if="query.quantity > 0" @click.stop="clickReduce(query)"/>
+        <span v-if="query.quantity > 0">{{ query.quantity }}</span>
+        <img src="../../../assets/add-icon.png" @click.stop="clickAdd(query)"/>
       </div>
       <p class="detail-price">
         <span class="price-red">
-          ￥<span class="big">500</span>.00
+          ￥<span class="big">{{ detail.fee | getInteger }}</span>{{ detail.fee | getFixed1 }}
         </span>
-        <span class="price-black">￥300.00</span>
+        <!--<span class="price-black">￥300.00</span>-->
       </p>
     </div>
-    <div class="periodical-inform">
-      <div class="periodical-inform-text">
-        <img src="../../../assets/gift-icon.png">
-        <span>赠送:益智DIY万变串珠+弹射飞机+笑脸橡益智DIY万变串珠+弹射飞机+笑脸橡益智DIY万变串珠+弹射飞机</span>
-      </div>
-      <img class="periodical-inform-images" src="http://pic.58pic.com/58pic/13/71/06/63J58PIC2FC_1024.jpg"/>
+    <div class="periodical-gift" v-if="detail.giftName">
+      <img src="../../../assets/link-icon.png"/>
+      <p>{{ detail.giftName }}</p>
     </div>
-    <div class="periodical-content">
-      <p>文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内</p>
-      <img src="http://pic.58pic.com/58pic/13/71/22/35T58PICrEk_1024.jpg"/>
+    <div class="periodical-content" v-html="detail.content">
     </div>
+    <v-details-footer></v-details-footer>
   </div>
 </template>
 
 <script>
 import swiper from '@/components/swiper/swiper.vue'
+import detailsFooter from '@/components/detailsFooter/detailsFooter.vue'
+import store from '@/store/store.js'
 export default {
   name: 'maga-detail',
   components: {
-    'v-swiper': swiper
+    'v-swiper': swiper,
+    'v-details-footer': detailsFooter
   },
   data () {
     return {
-      listImg: [{
-        url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534501969084&di=8e1bf71067afe1b9a6f97215fd2217b3&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201305%2F26%2F20130526140022_5fMJe.jpeg'
-      }, {
-        url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534501983893&di=82b250df30bdb0867644e108ba9598f7&imgtype=jpg&src=http%3A%2F%2Fimg0.imgtn.bdimg.com%2Fit%2Fu%3D3564877025%2C796183547%26fm%3D214%26gp%3D0.jpg'
-      }, {
-        url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534501969084&di=60367c942dfbc8cc320f03ff88b52e7d&imgtype=0&src=http%3A%2F%2Fp3.gexing.com%2FG1%2FM00%2FB9%2F56%2FrBACFFaM_VfRWJE0AAlNClgKv_o422.jpg'
-      }],
+      query: JSON.parse(this.$route.query.item),
+      detail: {},
+      listImg: [],
       bannerHeight: window.innerWidth * 0.6 + 'px'
     }
   },
   created () {},
-  mounted () {},
-  computed: {},
-  methods: {},
+  mounted () {
+    console.log(this.query)
+    this.loadMagazineDetail()
+  },
+  methods: {
+    loadMagazineDetail () {
+      this.$axios.magazineDetail(this.query.id).then(res => {
+        if (res.data.code === '0') {
+          this.listImg = res.data.data.qrzdItemImgs
+          this.detail = res.data.data
+        } else {
+          this.Toast.fail(res.data.data.msg)
+        }
+      }, err => {
+        this.Toast.fail(err)
+      }).catch(err => {
+        this.Toast.fail(err)
+      })
+    },
+    clickReduce (item) {
+      item.quantity -= 1
+      if (item.quantity === 0) {
+        store.shoppingcarMage.forEach((items, index) => {
+          if (item.id === items.id) {
+            store.shoppingcarMage.splice(index, 1)
+          }
+        })
+      } else {
+        store.shoppingcarMage.forEach(items => {
+          if (items.id === item.id) {
+            items.quantity = item.quantity
+          }
+        })
+      }
+    },
+    clickAdd (item) {
+      item.quantity += 1
+      let exist = false
+      store.shoppingcarMage.forEach(items => {
+        if (items.id === item.id) {
+          items.quantity = item.quantity
+          exist = true
+        }
+      })
+      if (!exist) {
+        store.shoppingcarMage.push(item)
+      }
+    }
+  },
   watch: {}
 }
 </script>
