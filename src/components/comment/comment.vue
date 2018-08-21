@@ -13,7 +13,7 @@
           </div>
           <p class="comment-username">{{ item.name }}</p>
           <p class="comment-content">{{ item.content }}</p>
-          <div class="comment-images" v-for="img in item.imgs">
+          <div class="comment-images" v-for="img in item.imgs" :key="img">
             <img :src="img"/>
           </div>
           <span class="comment-time">{{ item.createdAt }}</span>
