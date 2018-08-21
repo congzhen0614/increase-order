@@ -20,6 +20,7 @@ import spypDetail from '@/pages/details/spypDetail/spypDetail.vue' // 视听详�
 import detail from '@/pages/details/bookDetail/detail/detail.vue' // 图书详情信息
 import directory from '@/pages/details/bookDetail/directory/directory.vue' // 图书目录信息
 import published from '@/pages/details/bookDetail/published/published.vue' // 图书出版信息
+import album from '@/pages/details/spypDetail/album/album.vue' // 专辑列表
 
 // 路由返回上一页
 Router.prototype.goBack = function () {
@@ -86,6 +87,10 @@ export default new Router({
       path: '/published',
       name: '图书出版信息',
       component: published
+    }, {
+      path: '/album',
+      name: '专辑列表',
+      component: album
     }
   ]
 })

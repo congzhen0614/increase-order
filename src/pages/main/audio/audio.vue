@@ -15,10 +15,11 @@
           <p class="voice-list-title">{{ item.name }}</p>
           <p class="voice-list-descr">{{ item.introductions }}</p>
           <p class="voice-list-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
+          <span class="kada">咔哒故事</span>
           <div class="voice-list-button">
             <span>购买</span>
             <span @click="toShoppingcar(item)">加入购物车</span>
-            <span>列表</span>
+            <span @click="toList(item)">列表</span>
           </div>
         </div>
       </li>
@@ -56,6 +57,14 @@ export default {
       } else {
         store.shoppingcarspyp.push(item)
       }
+    },
+    toList (item) {
+      this.$router.push({
+        path: '/spypDetail',
+        query: {
+          item: JSON.stringify(item)
+        }
+      })
     }
   },
   watch: {}

@@ -53,5 +53,13 @@ export default {
   bookComment (params) {
     let param = qs.stringify(params)
     return axios.get(`/qrzd/book/comment/open?${param}`)
+  },
+  spypaudioalbumList (params) {
+    let param = qs.stringify(params)
+    return axios.get(`/qrzd/spyp/spypaudioalbum/list/album/open?${param}`)
+  },
+  spypaudioList (params) {
+    let param = qs.stringify(params)
+    return axios.get(`/qrzd/spyp/spypaudio/list/open?${param}`)
   }
 }
