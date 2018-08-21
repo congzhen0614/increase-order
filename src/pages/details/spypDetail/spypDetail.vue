@@ -14,9 +14,9 @@
               <p class="header-price">￥<span class="big">{{ query.fee | getInteger }}</span>{{ query.fee | getFixed1 }}</p>
               <p class="header-kada">咔哒故事</p>
               <div class="header-button">
-                <span>购买</span>
-                <span>加入购物车</span>
-                <span>赠品</span>
+                <span @click="onBuy(query)">购买</span>
+                <span @click="toShoppingCar(query)">加入购物车</span>
+                <!--<span>赠品</span>-->
               </div>
             </div>
           </div>
@@ -24,7 +24,7 @@
         <ul>
           <li class="spyp-list" v-for="item in spypList" :key="item.id">
             <div class="spyp-list-left">
-              <img class="logo-icon" :src="item">
+              <img class="logo-icon" src="../../../assets/avatar.jpg">
               <img class="audio-icon" v-if="item.clsName === '音频'" src="../../../assets/audio-icon.png">
               <img class="video-icon" v-if="item.clsName === '视频'" src="../../../assets/video-icon.png">
             </div>
@@ -40,11 +40,14 @@
         </ul>
       </div>
     </div>
+    <img class="to-top" v-if="toTop" @click.stop="clickToTop()" src="../../../assets/toTop-icon.png">
+    <a href="tel:4008808888"><img class="contact-service" src="../../../assets/service_icon.png"></a>
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
+import store from '@/store/store.js'
 export default {
   name: 'spyp-detail',
   data () {
@@ -55,12 +58,26 @@ export default {
       scroller: '',
       scrollHeight: '',
       query: JSON.parse(this.$route.query.item),
-      spypList: []
+      spypList: [],
+      loadMore: false,
+      pages: {
+        total: 0,
+        pageNum: 1,
+        pageSize: 10
+      }
     }
   },
   computed: {
     toTop () {
       return this.scrollHeight > window.innerHeight
+    },
+    params () {
+      let param = {
+        pageNum: this.pages.pageNum,
+        pageSize: this.pages.pageSize,
+        packetId: this.query.id
+      }
+      return param
     }
   },
   mounted () {
@@ -68,9 +85,11 @@ export default {
   },
   methods: {
     loadSpypaudioalbumList () {
-      this.$axios.spypaudioalbumList({packetId: this.query.id}).then(res => {
+      this.$axios.spypaudioalbumList(this.params).then(res => {
         if (res.data.code === '0') {
           this.spypList = res.data.data.list
+          this.pages.total = res.data.data.total
+          this.loadMore = true
           this.$nextTick(() => {
             setTimeout(() => {
               this.initializeScroll()
@@ -98,10 +117,6 @@ export default {
     },
     listenScroll () {
       this.scroller.on('scroll', pos => {
-        if (pos.y >= 100 && this.reload) {
-          this.loadItempackList()
-          this.reload = false
-        }
         this.scrollHeight = -pos.y
       })
     },
@@ -118,6 +133,27 @@ export default {
     },
     onPlay () {
       console.log('play')
+    },
+    clickToTop () {
+      this.scroller.scrollTo(0, 0, 500) // scrollTo(x, y, time)
+    },
+    onBuy (item) {
+      console.log(item)
+    },
+    toShoppingCar (item) {
+      let exist = false
+      if (store.shoppingcarspyp.length > 0) {
+        store.shoppingcarspyp.forEach(obj => {
+          if (item.id === obj.id) {
+            exist = true
+          }
+        })
+        if (!exist) {
+          store.shoppingcarspyp.push(item)
+        }
+      } else {
+        store.shoppingcarspyp.push(item)
+      }
     }
   },
   watch: {
@@ -126,7 +162,7 @@ export default {
         this.loadMore = false
         this.pages.pageNum += 1
         if (parseInt(this.pages.total / this.pages.pageSize) < this.pages.pageNum) return false
-        this.loadItempackList()
+        this.loadSpypaudioalbumList()
       }
     }
   }

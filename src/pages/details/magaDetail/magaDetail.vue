@@ -50,7 +50,6 @@ export default {
   },
   created () {},
   mounted () {
-    console.log(this.query)
     this.loadMagazineDetail()
   },
   methods: {

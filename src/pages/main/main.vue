@@ -102,9 +102,7 @@ export default {
           this.catalogue.tip = res.data.data.tip
           this.pages.total = res.data.data.page.total
           res.data.data.page.list.forEach(item => {
-            item.select = false
-            item.quantity = 0
-            this.lists.push(item)
+            this.setQuantity(item)
           })
           // this.reload = true
           this.loadMore = true
@@ -121,6 +119,39 @@ export default {
       }).catch(err => {
         console.log(err)
       })
+    },
+    setQuantity (item) {
+      let exist = false
+      if (this.navType === 1 && store.shoppingcarMage.length > 0) {
+        store.shoppingcarMage.forEach(items => {
+          if (items.id === item.id) {
+            exist = true
+            item.select = items.select
+            item.quantity = items.quantity
+          }
+        })
+      } else if (this.navType === 2 && store.shoppingcarBook.length > 0) {
+        store.shoppingcarBook.forEach(items => {
+          if (items.id === item.id) {
+            exist = true
+            item.select = items.select
+            item.quantity = items.quantity
+          }
+        })
+      } else if (this.navType === 54 && store.shoppingcarspyp.length > 0) {
+        store.shoppingcarspyp.forEach(items => {
+          if (items.id === item.id) {
+            exist = true
+            item.select = items.select
+            item.quantity = items.quantity
+          }
+        })
+      }
+      if (!exist) {
+        item.select = false
+        item.quantity = 0
+      }
+      this.lists.push(item)
     },
     initializeScroll () {
       if (this.scroller === '') {

@@ -189,7 +189,7 @@ export default {
       })
       this.spypList.forEach(item => {
         if (item.select) {
-          this.accounts += item.quantity * item.fee
+          this.accounts += item.fee
           this.total += item.quantity
         }
         // else {

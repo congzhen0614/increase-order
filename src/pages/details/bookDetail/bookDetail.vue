@@ -65,7 +65,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.query)
     this.loadBookDetail()
     this.loadComment()
   },
