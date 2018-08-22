@@ -11,5 +11,7 @@ export default {
   shoppingcarBook: [],
   shoppingcarspyp: [],
   accounts: 0,
-  total: 0
+  total: 0,
+  remark: '',
+  address: {}
 }

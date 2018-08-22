@@ -21,6 +21,12 @@ import detail from '@/pages/details/bookDetail/detail/detail.vue' // 图书详�
 import directory from '@/pages/details/bookDetail/directory/directory.vue' // 图书目录信息
 import published from '@/pages/details/bookDetail/published/published.vue' // 图书出版信息
 import album from '@/pages/details/spypDetail/album/album.vue' // 专辑列表
+import order from '@/pages/order/order.vue' // 提交订单
+import remarks from '@/pages/order/remarks/remarks.vue' // 订单留言
+import homeAddress from '@/pages/order/address/homeAddress/homeAddress.vue' // 家庭地址
+import schoolAddress from '@/pages/order/address/schoolAddress/schoolAddress.vue' // 学校地址
+// import addHomeAddress from '@/pages/order/address/schoolAddress/addHomeAddress/addHomeAddress.vue' // 添加家庭地址
+// import addSchoolAddress from '@/pages/order/address/schoolAddress/addSchoolAddress/addSchoolAddress.vue' // 添加学校地址
 
 // 路由返回上一页
 Router.prototype.goBack = function () {
@@ -91,6 +97,22 @@ export default new Router({
       path: '/album',
       name: '专辑列表',
       component: album
+    }, {
+      path: '/order',
+      name: '提交订单',
+      component: order
+    }, {
+      path: '/remarks',
+      name: '订单留言',
+      component: remarks
+    }, {
+      path: '/homeAddress',
+      name: '家庭地址',
+      component: homeAddress
+    }, {
+      path: '/schoolAddress',
+      name: '学校地址',
+      component: schoolAddress
     }
   ]
 })

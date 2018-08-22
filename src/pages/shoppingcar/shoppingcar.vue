@@ -88,7 +88,7 @@
       </div>
     </main>
     <div class="shoppingcar" v-if="mageList.length > 0 || bookList.length > 0 || spypList.length > 0">
-      <span class="settle">去结算({{ total }})</span>
+      <span class="settle" @click="toSettle">去结算({{ total }})</span>
       <div class="accounts">
         <p>合计:￥<span class="big">{{ accounts |getInteger }}</span>{{ accounts | getFixed1 }}</p>
       </div>
@@ -201,6 +201,40 @@ export default {
       // this.selectMage = mageCheckedAll
       // this.selectBook = bookCheckedAll
       // this.selectSpyp = spypCheckedAll
+    },
+    toSettle () {
+      let selectMage = []
+      let selectBook = []
+      let selectSpyp = []
+      if (store.shoppingcarMage.length > 0) {
+        store.shoppingcarMage.forEach(item => {
+          if (item.select) {
+            selectMage.push(item)
+          }
+        })
+      }
+      if (store.shoppingcarBook.length > 0) {
+        store.shoppingcarBook.forEach(item => {
+          if (item.select) {
+            selectBook.push(item)
+          }
+        })
+      }
+      if (store.shoppingcarspyp.length > 0) {
+        store.shoppingcarspyp.forEach(item => {
+          if (item.select) {
+            selectSpyp.push(item)
+          }
+        })
+      }
+      this.$router.push({
+        path: '/order',
+        query: {
+          selectMage: JSON.stringify(selectMage),
+          selectBook: JSON.stringify(selectBook),
+          selectSpyp: JSON.stringify(selectSpyp)
+        }
+      })
     }
   },
   watch: {

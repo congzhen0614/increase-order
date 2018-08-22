@@ -17,7 +17,7 @@ module.exports = {
         pathRewrite: {'^/qrzd': ''}
       },
       '/api': {// 正式: http://app.51weixiao.com/app-api/api 测试: http://192.168.0.231:8080/app-api/api
-        target: 'http://app.51weixiao.com/app-api/api',
+        target: 'http://192.168.0.231:8080/app-api/api',
         changeOrigin: true,
         pathRewrite: {'^/api': ''}
       }

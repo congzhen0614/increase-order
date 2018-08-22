@@ -1,128 +1,147 @@
 <template>
   <div class="order-list">
-    <v-address v-if="bookList.length > 0" :address="homeAddress" :type="'home'"></v-address>
-    <v-address v-if="periodicalList.length > 0" :address="schoolAddress" :type="'school'"></v-address>
-    <div class="orders-list" v-if="periodicalList.length > 0">
-      <p class="orders-list-title">刊物</p>
-      <ul>
-        <li class="orders" v-for="(item, index) in periodicalList" :key="index">
-          <div class="orders-img">
-            <img src="../../assets/book.jpg"/>
-          </div>
-          <p class="orders-title">商品名称商品名称商品名称商品商品名称商品名称商品名称商品</p>
-          <p class="orders-quantity">{{ item.quantity }}</p>
-          <p class="orders-price">￥<span class="big">{{ item.price | getInteger }}</span>{{ item.price | getFixed1 }}</p>
-        </li>
-      </ul>
-    </div>
-    <div class="orders-list" v-if="bookList.length > 0">
-      <p class="orders-list-title">图书</p>
-      <ul>
-        <li class="orders" v-for="(item, index) in bookList" :key="index">
-          <div class="orders-img">
-            <img src="../../assets/book.jpg"/>
-          </div>
-          <p class="orders-title">商品名称商品名称商品名称商品商品名称商品名称商品名称商品</p>
-          <p class="orders-quantity">{{ item.quantity }}</p>
-          <p class="orders-price">￥<span class="big">{{ item.price | getInteger }}</span>{{ item.price | getFixed1 }}</p>
-        </li>
-      </ul>
-    </div>
-    <div class="orders-list" v-if="videoList.length > 0">
-      <p class="orders-list-title">电子读物</p>
-      <ul>
-        <li class="orders" v-for="(item, index) in videoList" :key="index">
-          <div class="orders-img">
-            <img src="../../assets/book.jpg"/>
-          </div>
-          <p class="orders-title">商品名称商品名称商品名称商品商品名称商品名称商品名称商品</p>
-          <p class="orders-quantity">{{ item.quantity }}</p>
-          <p class="orders-price">￥<span class="big">{{ item.price | getInteger }}</span>{{ item.price | getFixed1 }}</p>
-        </li>
-      </ul>
-    </div>
-    <div class="order-leave" @click.stop="toRemarks()">
-      <img src="../../assets/link-icon.png"/>
-      <span class="order-leave-right">{{ remarks || '请点击输入留言内容' }}</span>
-      <span>订单留言</span>
-    </div>
-    <div class="order-total">
-      <div class="order-price">
-        商品金额
-        <p>￥<span class="big">100</span>.00</p>
+    <div class="order-address">
+      <div class="order-address-bg"></div>
+      <div class="order-address-content" @click="checkBookAddress">
+        <div class="content-left">
+          <p class="no-address" v-if="JSON.stringify(address) === '{}'">请填写您的商品收货地址</p>
+          <span v-if="JSON.stringify(address) !== '{}'" class="address-name">{{ address.name}}</span>
+          <span  v-if="JSON.stringify(address) !== '{}'" class="address-phone">{{ address.mobile }}</span>
+          <p  v-if="JSON.stringify(address) !== '{}'" class="address-content">{{ address.provinceName }}{{ address.cityName }}{{ address.regionName }}{{ address.address }}</p>
+        </div>
+        <div class="content-right">
+          <img src="../../assets/link-icon.png">
+        </div>
       </div>
-      <div class="order-delivery">
-        运费
-        <p>+<span class="big">10</span>.00</p>
+      <div class="order-address-bg"></div>
+    </div>
+    <!--<div class="order-address">-->
+      <!--<div class="order-address-bg"></div>-->
+      <!--<div class="order-address-content" @click="checkMagaAddress">-->
+        <!--<div class="content-left">-->
+          <!--<p class="no-address">请填写您的杂志收货地址</p>-->
+          <!--<span class="address-name">张无忌</span>-->
+          <!--<span class="address-phone">18768566658</span>-->
+          <!--<p class="address-content">浙江省杭州市下城区文晖街道西湖文化广场D区浙江博物馆6楼666室</p>-->
+        <!--</div>-->
+        <!--<div class="content-right">-->
+          <!--<img src="../../assets/link-icon.png">-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="order-address-bg"></div>-->
+    <!--</div>-->
+    <div class="order-shop">
+      <div class="shop-list" v-if="selectMage.length > 0">
+        <p class="list-head">刊物</p>
+        <ul>
+          <li v-for="item in selectMage" :key="item.id">
+            <div class="list-left">
+              <img :src="item.logo">
+            </div>
+            <div class="list-right">
+              <p class="title">{{ item.name }}</p>
+              <p class="price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
+              <span class="quantity">{{ item.quantity }}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="shop-list" v-if="selectBook.length > 0">
+        <p class="list-head">图书</p>
+        <ul>
+          <li v-for="item in selectBook" :key="item.id">
+            <div class="list-left">
+              <img :src="item.logo">
+            </div>
+            <div class="list-right">
+              <p class="title">{{ item.name }}</p>
+              <p class="price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
+              <span class="quantity">{{ item.quantity }}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="shop-list" v-if="selectSpyp.length > 0">
+        <p class="list-head">电子读物</p>
+        <ul>
+          <li v-for="item in selectSpyp" :key="item.id">
+            <div class="list-left">
+              <img :src="item.logo">
+            </div>
+            <div class="list-right">
+              <p class="title">{{ item.name }}</p>
+              <p class="price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
-    <footer>
-      <span class="submit-order" @click.stop="submitOrder()">提交订单</span>
-      <div class="order-totla">实付款<span>￥<span class="big">300</span>.00</span></div>
-    </footer>
+    <div class="order-message" @click="toRemarks">
+      <img src="../../assets/link-icon.png">
+      <input type="text" placeholder="请点击输入留言内容" v-model="messageContent" disabled/>
+      <p>订单留言</p>
+    </div>
+    <div class="order-price">
+      <div>商品金额<p>￥<span class="big">{{ total | getInteger }}</span>{{ total | getFixed1 }}</p></div>
+      <div>图书运费<p>+<span class="big">0</span>.00</p></div>
+      <div>刊物运费<p>+<span class="big">0</span>.00</p></div>
+    </div>
+    <div class="order-footer">
+      <span class="order-submit">提交订单</span>
+      <p><span>实付款: </span>￥<span class="big">{{ total | getInteger }}</span>{{ total | getFixed1 }}</p>
+    </div>
   </div>
 </template>
 
 <script>
-import address from './orderAddress/orderAddress.vue'
-import shoppingCar from '@/store/shoppingCar.js'
+import store from '@/store/store.js'
 export default {
   name: 'order-list',
-  components: {
-    'v-address': address
-  },
+  components: {},
   data () {
     return {
-      bookList: [],
-      videoList: [],
-      periodicalList: [],
-      homeAddress: {
-        id: 1,
-        name: '张三',
-        phone: 1552200220,
-        address: '浙江省杭州市下城区文晖街道西湖文化广场D区浙江博物馆1楼101室'
-      },
-      schoolAddress: {
-        id: 2,
-        name: '李四',
-        phone: 1552200220,
-        address: '浙江省杭州市下城区文晖街道西湖文化广场D区浙江博物馆1楼101室'
-      },
-      remarks: ''
+      selectMage: JSON.parse(this.$route.query.selectMage),
+      selectBook: JSON.parse(this.$route.query.selectBook),
+      selectSpyp: JSON.parse(this.$route.query.selectSpyp),
+      messageContent: store.remark,
+      address: store.address
     }
   },
-  created () {
-    this.$root.Bus.$on('homeAddress', item => {
-      this.homeAddress = item
-    })
-    this.$root.Bus.$on('schoolAddress', item => {
-      this.schoolAddress = item
-    })
-    this.$root.Bus.$on('remarks', item => {
-      this.remarks = item
-    })
+  computed: {
+    total () {
+      let total = 0
+      if (this.selectMage.length > 0) {
+        this.selectMage.forEach(item => {
+          total += item.quantity * item.fee
+        })
+      }
+      if (this.selectBook.length > 0) {
+        this.selectBook.forEach(item => {
+          total += item.quantity * item.fee
+        })
+      }
+      if (this.selectSpyp.length > 0) {
+        this.selectSpyp.forEach(item => {
+          total += item.quantity * item.fee
+        })
+      }
+      return total
+    }
   },
-  mounted () {
-    this.getShoppingCar()
-  },
-  computed: {},
   methods: {
-    getShoppingCar () {
-      this.bookList = shoppingCar.bookList
-      this.videoList = shoppingCar.videoList
-      this.periodicalList = shoppingCar.periodicalList
+    checkBookAddress () {
+      this.$router.push({
+        path: '/homeAddress'
+      })
+    },
+    checkMagaAddress () {
+      this.$router.push({
+        path: '/schoolAddress'
+      })
     },
     toRemarks () {
       this.$router.push({
         path: '/remarks'
-      })
-    },
-    submitOrder () {
-      // this.$router.push({
-      //   path: '/paySuccess'
-      // })
-      this.$router.push({
-        path: '/payFailed'
       })
     }
   },

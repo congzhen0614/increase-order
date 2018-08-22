@@ -1,116 +1,168 @@
 .order-list
   background-color #F0F0F0
-  padding-top 0.2rem
-  padding-bottom 1.5rem
-  .orders-list
-    margin-top 0.2rem
-    .orders-list-title
-      height 0.88rem
-      line-height 0.88rem
-      font-size 0.3rem
-      color #333333
-      background-color #F8F7F6
-      padding 0 0.3rem
-    > ul
-      background-color #ffffff
-      padding-left 0.3rem
-      .orders
-        border-bottom 1px solid #E6E6E6
-        padding 0.3rem 0
-        padding-right 0.3rem
-        overflow hidden
-        .orders-img
-          width 1.6rem
-          height 1.6rem
-          border 1px solid #D6D6D6
-          border-radius 5px
-          float left
-          margin-right 0.2rem
-          > img
-            display block
-            height 100%
-            margin 0 auto
-        .orders-title
-          margin-top 0.1rem
-          font-size 0.3rem
-          color #333
-        .orders-price
-          font-size 0.2rem
-          color #F8BD48
-          margin-top 0.1rem
-          .big
-            font-size 0.36rem
-            vertical-align baseline
-        .orders-quantity
-          font-size 0.28rem
-          background-color #F8BD48
-          color #ffffff
-          height 0.4rem
-          line-height 0.4rem
-          padding 0 0.16rem
+  padding-top 0.1rem
+  padding-bottom 1.2rem
+  .order-address
+    margin-bottom 0.1rem
+    .order-address-bg
+      height 0.1rem
+      background-color #FFFDE0
+      background-image url("../../assets/address-border.png")
+      background-repeat repeat-x
+      background-size 1rem 0.1rem
+    .order-address-content
+      display table
+      width 100%
+      background-color #FFFDE0
+      .content-left
+        display table-cell
+        padding 0.3rem
+        padding-right 0px
+        > span
+          font-size 0.34rem
+          color #525042
+        .address-phone
           float right
-          border-radius 0.4rem
-          margin-top 0.2rem
-      .orders:last-child
-        border-bottom none
-  .order-leave
-    padding 0.3rem
+        .address-content
+          margin-top 0.1rem
+          font-size 0.26rem
+          line-height 0.34rem
+          color #84836D
+        .no-address
+          font-size 0.3rem
+          color #84836D
+      .content-right
+        display table-cell
+        width 0.8rem
+        > img
+          display block
+          margin 0 auto
+          width 0.16rem
+          height 0.26rem
+  .order-shop
+    .shop-list
+      .list-head
+        padding 0 0.3rem
+        height 0.88rem
+        line-height 0.88rem
+        font-size 0.3rem
+        color #333333
+        background-color #F8F7F6
+      > ul
+        background-color #ffffff
+        padding-left 0.3rem
+        > li
+          border-bottom 1px solid #E6E6E6
+          padding 0.3rem
+          overflow hidden
+          padding-left 0px
+          .list-left
+            float left
+            width 1.6rem
+            height 1.6rem
+            border 1px solid #D6D6D6
+            border-radius 0.2rem
+            margin-right 0.2rem
+            overflow hidden
+            > img
+              display block
+              height 100%
+              margin 0 auto
+          .list-right
+            width 100%
+            .title
+              margin-bottom 0.2rem
+              font-size 0.3rem
+              font-weight 600
+              color #333333
+              text-overflow ellipsis
+              white-space nowrap
+              overflow hidden
+            .price
+              font-size 0.2rem
+              color #F8BD48
+              .big
+                font-size 0.34rem
+                vertical-align baseline
+            .quantity
+              display block
+              height 0.4rem
+              line-height 0.4rem
+              padding 0 0.2rem
+              background-color #F8BD48
+              border-radius 0.4rem
+              font-size 0.28rem
+              color #ffffff
+              float right
+        > li:last-child
+          border none
+  .order-message
     background-color #ffffff
-    margin-top 0.2rem
+    margin-top 0.1rem
     font-size 0.3rem
-    color #523F1A
+    padding 0.3rem
+    overflow hidden
     > img
-      float right
       width 0.16rem
       height 0.26rem
-    .order-leave-right
+      margin-left 0.3rem
+      margin-top 0.1rem
       float right
-      color #C7C7CC
-      margin-right 0.3rem
-    > span
+    > input
+      background-color #ffffff
       display block
-      line-height 0.25rem
-  .order-total
-    margin-top 0.2rem
-    padding 0.1rem 0.3rem
+      width 70%
+      float right
+      font-size 0.3rem
+      color #C7C7CC
+      text-align right
+      text-overflow ellipsis
+      white-space nowrap
+      overflow hidden
+    > p
+      color #523F1A
+  .order-price
+    padding 0.3rem
+    margin-top 0.1rem
     background-color #ffffff
     > div
-      clear both
-      height 0.54rem
-      line-height 0.54rem
+      padding  0.1rem 0
       font-size 0.3rem
       color #9A968D
       > p
-        float right
-        color #6E5627
         font-size 0.2rem
+        color #6E5627
+        float right
         .big
           font-size 0.34rem
           vertical-align baseline
-  footer
+  .order-footer
     position fixed
-    width 100%
     height 1rem
-    left 0
+    width 100%
     bottom 0
+    left 0
     background-color #ffffff
     box-shadow 0px -2px 5px 0px rgba(0, 0, 0, 0.1)
-    .submit-order
-      display block
+    .order-submit
       float right
+      display block
       width 2.5rem
       height 1rem
       line-height 1rem
       text-align center
       font-size 0.34rem
-      color #ffffff
+      color #FFFFFF
       background linear-gradient(-135deg, rgba(254, 122, 86, 1), rgba(255, 80, 80, 1))
-    .order-totla
-      padding 0.24rem 0.3rem
+    > p
       font-size 0.2rem
-      color #6E5627
-      > span
-        color #F8BD48
-        .big
-          font-size 0.36rem
-          vertical-align baseline
+      color #F8BD48
+      margin-top 0.2rem
+      margin-left 0.3rem
+      > span:first-child
+        color #6E5627
+        vertical-align baseline
+      .big
+        font-size 0.48rem
+        vertical-align baseline
+

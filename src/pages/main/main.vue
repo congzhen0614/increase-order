@@ -138,18 +138,15 @@ export default {
             item.quantity = items.quantity
           }
         })
-      } else if (this.navType === 54 && store.shoppingcarspyp.length > 0) {
-        store.shoppingcarspyp.forEach(items => {
-          if (items.id === item.id) {
-            exist = true
-            item.select = items.select
-            item.quantity = items.quantity
-          }
-        })
       }
       if (!exist) {
-        item.select = false
-        item.quantity = 0
+        if (this.navType === 54) {
+          item.select = false
+          item.quantity = 1
+        } else {
+          item.select = false
+          item.quantity = 0
+        }
       }
       this.lists.push(item)
     },

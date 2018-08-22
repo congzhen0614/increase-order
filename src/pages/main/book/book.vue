@@ -39,9 +39,9 @@
             <span class="original-price" v-if="item.originalFee">￥{{ item.originalFee | getFixed2 }}</span>
           </p>
           <div class="list-number">
-            <img @click="onReduce(item)" v-if="item.quantity > 0" src="../../../assets/minus-icon.png">
+            <img @click.stop="onReduce(item)" v-if="item.quantity > 0" src="../../../assets/minus-icon.png">
             <span v-if="item.quantity > 0">{{ item.quantity }}</span>
-            <img @click="onAdd(item)" src="../../../assets/add-icon.png">
+            <img @click.stop="onAdd(item)" src="../../../assets/add-icon.png">
           </div>
         </div>
       </li>
