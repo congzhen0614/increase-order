@@ -68,19 +68,31 @@ export default {
   childList () { // 孩子列表
     return axios.get('/qrzd/sys/child/list/open')
   },
-  addressUpdate (params) {
+  addressUpdate (params) { // 添加修改地址
     return axios.post('/qrzd/sys/address/update/open', params)
   },
-  provinceList () {
-    return axios.get('/qrzd/sys/area/list/province')
-  },
-  citiesList (params) {
-    return axios.post('/qrzd/sys/area/list/citybyid', params)
-  },
-  regionList (params) {
-    return axios.post('/qrzd/sys/area/list/regionbyid', params)
-  },
-  accountListarea (params) {
+  accountListarea (params) { // 添加修改孩子
     return axios.post('/qrzd/agent/account/listarea/open', params)
+  },
+  schoolList (params) { // 学校列表
+    return axios.post('/qrzd/sys/school/list/open', params)
+  },
+  gradeList () { // 年级列表
+    return axios.get('/qrzd/sys/grade/list/open')
+  },
+  schclassList () {
+    return axios.get('/qrzd/sys/schclass/list/open')
+  },
+  childUpdate (params) {
+    return axios.post('/qrzd/sys/child/update/open', params)
+  },
+  tradeConfirm (params) {
+    return axios.post('/qrzd/trade/confirm/open', params)
+  },
+  getWapOrderInfoByAliPay (params) {
+    return axios.post('/qrzd/alipay/wap/notify/open', params)
+  },
+  getOfficialAccountPrepayInfo (params) {
+    return axios.post('/qrzd/wxpay/officialaccount/prepay/open', params)
   }
 }

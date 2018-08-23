@@ -27,6 +27,7 @@ import homeAddress from '@/pages/address/homeAddress/homeAddress.vue' // 家庭�
 import schoolAddress from '@/pages/address/schoolAddress/schoolAddress.vue' // 学校地址
 import addHomeAddress from '@/pages/address/homeAddress/addHomeAddress/addHomeAddress.vue' // 添加家庭地址
 import addSchoolAddress from '@/pages/address/schoolAddress/addSchoolAddress/addSchoolAddress.vue' // 添加学校地址
+import pay from '@/pages/pay/pay.vue' // 支付
 
 // 路由返回上一页
 Router.prototype.goBack = function () {
@@ -121,6 +122,10 @@ export default new Router({
       path: '/addSchoolAddress',
       name: 'addSchoolAddress',
       component: addSchoolAddress
+    }, {
+      path: '/pay',
+      name: '支付页面',
+      component: pay
     }
   ]
 })

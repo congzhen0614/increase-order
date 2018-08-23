@@ -66,12 +66,13 @@ export default {
     }
   },
   mounted () {
+    store.qrzdItemPackId = this.$route.query.id
     this.loadItempackList()
   },
   computed: {
     params () {
       let param = {
-        itemPackId: 27,
+        itemPackId: this.$route.query.id,
         pageNum: this.pages.pageNum,
         pageSize: this.pages.pageSize,
         cls: this.navType,
@@ -96,7 +97,8 @@ export default {
     loadItempackList () {
       this.$axios.itempackList(this.params).then(res => {
         if (res.data.code === '0') {
-          localStorage.setItem('id', res.data.data.id)
+          store.id = res.data.data.id
+          store.sendType = res.data.data.sendType
           this.catalogue.title = res.data.data.title
           this.catalogue.linkman = res.data.data.linkman
           this.catalogue.linkmobile = res.data.data.linkmobile

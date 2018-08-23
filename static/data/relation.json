@@ -1,0 +1,24 @@
+{
+  "relationList": [{
+    "text": "爸爸",
+    "value": 0
+  }, {
+    "text": "妈妈",
+    "value": 1
+  }, {
+    "text": "爷爷",
+    "value": 2
+  }, {
+    "text": "奶奶",
+    "value": 3
+  }, {
+    "text": "外公",
+    "value": 4
+  }, {
+    "text": "外婆",
+    "value": 5
+  }, {
+    "text": "其他",
+    "value": 6
+  }]
+}

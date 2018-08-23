@@ -25,6 +25,7 @@
 
 <script>
 import Picker from 'better-picker'
+import store from '@/store/store.js'
 export default {
   name: '',
   data () {
@@ -73,16 +74,11 @@ export default {
   created () {
     this.loadAccountListarea()
   },
-  mounted () {
-  },
   methods: {
     loadAccountListarea () {
-      this.$axios.accountListarea({id: localStorage.getItem('id')}).then(res => {
+      this.$axios.accountListarea({id: store.id}).then(res => {
         if (res.data.code === '0') {
           this.dynamicCities = res.data.data.area
-          this.$nextTick(() => {
-            this.setPicker()
-          })
         } else {
           console.log(res.data.data.msg)
         }
@@ -92,10 +88,10 @@ export default {
         console.log(err)
       })
     },
-    setPicker () {
+    onInputClick () {
       this.picker = new Picker({
         data: this.dynamicCities,
-        selectedIndex: [0, 0, 0],
+        selectedIndex: [0, this.cityIndex, 0],
         title: '请选择地区'
       })
       this.picker.on('picker.select', (selectedVal, selectedIndex) => {
@@ -110,8 +106,6 @@ export default {
       this.picker.on('picker.change', (index) => {
         this.cityIndex = index
       })
-    },
-    onInputClick () {
       this.picker.show()
     },
     onSubmit () {

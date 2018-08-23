@@ -13,7 +13,7 @@
           <img v-if="sex===0" class="school-address-sex" src="../../../assets/boy-icon.png"/>
           <img v-if="sex===1" class="school-address-sex" src="../../../assets/girl-icon.png"/>
         </p>
-        <p class="school-address-content">{{ item.address }}</p>
+        <p class="school-address-content">{{ item.provinceName }}{{ item.cityName }}{{ item.regionName }}{{ item.schoolName }}{{ item.gradeName }}{{ item.defaultClassName }}</p>
       </li>
     </ul>
     <div class="add-adress" @click.stop="addHomeAddress()">添加</div>
@@ -40,7 +40,7 @@ export default {
     loadChildList () {
       this.$axios.childList().then(res => {
         if (res.data.code === '0') {
-          console.log(res.data.data)
+          this.addressList = res.data.data
         } else {
           this.Toast.fail({
             title: res.data.data.msg

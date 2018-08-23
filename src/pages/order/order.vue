@@ -1,13 +1,13 @@
 <template>
   <div class="order-list">
-    <div class="order-address" v-if="selectBook.length > 0">
+    <div class="order-address" v-if="selectBook.length > 0 || sendType === 1">
       <div class="order-address-bg"></div>
       <div class="order-address-content" @click="checkBookAddress">
         <div class="content-left">
-          <p class="no-address" v-if="JSON.stringify(address) === '{}'">请填写您的商品收货地址</p>
-          <span v-if="JSON.stringify(address) !== '{}'" class="address-name">{{ address.name}}</span>
-          <span  v-if="JSON.stringify(address) !== '{}'" class="address-phone">{{ address.mobile }}</span>
-          <p  v-if="JSON.stringify(address) !== '{}'" class="address-content">{{ address.provinceName }}{{ address.cityName }}{{ address.regionName }}{{ address.address }}</p>
+          <p class="no-address" v-if="address === ''">请填写您的商品收货地址</p>
+          <span v-if="address !== ''" class="address-name">{{ address.name}}</span>
+          <span  v-if="address !== ''" class="address-phone">{{ address.mobile }}</span>
+          <p  v-if="address !== ''" class="address-content">{{ address.provinceName }}{{ address.cityName }}{{ address.regionName }}{{ address.address }}</p>
         </div>
         <div class="content-right">
           <img src="../../assets/link-icon.png">
@@ -15,14 +15,14 @@
       </div>
       <div class="order-address-bg"></div>
     </div>
-    <div class="order-address" v-if="selectMage.length > 0">
+    <div class="order-address" v-if="selectMage.length > 0 && sendType === 0">
       <div class="order-address-bg"></div>
       <div class="order-address-content" @click="checkMagaAddress">
         <div class="content-left">
-          <p class="no-address" v-if="JSON.stringify(child) === '{}'">请填写您的杂志收货地址</p>
-          <span class="address-name" v-if="JSON.stringify(child) !== '{}'">{{ child.name }}</span>
-          <span class="address-phone" v-if="JSON.stringify(child) !== '{}'">{{ chils.mobile }}</span>
-          <p class="address-content" v-if="JSON.stringify(child) !== '{}'">{{ address.provinceName }}{{ address.cityName }}{{ address.regionName }}{{ address.address }}</p>
+          <p class="no-address" v-if="child === ''">请填写您的杂志收货地址</p>
+          <span class="address-name" v-if="child !== ''">{{ child.name }}</span>
+          <span class="address-phone" v-if="child !== ''">{{ child.mobile }}</span>
+          <p class="address-content" v-if="child !== ''">{{ child.provinceName }}{{ child.cityName }}{{ child.regionName }}{{ child.schoolName }}{{ child.gradeName }}{{ child.defaultClassName }}</p>
         </div>
         <div class="content-right">
           <img src="../../assets/link-icon.png">
@@ -78,7 +78,7 @@
     </div>
     <div class="order-message" @click="toRemarks">
       <img src="../../assets/link-icon.png">
-      <input type="text" placeholder="请点击输入留言内容" v-model="messageContent" disabled/>
+      <input type="text" placeholder="请点击输入留言内容" v-model="remark" disabled/>
       <p>订单留言</p>
     </div>
     <div class="order-price">
@@ -87,7 +87,7 @@
       <div>刊物运费<p>+<span class="big">0</span>.00</p></div>
     </div>
     <div class="order-footer">
-      <span class="order-submit">提交订单</span>
+      <span class="order-submit" @click="onSubmit">提交订单</span>
       <p><span>实付款: </span>￥<span class="big">{{ total | getInteger }}</span>{{ total | getFixed1 }}</p>
     </div>
   </div>
@@ -97,15 +97,16 @@
 import store from '@/store/store.js'
 export default {
   name: 'order-list',
-  components: {},
   data () {
     return {
       selectMage: JSON.parse(this.$route.query.selectMage),
       selectBook: JSON.parse(this.$route.query.selectBook),
       selectSpyp: JSON.parse(this.$route.query.selectSpyp),
-      messageContent: store.remark,
+      sendType: store.sendType,
       address: store.address,
-      child: store.child
+      child: store.child,
+      remark: store.remark,
+      items: []
     }
   },
   computed: {
@@ -127,9 +128,52 @@ export default {
         })
       }
       return total
+    },
+    params () {
+      let param = {
+        uid: JSON.parse(localStorage.getItem('user')).id,
+        childId: store.child.id ? store.child.id : '',
+        addressId: store.address.id ? store.address.id : '',
+        qrzdItemPackId: store.qrzdItemPackId,
+        remark: store.remark,
+        items: this.items
+      }
+      return param
     }
   },
+  mounted () {
+    this.setItems()
+  },
   methods: {
+    setItems () {
+      if (this.selectMage.length > 0) {
+        this.selectMage.forEach(item => {
+          this.items.push({
+            cls: 1,
+            itemId: item.id,
+            quantity: item.quantity
+          })
+        })
+      }
+      if (this.selectBook.length > 0) {
+        this.selectBook.forEach(item => {
+          this.items.push({
+            cls: 2,
+            itemId: item.id,
+            quantity: item.quantity
+          })
+        })
+      }
+      if (this.selectSpyp.length > 0) {
+        this.selectSpyp.forEach(item => {
+          this.items.push({
+            cls: 54,
+            itemId: item.id,
+            quantity: item.quantity
+          })
+        })
+      }
+    },
     checkBookAddress () {
       this.$router.push({
         path: '/homeAddress'
@@ -143,6 +187,19 @@ export default {
     toRemarks () {
       this.$router.push({
         path: '/remarks'
+      })
+    },
+    onSubmit () {
+      this.$axios.tradeConfirm(this.params).then(res => {
+        if (res.data.code === '0') {
+          console.log(this.total)
+        } else {
+          console.log(res.data.msg)
+        }
+      }, err => {
+        console.log(err)
+      }).catch(err => {
+        console.log(err)
       })
     }
   },
