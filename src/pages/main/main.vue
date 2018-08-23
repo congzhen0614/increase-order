@@ -71,7 +71,7 @@ export default {
   computed: {
     params () {
       let param = {
-        itemPackId: 22,
+        itemPackId: 27,
         pageNum: this.pages.pageNum,
         pageSize: this.pages.pageSize,
         cls: this.navType,
@@ -96,6 +96,7 @@ export default {
     loadItempackList () {
       this.$axios.itempackList(this.params).then(res => {
         if (res.data.code === '0') {
+          localStorage.setItem('id', res.data.data.id)
           this.catalogue.title = res.data.data.title
           this.catalogue.linkman = res.data.data.linkman
           this.catalogue.linkmobile = res.data.data.linkmobile

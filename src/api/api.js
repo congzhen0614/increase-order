@@ -64,5 +64,23 @@ export default {
   },
   addressList () { // 地址列表
     return axios.get('/qrzd/sys/address/list/open')
+  },
+  childList () { // 孩子列表
+    return axios.get('/qrzd/sys/child/list/open')
+  },
+  addressUpdate (params) {
+    return axios.post('/qrzd/sys/address/update/open', params)
+  },
+  provinceList () {
+    return axios.get('/qrzd/sys/area/list/province')
+  },
+  citiesList (params) {
+    return axios.post('/qrzd/sys/area/list/citybyid', params)
+  },
+  regionList (params) {
+    return axios.post('/qrzd/sys/area/list/regionbyid', params)
+  },
+  accountListarea (params) {
+    return axios.post('/qrzd/agent/account/listarea/open', params)
   }
 }

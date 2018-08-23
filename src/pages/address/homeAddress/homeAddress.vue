@@ -1,13 +1,13 @@
 <template>
   <div class="home-address">
     <div class="no-address-list" v-if="addressList.length===0">
-      <img src="../../../../assets/no-content-icon.png"/>
+      <img src="../../../assets/no-content-icon.png"/>
       <p>暂无内容</p>
     </div>
     <ul class="address-list" v-if="addressList.length>0">
       <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)">
         <div class="address-list-right">
-          <img src="../../../../assets/link-icon.png"/>
+          <img src="../../../assets/link-icon.png"/>
         </div>
         <div class="address-list-left">
           <div class="address-info">
@@ -73,5 +73,5 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-    @import './homeAddress.styl'
+    @import 'homeAddress.styl'
 </style>

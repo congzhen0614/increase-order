@@ -1,6 +1,6 @@
 <template>
   <div class="order-list">
-    <div class="order-address">
+    <div class="order-address" v-if="selectBook.length > 0">
       <div class="order-address-bg"></div>
       <div class="order-address-content" @click="checkBookAddress">
         <div class="content-left">
@@ -15,21 +15,21 @@
       </div>
       <div class="order-address-bg"></div>
     </div>
-    <!--<div class="order-address">-->
-      <!--<div class="order-address-bg"></div>-->
-      <!--<div class="order-address-content" @click="checkMagaAddress">-->
-        <!--<div class="content-left">-->
-          <!--<p class="no-address">请填写您的杂志收货地址</p>-->
-          <!--<span class="address-name">张无忌</span>-->
-          <!--<span class="address-phone">18768566658</span>-->
-          <!--<p class="address-content">浙江省杭州市下城区文晖街道西湖文化广场D区浙江博物馆6楼666室</p>-->
-        <!--</div>-->
-        <!--<div class="content-right">-->
-          <!--<img src="../../assets/link-icon.png">-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<div class="order-address-bg"></div>-->
-    <!--</div>-->
+    <div class="order-address" v-if="selectMage.length > 0">
+      <div class="order-address-bg"></div>
+      <div class="order-address-content" @click="checkMagaAddress">
+        <div class="content-left">
+          <p class="no-address" v-if="JSON.stringify(child) === '{}'">请填写您的杂志收货地址</p>
+          <span class="address-name" v-if="JSON.stringify(child) !== '{}'">{{ child.name }}</span>
+          <span class="address-phone" v-if="JSON.stringify(child) !== '{}'">{{ chils.mobile }}</span>
+          <p class="address-content" v-if="JSON.stringify(child) !== '{}'">{{ address.provinceName }}{{ address.cityName }}{{ address.regionName }}{{ address.address }}</p>
+        </div>
+        <div class="content-right">
+          <img src="../../assets/link-icon.png">
+        </div>
+      </div>
+      <div class="order-address-bg"></div>
+    </div>
     <div class="order-shop">
       <div class="shop-list" v-if="selectMage.length > 0">
         <p class="list-head">刊物</p>
@@ -104,7 +104,8 @@ export default {
       selectBook: JSON.parse(this.$route.query.selectBook),
       selectSpyp: JSON.parse(this.$route.query.selectSpyp),
       messageContent: store.remark,
-      address: store.address
+      address: store.address,
+      child: store.child
     }
   },
   computed: {
