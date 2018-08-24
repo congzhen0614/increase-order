@@ -8,6 +8,7 @@ import Router from 'vue-router'
 
 import login from '@/pages/login/login.vue' // 登录
 import register from '@/pages/login/register/register.vue' // 手机号登录
+import forgetPsw from '@/pages/login/forgetPsw/forgetPsw.vue' // 忘记密码
 import main from '@/pages/main/main.vue' // 首页
 import shoppingCar from '@/pages/shoppingcar/shoppingcar.vue' // 购物车
 import myOrder from '@/pages/myorder/myorder.vue' // 我的订单
@@ -46,6 +47,10 @@ export default new Router({
       path: '/register',
       name: '手机号登录',
       component: register
+    }, {
+      path: '/forgetPsw',
+      name: '忘记密码',
+      component: forgetPsw
     }, {
       path: '/',
       name: '首页',

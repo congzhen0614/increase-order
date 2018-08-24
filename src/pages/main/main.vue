@@ -99,6 +99,10 @@ export default {
         if (res.data.code === '0') {
           store.id = res.data.data.id
           store.sendType = res.data.data.sendType
+          store.postageSum = res.data.data.postageSum
+          store.postage = res.data.data.postage
+          store.postageSumBook = res.data.data.postageSumBook
+          store.postageBook = res.data.data.postageBook
           this.catalogue.title = res.data.data.title
           this.catalogue.linkman = res.data.data.linkman
           this.catalogue.linkmobile = res.data.data.linkmobile
@@ -107,7 +111,7 @@ export default {
           res.data.data.page.list.forEach(item => {
             this.setQuantity(item)
           })
-          // this.reload = true
+          this.reload = true
           this.loadMore = true
           this.$nextTick(() => {
             setTimeout(() => {

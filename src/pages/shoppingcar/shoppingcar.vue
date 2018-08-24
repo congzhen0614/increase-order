@@ -164,43 +164,34 @@ export default {
       this.selectVerdict()
     },
     selectVerdict () {
-      // let mageCheckedAll = true
-      // let bookCheckedAll = true
-      // let spypCheckedAll = true
       this.accounts = 0
       this.total = 0
-      this.mageList.forEach(item => {
-        if (item.select) {
-          this.accounts += item.quantity * item.fee
-          this.total += item.quantity
-        }
-        // else {
-        //   mageCheckedAll = false
-        // }
-      })
-      this.bookList.forEach(item => {
-        if (item.select) {
-          this.accounts += item.quantity * item.fee
-          this.total += item.quantity
-        }
-        // else {
-        //   bookCheckedAll = false
-        // }
-      })
-      this.spypList.forEach(item => {
-        if (item.select) {
-          this.accounts += item.fee
-          this.total += item.quantity
-        }
-        // else {
-        //   spypCheckedAll = false
-        // }
-      })
+      if (this.mageList.length > 0) {
+        this.mageList.forEach(item => {
+          if (item.select) {
+            this.accounts += item.quantity * item.fee
+            this.total += item.quantity
+          }
+        })
+      }
+      if (this.bookList.length > 0) {
+        this.bookList.forEach(item => {
+          if (item.select) {
+            this.accounts += item.quantity * item.fee
+            this.total += item.quantity
+          }
+        })
+      }
+      if (this.spypList.length > 0) {
+        this.spypList.forEach(item => {
+          if (item.select) {
+            this.accounts += item.fee
+            this.total += item.quantity
+          }
+        })
+      }
       store.accounts = this.accounts
       store.total = this.total
-      // this.selectMage = mageCheckedAll
-      // this.selectBook = bookCheckedAll
-      // this.selectSpyp = spypCheckedAll
     },
     toSettle () {
       let selectMage = []

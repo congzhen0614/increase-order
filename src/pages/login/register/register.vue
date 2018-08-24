@@ -14,7 +14,7 @@
       </div>
       <span class="register-button" @click="onLogin">登录</span>
       <span class="user-registration">用户注册</span>
-      <span class="forget-password">忘记密码</span>
+      <span class="forget-password" @click="onForgetPsw">忘记密码</span>
     </div>
     <div class="weixin-login" @click="onWeixinLogin">
       <img src="../../../assets/weixin-icon.png">
@@ -84,6 +84,11 @@ export default {
         this.Toast.fail(err)
       }).catch(err => {
         this.Toast.fail(err)
+      })
+    },
+    onForgetPsw () {
+      this.$router.push({
+        path: '/forgetPsw'
       })
     },
     onWeixinLogin () {

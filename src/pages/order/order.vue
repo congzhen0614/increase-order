@@ -83,8 +83,8 @@
     </div>
     <div class="order-price">
       <div>商品金额<p>￥<span class="big">{{ total | getInteger }}</span>{{ total | getFixed1 }}</p></div>
-      <div>图书运费<p>+<span class="big">0</span>.00</p></div>
-      <div>刊物运费<p>+<span class="big">0</span>.00</p></div>
+      <div v-if="selectBook.length > 0">图书运费<p>+<span class="big">{{ postage | getInteger }}</span>{{ postage | getFixed1 }}</p></div>
+      <div v-if="selectMage.length > 0">刊物运费<p>+<span class="big">{{ postageBook | getInteger }}</span>{{ postageBook | getFixed1 }}</p></div>
     </div>
     <div class="order-footer">
       <span class="order-submit" @click="onSubmit">提交订单</span>
@@ -110,6 +110,36 @@ export default {
     }
   },
   computed: {
+    postage () {
+      let total = 0
+      if (this.selectMage.length > 0) {
+        this.selectMage.forEach(item => {
+          total += item.quantity * item.fee
+        })
+        if (total >= store.postageSum) {
+          return 0
+        } else {
+          return store.postage
+        }
+      } else {
+        return 0
+      }
+    },
+    postageBook () {
+      let total = 0
+      if (this.selectBook.length > 0) {
+        this.selectBook.forEach(item => {
+          total += item.quantity * item.fee
+        })
+        if (total >= store.postageSumBook) {
+          return 0
+        } else {
+          return store.postageBook
+        }
+      } else {
+        return 0
+      }
+    },
     total () {
       let total = 0
       if (this.selectMage.length > 0) {
@@ -127,7 +157,21 @@ export default {
           total += item.quantity * item.fee
         })
       }
-      return total
+      return total + this.postage + this.postageBook
+    },
+    cls () {
+      if (this.selectMage.length > 0 && this.selectBook.length === 0 && this.selectSpyp.length === 0) {
+        return 1
+      }
+      if (this.selectMage.length === 0 && this.selectBook.length > 0 && this.selectSpyp.length === 0) {
+        return 2
+      }
+      if (this.selectMage.length === 0 && this.selectBook.length === 0 && this.selectMage.length > 0) {
+        return 54
+      }
+      if ((this.selectMage.length > 0 && this.selectBook.length > 0) || (this.selectMage.length > 0 && this.selectBook.selectMage > 0) || (this.selectBook.length > 0 || this.selectMage.length > 0)) {
+        return 55
+      }
     },
     params () {
       let param = {
@@ -192,7 +236,14 @@ export default {
     onSubmit () {
       this.$axios.tradeConfirm(this.params).then(res => {
         if (res.data.code === '0') {
-          console.log(this.total)
+          this.$router.push({
+            path: '/pay',
+            query: {
+              no: res.data.data.no,
+              total: this.total,
+              cls: this.cls
+            }
+          })
         } else {
           console.log(res.data.msg)
         }

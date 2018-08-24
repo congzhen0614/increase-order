@@ -27,7 +27,11 @@ export default {
   },
   computed: {},
   created () {},
-  mounted () {},
+  mounted () {
+    if (this.isWeixin) {
+      this.weixinPay()
+    }
+  },
   methods: {
     onSubmit () {
       if (this.isAlipay) {
@@ -41,19 +45,17 @@ export default {
       let protocol = window.location.protocol // 协议
       let host = window.location.host
       let returnUrl = `${protocol}//${host}/result?href=${href}&success=true`
-      this.Toast.loading({
-        title: '提交中...'
-      })
       let _data = {
         cls: this.$route.query.cls,
-        return_url: returnUrl,
-        outtradeno: this.$route.query.outtradeno
+        no: this.$route.query.no,
+        returnUrl: returnUrl
       }
       this.$axios.getWapOrderInfoByAliPay(_data).then((res) => {
-        this.$refs.form.innerHTML = res.data
-        if (document.forms && document.forms.length) {
-          document.forms[0].submit()
-        }
+        console.log(res)
+        // this.$refs.form.innerHTML = res.data
+        // if (document.forms && document.forms.length) {
+        //   document.forms[0].submit()
+        // }
       }, err => {
         console.log(err)
       })
@@ -61,7 +63,7 @@ export default {
     weixinPay () {
       let _data = {
         cls: this.$route.query.cls,
-        outtradeno: this.$route.query.outtradeno,
+        no: this.$route.query.no,
         ip: window.returnCitySN.cip,
         openid: localStorage.getItem('wxOpenId')
       }

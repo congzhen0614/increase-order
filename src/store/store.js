@@ -17,5 +17,10 @@ export default {
   total: 0, // 购物车选中数量
   remark: '', // 订单留言
   address: '', // 订单选中地址
-  child: '' // 订单选中孩子
+  child: '', // 订单选中孩子
+  postageSum: '', // 杂志未满多少金额
+  postage: '', // 杂志需要多少邮费
+  postageSumBook: '', // 图书未满多少金额
+  postageBook: '' // 图书需要多少邮费
+
 }

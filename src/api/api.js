@@ -94,5 +94,9 @@ export default {
   },
   getOfficialAccountPrepayInfo (params) {
     return axios.post('/qrzd/wxpay/officialaccount/prepay/open', params)
+  },
+  userGetPass (params) {
+    let param = qs.stringify(params)
+    return axios.post(`/api/user/get_pass?${param}`)
   }
 }
