@@ -7,8 +7,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import login from '@/pages/login/login.vue' // 登录
-import register from '@/pages/login/register/register.vue' // 手机号登录
+import mobileLogin from '@/pages/login/mobileLogin/mobileLogin.vue' // 手机号登录
 import forgetPsw from '@/pages/login/forgetPsw/forgetPsw.vue' // 忘记密码
+import newPassword from '@/pages/login/forgetPsw/newPassword/newPassword.vue' // 输入密码页面
 import main from '@/pages/main/main.vue' // 首页
 import shoppingCar from '@/pages/shoppingcar/shoppingcar.vue' // 购物车
 import myOrder from '@/pages/myorder/myorder.vue' // 我的订单
@@ -44,13 +45,17 @@ export default new Router({
       name: '登录',
       component: login
     }, {
-      path: '/register',
+      path: '/mobileLogin',
       name: '手机号登录',
-      component: register
+      component: mobileLogin
     }, {
       path: '/forgetPsw',
       name: '忘记密码',
       component: forgetPsw
+    }, {
+      path: '/newPassword',
+      name: '输入新密码',
+      component: newPassword
     }, {
       path: '/',
       name: '首页',

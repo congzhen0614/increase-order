@@ -82,7 +82,7 @@ export default {
   methods: {
     onPhoneLogin () {
       this.$router.push({
-        path: '/register'
+        path: '/mobileLogin'
       })
     },
     onWeixinLogin () {

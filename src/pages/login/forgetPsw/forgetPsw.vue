@@ -1,5 +1,5 @@
 <template>
-  <div class="forget-password">
+  <div class="forget-password-page">
     <div class="mobile-number">
       <img class="phone-icon" src="../../../assets/phone-icon.png"/>
       <input type="text" placeholder="请输入注册手机号码" v-model="mobile">
@@ -7,34 +7,54 @@
     </div>
     <div class="security-code">
       <img class="security-icon" src="../../../assets/security-icon.png"/>
-      <input type="text" placeholder="请输入验证码">
-      <span class="get-code" :class="{'getcode-color': canGetCode}" @click="onGetCode">点击获取验证码</span>
+      <input type="number" v-model="code" placeholder="请输入验证码">
+      <span class="get-code" :class="{'getcode-color': mobileFlag}" @click="onGetCode">{{ '点击获取验证码' }}</span>
     </div>
-    <div class="onSubmit" :class="{'submit-background': canSubmit}">提交</div>
+    <div class="onSubmit" :class="{'submit-background': submitFlag}" @click="onSubmit">提交</div>
   </div>
 </template>
 
 <script>
+import { getMd5 } from '@/common/common.js'
 export default {
   name: 'forget-password',
   components: {},
   data () {
     return {
-      canGetCode: false,
       canSubmit: false,
-      mobile: ''
+      mobile: '',
+      code: '',
+      uid: ''
     }
   },
   created () {
   },
   mounted () {
   },
-  computed: {},
+  computed: {
+    submitFlag () {
+      var mobile = /^[1][3,4,5,7,8][0-9]{9}$/
+      if (mobile.test(this.mobile) && this.code.length === 4) {
+        return true
+      } else {
+        return false
+      }
+    },
+    mobileFlag () {
+      var mobile = /^[1][3,4,5,7,8][0-9]{9}$/
+      if (mobile.test(this.mobile)) {
+        return true
+      } else {
+        return false
+      }
+    }
+  },
   methods: {
     onGetCode () {
-      this.$axios.userGetPass({mobile: this.mobile}).then(res => {
+      if (!this.mobileFlag) return
+      this.$axios.userGetPass({mobile: this.mobile, sign: getMd5(this.mobile)}).then(res => {
         if (res.data.code === '0') {
-          console.log(res.data.data)
+          this.uid = res.data.id
         } else {
           console.log(res.data.data.msg)
         }
@@ -43,18 +63,32 @@ export default {
       }).catch(err => {
         console.log(err)
       })
+    },
+    onSubmit () {
+      let data = {
+        mobile: this.mobile,
+        code: this.code,
+        sign: getMd5(this.mobile)
+      }
+      this.$axios.userValidateVerifyCode(data).then(res => {
+        if (res.data.code === '0') {
+          this.$rputer.push({
+            path: '/',
+            query: {
+              uid: this.uid
+            }
+          })
+        } else {
+          console.log(res.data.msg)
+        }
+      }, err => {
+        console.log(err)
+      }).catch(err => {
+        console.log(err)
+      })
     }
   },
-  watch: {
-    mobile (val) {
-      var mobile = /^[1][3,4,5,7,8][0-9]{9}$/
-      if (mobile.test(val)) {
-        this.canGetCode = true
-      } else {
-        this.canGetCode = false
-      }
-    }
-  }
+  watch: {}
 }
 </script>
 

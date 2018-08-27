@@ -24,7 +24,7 @@
 
 <script>
 export default {
-  name: 'solicit-subscription-register',
+  name: 'solicit-subscription-mobileLogin',
   data () {
     return {
       mobile: '',
@@ -106,5 +106,5 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-    @import './register.styl'
+    @import 'mobileLogin.styl'
 </style>

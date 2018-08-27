@@ -98,5 +98,13 @@ export default {
   userGetPass (params) {
     let param = qs.stringify(params)
     return axios.post(`/api/user/get_pass?${param}`)
+  },
+  userValidateVerifyCode (params) {
+    let param = qs.stringify(params)
+    return axios.post(`/api/user/validate_verify_code?${param}`)
+  },
+  userUpdatePass (params) {
+    let param = qs.stringify(params)
+    return axios.post(`/api/user/update_pass?${param}`)
   }
 }
