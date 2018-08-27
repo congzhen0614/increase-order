@@ -106,5 +106,13 @@ export default {
   userUpdatePass (params) {
     let param = qs.stringify(params)
     return axios.post(`/api/user/update_pass?${param}`)
+  },
+  userSendVerifyCode (params) {
+    let param = qs.stringify(params)
+    return axios.post(`/api/user/send_verify_code?${param}`)
+  },
+  userRegister (params) {
+    let param = qs.stringify(params)
+    return axios.post(`/api/user/register?${param}`)
   }
 }

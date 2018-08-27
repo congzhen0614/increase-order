@@ -8,7 +8,8 @@
     <div class="security-code">
       <img class="security-icon" src="../../../assets/security-icon.png"/>
       <input type="number" v-model="code" placeholder="请输入验证码">
-      <span class="get-code" :class="{'getcode-color': mobileFlag}" @click="onGetCode">{{ '点击获取验证码' }}</span>
+      <span class="get-code" v-if="!gettedCode" :class="{'getcode-color': mobileFlag}" @click="onGetCode">点击获取验证码</span>
+      <span class="get-code" v-if="gettedCode">{{ seconds }}s后重新获取</span>
     </div>
     <div class="onSubmit" :class="{'submit-background': submitFlag}" @click="onSubmit">提交</div>
   </div>
@@ -22,6 +23,8 @@ export default {
   data () {
     return {
       canSubmit: false,
+      gettedCode: false,
+      seconds: 60,
       mobile: '',
       code: '',
       uid: ''
@@ -53,8 +56,10 @@ export default {
     onGetCode () {
       if (!this.mobileFlag) return
       this.$axios.userGetPass({mobile: this.mobile, sign: getMd5(this.mobile)}).then(res => {
-        if (res.data.code === '0') {
+        if (res.data.status === '0') {
           this.uid = res.data.id
+          this.gettedCode = true
+          this.setSeconds()
         } else {
           console.log(res.data.data.msg)
         }
@@ -63,6 +68,17 @@ export default {
       }).catch(err => {
         console.log(err)
       })
+    },
+    setSeconds () {
+      if (this.seconds === 0) {
+        this.gettedCode = false
+        this.seconds = 60
+        return
+      }
+      setTimeout(() => {
+        this.seconds -= 1
+        this.setSeconds()
+      }, 1000)
     },
     onSubmit () {
       let data = {
