@@ -37,6 +37,7 @@ export default {
       if (this.isAlipay) {
         this.aliPay()
       } else {
+        console.log(1)
         this.weixinPay()
       }
     },
@@ -64,7 +65,7 @@ export default {
       let _data = {
         cls: this.$route.query.cls,
         no: this.$route.query.no,
-        ip: window.returnCitySN.cip,
+        ip: window.returnCitySN.cip ? window.returnCitySN.cip : '127.0.0.1',
         openid: localStorage.getItem('wxOpenId')
       }
       this.$axios.getOfficialAccountPrepayInfo(_data).then(res => {

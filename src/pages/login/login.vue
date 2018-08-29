@@ -53,7 +53,6 @@ export default {
   },
   created () {
     // 判断浏览器
-    console.log(this.$route.query.hasOwnProperty('status'))
     if (this.isWeixin) {
       // 判断微信登陆返回 status
       if (this.$route.query.hasOwnProperty('status')) {
@@ -61,17 +60,6 @@ export default {
           localStorage.setItem('userId', this.$route.query.uid)
           localStorage.setItem('wxOpenId', this.$route.query.openid)
           // 如果有上一页
-          if (this.$route.query.backRoute) {
-            this.$router.push({
-              path: this.$route.query.backRoute,
-              query: JSON.parse(this.$route.query.backQuery)
-            })
-          } else {
-            // 没有则返回首页
-            this.$router.push({
-              path: localStorage.getItem('activityPage') || '/'
-            })
-          }
         }
       }
     }

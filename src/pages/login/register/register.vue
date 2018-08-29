@@ -2,7 +2,7 @@
   <div class="user-register">
     <div class="mobile item-list">
       <img class="phone-icon" src="../../../assets/phone-icon.png"/>
-      <input type="text" placeholder="请输入注册手机号码" v-model="mobile">
+      <input type="number" placeholder="请输入注册手机号码" v-model="mobile">
       <img class="close-icon" src="../../../assets/close-icon.png" @click="mobile = ''"/>
     </div>
     <div class="code item-list">
