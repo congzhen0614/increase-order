@@ -42,10 +42,11 @@ export default {
       }
     },
     aliPay () {
-      let href = this.$route.query.href
+      let href = window.location.href
+      let _href = encodeURIComponent(`${href}`)
       let protocol = window.location.protocol // 协议
       let host = window.location.host
-      let returnUrl = `${protocol}//${host}/result?href=${href}&success=true`
+      let returnUrl = `${protocol}//${host}/result?href=${_href}&success=true`
       let _data = {
         cls: this.$route.query.cls,
         no: this.$route.query.no,
