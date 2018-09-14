@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import store from '@/store/store.js'
 export default {
   name: 'solicit-subscription-mobileLogin',
   data () {
@@ -50,7 +51,10 @@ export default {
           } else {
             // 没有则返回首页
             this.$router.push({
-              path: localStorage.getItem('activityPage') || '/'
+              path: '/',
+              query: {
+                id: store.qrzdItemPackId
+              }
             })
           }
         }
@@ -64,19 +68,15 @@ export default {
     clearPassword () {
       this.password = ''
     },
-    isShowPassword () {
-      if (this.isPassword === 'password') {
-        this.isPassword = 'text'
-      } else {
-        this.isPassword = 'password'
-      }
-    },
     onLogin () {
       this.$axios.login({mobile: this.mobile, password: this.password}).then(res => {
         if (res.data.status === '0') {
           localStorage.setItem('user', JSON.stringify(res.data.data))
           this.$router.push({
-            path: '/'
+            path: '/',
+            query: {
+              id: store.qrzdItemPackId
+            }
           })
         } else {
           this.Toast.fail(res.data.msg)

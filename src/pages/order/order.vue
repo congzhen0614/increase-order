@@ -159,20 +159,6 @@ export default {
       }
       return total + this.postage + this.postageBook
     },
-    cls () {
-      if (this.selectMage.length > 0 && this.selectBook.length === 0 && this.selectSpyp.length === 0) {
-        return 1
-      }
-      if (this.selectMage.length === 0 && this.selectBook.length > 0 && this.selectSpyp.length === 0) {
-        return 2
-      }
-      if (this.selectMage.length === 0 && this.selectBook.length === 0 && this.selectMage.length > 0) {
-        return 54
-      }
-      if ((this.selectMage.length > 0 && this.selectBook.length > 0) || (this.selectMage.length > 0 && this.selectBook.selectMage > 0) || (this.selectBook.length > 0 || this.selectMage.length > 0)) {
-        return 55
-      }
-    },
     params () {
       let param = {
         uid: JSON.parse(localStorage.getItem('user')).id,
@@ -241,7 +227,7 @@ export default {
             query: {
               no: res.data.data.no,
               total: this.total,
-              cls: this.cls
+              cls: 55
             }
           })
         } else {

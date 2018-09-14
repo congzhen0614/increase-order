@@ -14,10 +14,14 @@ import register from '@/pages/login/register/register.vue' // 注册
 import main from '@/pages/main/main.vue' // 首页
 import shoppingCar from '@/pages/shoppingcar/shoppingcar.vue' // 购物车
 import myOrder from '@/pages/myorder/myorder.vue' // 我的订单
+import orderDetail from '@/pages/myorder/orderDetail/orderDetail.vue' // 订单详情
+import refundList from '@/pages/myOrder/refundList/refundList.vue' // 申请退款列表
+import applyRefund from '@/pages/myOrder/applyRefund/applyRefund.vue' // 申请退款
 import aboutUs from '@/pages/aboutus/aboutus.vue' // 关于我们
 import ageList from '@/pages/main/seekList/ageList/ageList.vue' // 年龄列表
 import typeList from '@/pages/main/seekList/typeList/typeList.vue' // 年龄列表
 import magaDetail from '@/pages/details/magaDetail/magaDetail.vue' // 杂志详情页
+import magaGift from '@/pages/details/magaDetail/gift/gift.vue' // 杂志详情页
 import bookDetail from '@/pages/details/bookDetail/bookDetail.vue' // 图书详情页
 import spypDetail from '@/pages/details/spypDetail/spypDetail.vue' // 视听详情页
 import detail from '@/pages/details/bookDetail/detail/detail.vue' // 图书详情信息
@@ -90,6 +94,10 @@ export default new Router({
       name: '杂志详情',
       component: magaDetail
     }, {
+      path: '/magaGift',
+      name: '杂志礼物',
+      component: magaGift
+    }, {
       path: '/bookDetail',
       name: '图书详情',
       component: bookDetail
@@ -141,6 +149,18 @@ export default new Router({
       path: '/pay',
       name: '支付页面',
       component: pay
+    }, {
+      path: '/orderDetail',
+      name: '订单详情',
+      component: orderDetail
+    }, {
+      path: '/refundList',
+      name: '退款列表',
+      component: refundList
+    }, {
+      path: '/applyRefund',
+      name: '申请退款',
+      component: applyRefund
     }
   ]
 })

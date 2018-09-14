@@ -17,23 +17,21 @@
         <span class="price-red">
           ￥<span class="big">{{ detail.fee | getInteger }}</span>{{ detail.fee | getFixed1 }}
         </span>
-        <!--<span class="price-black">￥300.00</span>-->
       </p>
     </div>
-    <div class="periodical-gift" v-if="detail.giftName">
+    <div class="periodical-gift" v-if="detail.giftName" @click="toLift">
       <img src="../../../assets/link-icon.png"/>
       <p>{{ detail.giftName }}</p>
     </div>
     <div class="periodical-content" v-html="detail.content">
     </div>
-    <v-details-footer></v-details-footer>
+    <v-details-footer :detail="query" :detailType="1"></v-details-footer>
   </div>
 </template>
 
 <script>
 import swiper from '@/components/swiper/swiper.vue'
 import detailsFooter from '@/components/detailsFooter/detailsFooter.vue'
-import store from '@/store/store.js'
 export default {
   name: 'maga-detail',
   components: {
@@ -48,10 +46,10 @@ export default {
       bannerHeight: window.innerWidth * 0.6 + 'px'
     }
   },
-  created () {},
-  mounted () {
+  created () {
     this.loadMagazineDetail()
   },
+  mounted () {},
   methods: {
     loadMagazineDetail () {
       this.$axios.magazineDetail(this.query.id).then(res => {
@@ -69,32 +67,18 @@ export default {
     },
     clickReduce (item) {
       item.quantity -= 1
-      if (item.quantity === 0) {
-        store.shoppingcarMage.forEach((items, index) => {
-          if (item.id === items.id) {
-            store.shoppingcarMage.splice(index, 1)
-          }
-        })
-      } else {
-        store.shoppingcarMage.forEach(items => {
-          if (items.id === item.id) {
-            items.quantity = item.quantity
-          }
-        })
-      }
     },
     clickAdd (item) {
       item.quantity += 1
-      let exist = false
-      store.shoppingcarMage.forEach(items => {
-        if (items.id === item.id) {
-          items.quantity = item.quantity
-          exist = true
+    },
+    toLift () {
+      this.$router.push({
+        path: '/magaGift',
+        query: {
+          giftName: this.detail.giftName,
+          giftLogo: this.detail.giftLogo
         }
       })
-      if (!exist) {
-        store.shoppingcarMage.push(item)
-      }
     }
   },
   watch: {}

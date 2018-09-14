@@ -111,6 +111,7 @@ export default {
       })
     },
     onReduce (item) {
+      store.quantity -= 1
       item.quantity -= 1
       store.shoppingcarBook.forEach(obj => {
         if (item.id === obj.id) {
@@ -119,6 +120,7 @@ export default {
       })
     },
     onAdd (item) {
+      store.quantity += 1
       item.quantity += 1
       let exist = false
       if (store.shoppingcarBook.length > 0) {

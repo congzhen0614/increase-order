@@ -42,18 +42,20 @@
     <div class="book-content" v-html="detail.html">
     </div>
     <v-comment :bookComment="comment"></v-comment>
+    <v-details-footer :detail="query" :detailType="2"></v-details-footer>
   </div>
 </template>
 
 <script>
 import swiper from '@/components/swiper/swiper.vue'
 import comment from '@/components/comment/comment.vue'
-import store from '@/store/store.js'
+import detailsFooter from '@/components/detailsFooter/detailsFooter.vue'
 export default {
   name: '',
   components: {
     'v-swiper': swiper,
-    'v-comment': comment
+    'v-comment': comment,
+    'v-details-footer': detailsFooter
   },
   data () {
     return {
@@ -127,32 +129,9 @@ export default {
     },
     clickReduce (item) {
       item.quantity -= 1
-      if (item.quantity === 0) {
-        store.shoppingcarBook.forEach((items, index) => {
-          if (items.id === item.id) {
-            store.shoppingcarBook.splice(index, 1)
-          }
-        })
-      } else {
-        store.shoppingcarBook.forEach(items => {
-          if (items.id === item.id) {
-            items.quantity = item.quantity
-          }
-        })
-      }
     },
     clickAdd (item) {
       item.quantity += 1
-      let exist = false
-      store.shoppingcarBook.forEach(items => {
-        if (items.id === item.id) {
-          items.quantity = item.quantity
-          exist = true
-        }
-      })
-      if (!exist) {
-        store.shoppingcarBook.push(item)
-      }
     }
   },
   watch: {}

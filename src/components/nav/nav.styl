@@ -1,23 +1,44 @@
 .solicit-subscription-nav
   > nav
-    position fixed
-    width 100%
-    height 1rem
-    left 0
-    bottom 0
-    display flex
-    justify-content space-around
-    background rgba(255, 255, 255, 1)
-    box-shadow 0px -2px 5px 0px rgba(0, 0, 0, 0.1)
-    padding 0.1rem
-    > a
-      > img
-        display block
-        width 0.44rem
-        height 0.44rem
-        margin 0 auto
-      > span
-        font-size 0.24rem
-        color #C7C7CC
-      .activity
-        color #655022
+    > ul
+      position fixed
+      bottom 0
+      left 0
+      display flex
+      width 100%
+      height 1rem
+      justify-content space-around
+      background rgba(255, 255, 255, 1)
+      box-shadow 0px -2px 5px 0px rgba(0, 0, 0, 0.1)
+      padding 0.1rem
+      > li
+        position relative
+        height 100%
+        width 100%
+        > img
+          display block
+          width 0.44rem
+          height 0.44rem
+          margin 0 auto
+        > p
+          position absolute
+          text-align center
+          font-size 0.2rem
+          color #C7C7CC
+          width 100%
+          bottom 0
+          left 0
+        .activity
+          color #655022
+        .quantity
+          background-color #F23030
+          border-radius 0.26rem
+          line-height 0.26rem
+          position absolute
+          padding 0 0.1rem
+          font-size 0.2rem
+          height 0.26rem
+          color #ffffff
+          display block
+          right 0.3rem
+          top -0.13rem

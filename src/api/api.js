@@ -90,7 +90,7 @@ export default {
     return axios.post('/qrzd/trade/confirm/open', params)
   },
   getWapOrderInfoByAliPay (params) {
-    return axios.post('/qrzd/alipay/wap/notify/open', params)
+    return axios.post('/qrzd/alipay/wap/prepay/open', params)
   },
   getOfficialAccountPrepayInfo (params) {
     return axios.post('/qrzd/wxpay/officialaccount/prepay/open', params)
@@ -114,5 +114,33 @@ export default {
   userRegister (params) {
     let param = qs.stringify(params)
     return axios.post(`/api/user/register?${param}`)
+  },
+  myOrderList (params) {
+    let param = qs.stringify(params)
+    return axios.get(`/qrzd/trade/myorder/list/open?${param}`)
+  },
+  myOrderDeteil (tradeId) {
+    return axios.get(`/qrzd/trade/myorder/${tradeId}/open`)
+  },
+  tradeListDetail (tradeId) {
+    return axios.get(`/qrzd/trade/tradelist/detail/${tradeId}/open`)
+  },
+  refundList (tradeId, cls) {
+    return axios.get(`/qrzd/trade/myorder/${tradeId}/${cls}/open`)
+  },
+  applyRefund (params) {
+    return axios.post('/qrzd/trade/refundApply/open', params)
+  },
+  refundCancel (params) {
+    return axios.post('/qrzd/trade/refund/cancel/open', params)
+  },
+  upLiadImages (file) {
+    return axios.post('/api/upload', file)
+  },
+  tradeDel (params) {
+    return axios.post('/qrzd/trade/del/open', params)
+  },
+  cancelOrder (params) {
+    return axios.post('/qrzd/trade/cancel/open', params)
   }
 }

@@ -2,8 +2,8 @@
   <div class="solicit-subscription-audio">
     <div class="voice-seek">
       <p>
-        <input type="text">
-        <img src="../../../assets/seek-logo.png">
+        <input type="text" v-model="packetname">
+        <img src="../../../assets/seek-logo.png" @click="onSearch">
       </p>
     </div>
     <ul v-if="lists.length > 0">
@@ -33,7 +33,9 @@ import store from '@/store/store.js'
 export default {
   name: 'solicit-subscription-audio',
   data () {
-    return {}
+    return {
+      packetname: ''
+    }
   },
   props: {
     lists: {
@@ -52,9 +54,11 @@ export default {
           }
         })
         if (!exist) {
+          store.quantity += 1
           store.shoppingcarspyp.push(item)
         }
       } else {
+        store.quantity += 1
         store.shoppingcarspyp.push(item)
       }
     },
@@ -65,6 +69,9 @@ export default {
           item: JSON.stringify(item)
         }
       })
+    },
+    onSearch () {
+      this.$emit('packetname', this.packetname)
     }
   },
   watch: {}

@@ -1,45 +1,72 @@
 <template>
   <div class="solicit-subscription-nav">
     <nav>
-      <router-link to="/">
-        <img v-if="navName === '首页'" src="../../assets/classifyed-icon.png">
-        <img v-else src="../../assets/classify-icon.png">
-        <span :class="{activity: navName === '首页'}">首页</span>
-      </router-link>
-      <router-link to="/shoppingCar">
-        <img v-if="navName === '购物车'" src="../../assets/shoppingcared-icon.png">
-        <img v-else src="../../assets/shoppingcar-icon.png">
-        <span :class="{activity: navName === '购物车'}">购物车</span>
-      </router-link>
-      <router-link to="/myOrder">
-        <img v-if="navName === '我的订单'" src="../../assets/ordered-icon.png">
-        <img v-else src="../../assets/order-icon.png">
-        <span :class="{activity: navName === '我的订单'}">我的订单</span>
-      </router-link>
-      <router-link to="/aboutUs">
-        <img v-if="navName === '了解我们'" src="../../assets/adouted-us-icon.png">
-        <img v-else src="../../assets/about-us-icon.png">
-        <span :class="{activity: navName === '了解我们'}">了解我们</span>
-      </router-link>
+      <ul>
+        <li @click="clickSwitch('/')">
+          <img v-if="navName === '首页'" src="../../assets/classifyed-icon.png">
+          <img v-else src="../../assets/classify-icon.png">
+          <p :class="{activity: navName === '首页'}">首页</p>
+        </li>
+        <li @click="clickSwitch('/shoppingCar')">
+          <span class="quantity" v-if="quantity > 0">{{ quantity }}</span>
+          <img v-if="navName === '购物车'" src="../../assets/shoppingcared-icon.png">
+          <img v-else src="../../assets/shoppingcar-icon.png">
+          <p :class="{activity: navName === '购物车'}">购物车</p>
+        </li>
+        <li @click="clickSwitch('/myOrder')">
+          <img v-if="navName === '我的订单'" src="../../assets/ordered-icon.png">
+          <img v-else src="../../assets/order-icon.png">
+          <p :class="{activity: navName === '我的订单'}">我的订单</p>
+        </li>
+        <li @click="clickSwitch('/aboutUs')">
+          <img v-if="navName === '了解我们'" src="../../assets/adouted-us-icon.png">
+          <img v-else src="../../assets/about-us-icon.png">
+          <p :class="{activity: navName === '了解我们'}">了解我们</p>
+        </li>
+      </ul>
     </nav>
   </div>
 </template>
 
 <script>
+import store from '@/store/store.js'
 export default {
   name: 'solicit-subscription-nav',
-  components: {},
   data () {
-    return {}
+    return {
+      store: store,
+      qrzdItemPackId: store.qrzdItemPackId,
+      quantity: store.quantity
+    }
   },
   props: {
     navName: {
       type: String
     }
   },
-  created () {},
-  mounted () {},
-  methods: {}
+  mounted () {
+  },
+  methods: {
+    clickSwitch (path) {
+      if (path === '/') {
+        this.$router.push({
+          path: path,
+          query: {
+            id: this.qrzdItemPackId
+          }
+        })
+      } else {
+        this.$router.push({
+          path: path
+        })
+      }
+    }
+  },
+  watch: {
+    'store.quantity' (val) {
+      this.quantity = val
+    }
+  }
 }
 </script>
 

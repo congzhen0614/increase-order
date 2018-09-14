@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import store from '@/store/store.js'
 export default {
   name: 'solicit-subscription-login',
   components: {},
@@ -59,7 +60,12 @@ export default {
         if (parseInt(this.$route.query.status) === 0) {
           localStorage.setItem('userId', this.$route.query.uid)
           localStorage.setItem('wxOpenId', this.$route.query.openid)
-          // 如果有上一页
+          this.$router.push({
+            path: '/',
+            query: {
+              id: store.qrzdItemPackId
+            }
+          })
         }
       }
     }

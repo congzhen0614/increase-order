@@ -90,6 +90,7 @@ export default {
       })
     },
     onReduce (item) {
+      store.quantity -= 1
       item.quantity -= 1
       store.shoppingcarMage.forEach(obj => {
         if (item.id === obj.id) {
@@ -98,6 +99,7 @@ export default {
       })
     },
     onAdd (item) {
+      store.quantity += 1
       item.quantity += 1
       let exist = false
       if (store.shoppingcarMage.length > 0) {

@@ -33,9 +33,18 @@ let cutStr = (value, len) => {
   }
 }
 
+let cutString = (value, isCut) => {
+  if (isCut) {
+    return value.substring(0, 20) + '...'
+  } else {
+    return value
+  }
+}
+
 export {
   getInteger,
   getFixed1,
   getFixed2,
+  cutString,
   cutStr
 }

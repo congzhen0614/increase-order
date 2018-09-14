@@ -18,7 +18,7 @@
           </nav>
           <v-magazine v-if="navType === 1" :lists="lists" @ageChange="ageChange" @typeChange="typeChange"></v-magazine>
           <v-book v-if="navType === 2" :lists="lists" @ageChange="ageChange" @typeChange="typeChange"></v-book>
-          <v-audio v-if="navType === 54" :lists="lists"></v-audio>
+          <v-audio v-if="navType === 54" :lists="lists" @packetname="search"></v-audio>
         </main>
       </div>
     </div>
@@ -54,6 +54,7 @@ export default {
       navType: store.navType,
       ageId: '',
       typeId: '',
+      packetname: '',
       catalogue: {},
       lists: [],
       reload: false,
@@ -77,7 +78,8 @@ export default {
         pageSize: this.pages.pageSize,
         cls: this.navType,
         ageId: this.ageId,
-        typeId: this.typeId
+        typeId: this.typeId,
+        packetname: this.packetname
       }
       return param
     },
@@ -92,6 +94,10 @@ export default {
     },
     typeChange (val) {
       this.typeId = val
+      this.loadItempackList()
+    },
+    search (val) {
+      this.packetname = val
       this.loadItempackList()
     },
     loadItempackList () {
@@ -119,7 +125,7 @@ export default {
             }, 500)
           })
         } else {
-          console.log(res.data.data.msg)
+          console.log(res.data.msg)
         }
       }, err => {
         console.log(err)
