@@ -57,12 +57,12 @@ export default {
           this.listImg = res.data.data.qrzdItemImgs
           this.detail = res.data.data
         } else {
-          this.Toast.fail(res.data.data.msg)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        this.Toast.fail(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        this.Toast.fail(err)
+        this.Toast.fail({title: err})
       })
     },
     clickReduce (item) {

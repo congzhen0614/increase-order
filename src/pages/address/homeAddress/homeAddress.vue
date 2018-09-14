@@ -45,7 +45,7 @@ export default {
           this.addressList = res.data.data
         } else {
           this.Toast.fail({
-            title: res.data.data.msg
+            title: res.data.msg
           })
         }
       }, err => {

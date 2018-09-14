@@ -65,14 +65,13 @@ export default {
           this.setSeconds()
         } else {
           this.Toast.fail({
-            icon: 'none',
             title: res.data.data.tip
           })
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     },
     setSeconds () {

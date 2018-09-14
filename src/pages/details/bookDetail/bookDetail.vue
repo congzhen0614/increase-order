@@ -77,12 +77,12 @@ export default {
           this.listImg = res.data.data.detailImgs
           this.detail = res.data.data
         } else {
-          this.Toast.fail(res.data.data.msg)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        this.Toast.fail(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        this.Toast.fail(err)
+        this.Toast.fail({title: err})
       })
     },
     loadComment () {
@@ -95,12 +95,12 @@ export default {
         if (res.data.code === '0') {
           this.comment = res.data.data
         } else {
-          this.Toast.fail(res.data.data.msg)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        this.Toast.fail(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        this.Toast.fail(err)
+        this.Toast.fail({title: err})
       })
     },
     toProductDetail (type) {

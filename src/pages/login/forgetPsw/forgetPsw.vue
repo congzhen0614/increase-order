@@ -61,12 +61,12 @@ export default {
           this.gettedCode = true
           this.setSeconds()
         } else {
-          console.log(res.data.data.msg)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     },
     setSeconds () {
@@ -95,12 +95,12 @@ export default {
             }
           })
         } else {
-          console.log(res.data.msg)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     }
   },

@@ -101,7 +101,11 @@ export default {
       this.loadItempackList()
     },
     loadItempackList () {
+      this.Toast.loading({
+        title: '加载中...'
+      })
       this.$axios.itempackList(this.params).then(res => {
+        this.Toast.hide()
         if (res.data.code === '0') {
           store.id = res.data.data.id
           store.sendType = res.data.data.sendType
@@ -125,12 +129,18 @@ export default {
             }, 500)
           })
         } else {
-          console.log(res.data.msg)
+          this.Toast.fail({
+            title: res.data.msg
+          })
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({
+          title: err
+        })
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({
+          title: err
+        })
       })
     },
     setQuantity (item) {

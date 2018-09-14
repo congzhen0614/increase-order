@@ -79,12 +79,12 @@ export default {
             }
           })
         } else {
-          this.Toast.fail(res.data.msg)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        this.Toast.fail(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        this.Toast.fail(err)
+        this.Toast.fail({title: err})
       })
     },
     onForgetPsw () {

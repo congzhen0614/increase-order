@@ -156,12 +156,14 @@ export default {
         if (res.data.code === '0') {
           this.dynamicCities = res.data.data.area
         } else {
-          console.log(res.data.data.msg)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
         console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
         console.log(err)
+        this.Toast.fail({title: err})
       })
     },
     setEnrollmentList () {
@@ -188,12 +190,12 @@ export default {
             })
           })
         } else {
-          console.log(res.data.data.msg)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     },
     loadGradeList () {
@@ -206,12 +208,12 @@ export default {
             })
           })
         } else {
-          console.log(res.data.data.msg)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     },
     loadClassList () {
@@ -224,12 +226,12 @@ export default {
             })
           })
         } else {
-          console.log(res.data.data.msg)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     },
     onCheckArea () {
@@ -323,12 +325,12 @@ export default {
             path: '/schoolAddress'
           })
         } else {
-          console.log(res.data.data.msg)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     }
   },

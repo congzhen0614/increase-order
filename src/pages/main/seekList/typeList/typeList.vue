@@ -41,15 +41,29 @@ export default {
   methods: {
     loadItemtypeList () {
       this.$axios.itemtypeList().then(res => {
-        if (res.data.data.length === this.selects.length) {
-          this.selectAll = true
-        }
-        res.data.data.forEach(item => {
-          this.dataList.push({
-            id: item.id,
-            name: item.name,
-            select: JSON.stringify(this.selects).indexOf(item.id) > -1 ? 1 : 0
+        if (res.data.code === '0') {
+          if (res.data.data.length === this.selects.length) {
+            this.selectAll = true
+          }
+          res.data.data.forEach(item => {
+            this.dataList.push({
+              id: item.id,
+              name: item.name,
+              select: JSON.stringify(this.selects).indexOf(item.id) > -1 ? 1 : 0
+            })
           })
+        } else {
+          this.Toast.fail({
+            title: res.data.msg
+          })
+        }
+      }, err => {
+        this.Toast.fail({
+          title: err
+        })
+      }).catch(err => {
+        this.Toast.fail({
+          title: err
         })
       })
     },

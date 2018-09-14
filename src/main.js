@@ -13,6 +13,7 @@ import * as custom from './common/filters.js'
 Vue.prototype.$axios = api
 Vue.prototype.Toast = new window.AuiToast() // 提示组件
 Vue.prototype.Dialog = new window.AuiDialog() // 对话框组件
+Vue.prototype.isIos = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
 Vue.prototype.isWeixin = !!navigator.userAgent.match(/MicroMessenger/i)
 
 // 过滤器

@@ -36,12 +36,12 @@ export default {
         if (res.data.code === '0') {
           console.log(res)
         } else {
-          console.log(res.data.msg)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     }
   },

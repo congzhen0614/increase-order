@@ -141,12 +141,12 @@ export default {
         if (res.data.code === '0') {
           this.detail = res.data.data
         } else {
-          console.log(res.data.data.msg)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     },
     loadTradeListDetail () {
@@ -156,12 +156,12 @@ export default {
           this.bookList = res.data.data.books
           this.spypList = res.data.data.packets
         } else {
-          console.log(res)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     },
     cancelRefund (item) {
@@ -177,9 +177,9 @@ export default {
           })
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     },
     cancelOrder () {
@@ -190,11 +190,13 @@ export default {
           })
           this.loadMyOrderDeteil()
           this.loadTradeListDetail()
+        } else {
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     },
     toPay () {

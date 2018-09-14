@@ -54,12 +54,12 @@ export default {
         if (res.data.code === '0') {
           this.refundList = res.data.data.refundItemViews
         } else {
-          console.log(res)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     },
     applyRefund (item) {
@@ -83,9 +83,9 @@ export default {
           })
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     }
   },

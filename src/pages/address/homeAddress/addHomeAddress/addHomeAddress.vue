@@ -80,12 +80,18 @@ export default {
         if (res.data.code === '0') {
           this.dynamicCities = res.data.data.area
         } else {
-          console.log(res.data.data.msg)
+          this.Toast.fail({
+            title: res.data.msg
+          })
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({
+          title: err
+        })
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({
+          title: err
+        })
       })
     },
     onInputClick () {
@@ -118,7 +124,7 @@ export default {
           this.$router.goBack()
         } else {
           this.Toast.fail({
-            title: res.data.data.msg
+            title: res.data.msg
           })
         }
       }, err => {

@@ -98,12 +98,12 @@ export default {
         if (res.data.code === '0') {
           this.orderList = res.data.data.list
         } else {
-          console.log(res.data.data.msg)
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     },
     toDetail (item) {
@@ -115,18 +115,19 @@ export default {
       })
     },
     onDelete (item) {
-      console.log(item)
       this.$axios.tradeDel({id: item.id}).then(res => {
         if (res.data.code === '0') {
           this.Toast.success({
             title: '操作成功'
           })
           this.loadMyOrderList()
+        } else {
+          this.Toast.fail({title: res.data.msg})
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       }).catch(err => {
-        console.log(err)
+        this.Toast.fail({title: err})
       })
     },
     toPay (item) {

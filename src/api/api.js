@@ -21,8 +21,6 @@ axios.interceptors.response.use(response => {
   if (response.data.code === '-6') {
     localStorage.clear()
     window.location.href = 'http://192.168.0.48:8090/#/login'
-  } else if (response.data.code < '0') {
-    console.log(response)
   }
   return response
 }, err => {
