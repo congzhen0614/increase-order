@@ -15,7 +15,7 @@
             <img src="../../../assets/gift-icon.png">
             {{ item.giftName }}
           </p>
-          <p class="units" v-if="item.feeUnit">{{ item.feeUnit }}</p>
+          <p class="units" v-if="item.feeUnitNum">{{ item.feeUnitTypeName + item.feeUnitNum + item.feeUnitName }}</p>
           <p class="amount">
             <img @click.stop="onReduce(item)" v-if="item.quantity > 0" src="../../../assets/minus-icon.png">
             <span v-if="item.quantity > 0">{{ item.quantity }}</span>
@@ -92,9 +92,13 @@ export default {
     onReduce (item) {
       store.quantity -= 1
       item.quantity -= 1
-      store.shoppingcarMage.forEach(obj => {
+      store.shoppingcarMage.forEach((obj, index) => {
         if (item.id === obj.id) {
-          obj = item
+          if (item.quantity === 0) {
+            store.shoppingcarMage.splice(index, 1)
+          } else {
+            obj.quantity = item.quantity
+          }
         }
       })
     },

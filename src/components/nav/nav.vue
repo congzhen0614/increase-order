@@ -44,8 +44,6 @@ export default {
       type: String
     }
   },
-  mounted () {
-  },
   methods: {
     clickSwitch (path) {
       if (path === '/') {

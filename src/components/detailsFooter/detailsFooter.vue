@@ -2,7 +2,7 @@
   <div class="detail-footer">
     <span class="buy-now" @click="clickBuy">立即购买</span>
     <span class="add-shoppingcar" @click="addShoppingCar">加入购物车</span>
-    <div class="shoppingcar-icon">
+    <div class="shoppingcar-icon" @click="clickShoppingCar">
       <div>
         <span v-if="quantity > 0">{{ quantity }}</span>
         <img src="../../assets/shoppingcar-icon.png"/>
@@ -20,7 +20,7 @@ export default {
   data () {
     return {
       store: store,
-      quantity: 0
+      quantity: store.quantity
     }
   },
   props: {
@@ -35,6 +35,11 @@ export default {
   mounted () {},
   computed: {},
   methods: {
+    clickShoppingCar () {
+      this.$router.push({
+        path: '/shoppingCar'
+      })
+    },
     clickBuy () {
       if (this.detailType === 1) {
         this.$router.push({

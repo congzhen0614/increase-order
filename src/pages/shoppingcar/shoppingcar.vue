@@ -133,6 +133,7 @@ export default {
       this.selectVerdict()
     },
     addQuantity (item) {
+      store.quantity += 1
       item.quantity += 1
       this.selectVerdict()
     },
@@ -143,6 +144,7 @@ export default {
           msg: '您确定要删除吗'
         }, res => {
           if (res.buttonIndex === 2) {
+            store.quantity -= 1
             if (type === 'maga') {
               this.mageList.forEach((items, index) => {
                 if (item.id === items.id) {
@@ -159,6 +161,7 @@ export default {
           }
         })
       } else {
+        store.quantity -= 1
         item.quantity -= 1
       }
       this.selectVerdict()

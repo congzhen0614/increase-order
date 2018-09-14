@@ -113,9 +113,13 @@ export default {
     onReduce (item) {
       store.quantity -= 1
       item.quantity -= 1
-      store.shoppingcarBook.forEach(obj => {
+      store.shoppingcarBook.forEach((obj, index) => {
         if (item.id === obj.id) {
-          obj = item
+          if (item.quantity === 0) {
+            store.shoppingcarBook.splice(index, 1)
+          } else {
+            obj.quantity = item.quantity
+          }
         }
       })
     },
