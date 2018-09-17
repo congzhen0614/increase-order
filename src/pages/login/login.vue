@@ -4,14 +4,14 @@
       <div class="back-top">
         <div class="back-top-right">
           <div>
-            <img src="../../assets/books/3.png">
+            <img src="../../assets/books/3.jpg">
           </div>
           <div>
-            <img src="../../assets/books/10.png">
+            <img src="../../assets/books/10.jpg">
           </div>
         </div>
         <div class="back-top-left">
-          <img src="../../assets/books/1.png">
+          <img src="../../assets/books/1.jpg">
         </div>
       </div>
       <div class="back-middle">
@@ -24,7 +24,7 @@
               <img src="../../assets/books/11.jpg">
             </div>
             <div>
-              <img src="../../assets/books/12.png">
+              <img src="../../assets/books/12.jpg">
             </div>
           </div>
         </div>

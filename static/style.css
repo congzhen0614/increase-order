@@ -50,11 +50,11 @@ body {
 
 @font-face {
   font-family: "apple_font";
-  src: url('apple_font.ttf') format('truetype');
+  src: url('apple-font.ttf') format('truetype');
 }
 
 body {
-  font-family: 'apple_font', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.24rem;
   font-weight: normal;
   line-height: 1.5;
