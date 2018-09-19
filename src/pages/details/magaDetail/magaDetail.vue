@@ -10,9 +10,9 @@
       </p>
       <p class="transport-costs">运费: <span>免运费</span></p>
       <div class="shoppingCar-quantity">
-        <img src="../../../assets/minus-icon.png" v-if="query.quantity > 0" @click.stop="clickReduce(query)"/>
+        <img src="../../../assets/minus-icon.png" v-if="query.quantity > 0" @click="clickReduce(query)"/>
         <span v-if="query.quantity > 0">{{ query.quantity }}</span>
-        <img src="../../../assets/add-icon.png" @click.stop="clickAdd(query)"/>
+        <img src="../../../assets/add-icon.png" @click="clickAdd(query)"/>
       </div>
       <p class="detail-price">
         <span class="price-red">

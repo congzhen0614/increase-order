@@ -1,13 +1,32 @@
 <template>
-  <div class="detail-footer">
-    <span class="buy-now" @click="clickBuy">立即购买</span>
-    <span class="add-shoppingcar" @click="addShoppingCar">加入购物车</span>
-    <div class="shoppingcar-icon" @click="clickShoppingCar">
-      <div>
-        <span v-if="quantity > 0">{{ quantity }}</span>
-        <img src="../../assets/shoppingcar-icon.png"/>
+  <div class="detail-footer-all" :class="{'detail-fixed': isShowShadow}">
+    <div class="quantity-shadow" v-if="isShowShadow">
+      <div class="quantity-footer">
+        <div class="detail-img">
+          <div class="detail-header-img">
+            <img class="detail-header" :src="detail.logo"/>
+          </div>
+          <img @click="isShowShadow = false" class="detail-close" src="../../assets/close.png">
+        </div>
+        <div class="detail-quantity">
+          <img @click.stop="detail.quantity += 1" src="../../assets/add-icon.png">
+          <p>{{ detail.quantity }}</p>
+          <img @click.stop="detail.quantity -= 1" src="../../assets/minus-icon.png">
+          <span>请选择数量</span>
+        </div>
       </div>
-      <p>购物车</p>
+    </div>
+    <div class="detail-footer">
+      <span class="buy-now" v-if="!isShowShadow" @click="isShowShadow = true">立即购买</span>
+      <span class="buy-now" v-if="isShowShadow" @click="clickBuy">去结算</span>
+      <span class="add-shoppingcar" @click="addShoppingCar">加入购物车</span>
+      <div class="shoppingcar-icon" @click="clickShoppingCar">
+        <div>
+          <span v-if="quantity > 0">{{ quantity }}</span>
+          <img src="../../assets/shoppingcar-icon.png"/>
+        </div>
+        <p>购物车</p>
+      </div>
     </div>
   </div>
 </template>
@@ -20,6 +39,7 @@ export default {
   data () {
     return {
       store: store,
+      isShowShadow: false,
       quantity: store.quantity
     }
   },
@@ -31,7 +51,9 @@ export default {
       type: Number
     }
   },
-  created () {},
+  created () {
+    console.log(this.detail)
+  },
   mounted () {},
   computed: {},
   methods: {
