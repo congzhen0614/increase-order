@@ -69,9 +69,13 @@ export default {
       }
     }
   },
-  mounted () {
+  created () {
     store.qrzdItemPackId = this.$route.query.id
-    this.loadItempackList()
+    setTimeout(() => {
+      if (this.ageId === '' && this.typeId === '') {
+        this.loadItempackList()
+      }
+    }, 300)
   },
   computed: {
     params () {
@@ -80,8 +84,8 @@ export default {
         pageNum: this.pages.pageNum,
         pageSize: this.pages.pageSize,
         cls: this.navType,
-        ageId: this.ageId,
-        typeId: this.typeId,
+        ageIds: this.ageId,
+        typeIds: this.typeId,
         packetname: this.packetname
       }
       return param
@@ -93,10 +97,12 @@ export default {
   methods: {
     ageChange (val) {
       this.ageId = val
+      this.lists = []
       this.loadItempackList()
     },
     typeChange (val) {
       this.typeId = val
+      this.lists = []
       this.loadItempackList()
     },
     search (val) {
@@ -193,7 +199,6 @@ export default {
     listenScroll () {
       this.scroller.on('scroll', pos => {
         if (pos.y >= 100 && this.reload) {
-          // this.loadItempackList()
           this.reload = false
         }
         this.scrollHeight = -pos.y

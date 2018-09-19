@@ -206,12 +206,14 @@ export default {
     },
     checkBookAddress () {
       this.$router.push({
-        path: '/homeAddress'
+        path: '/homeAddress',
+        query: this.$route.query
       })
     },
     checkMagaAddress () {
       this.$router.push({
-        path: '/schoolAddress'
+        path: '/schoolAddress',
+        query: this.$route.query
       })
     },
     toRemarks () {

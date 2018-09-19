@@ -60,7 +60,10 @@ export default {
     },
     selectAddress (item) {
       store.address = item
-      this.$router.go(-1)
+      this.$router.push({
+        path: '/order',
+        query: this.$route.query
+      })
     },
     addHomeAddress () {
       this.$router.push({

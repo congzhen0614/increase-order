@@ -65,6 +65,7 @@ export default {
     addShoppingCar () {
       if (this.detailType === 1) {
         if (store.shoppingcarMage.length === 0) {
+          if (this.detail.quantity === 0) this.detail.quantity = 1
           store.shoppingcarMage.push(this.detail)
         } else {
           store.shoppingcarMage.forEach((item, index) => {
@@ -79,12 +80,13 @@ export default {
         }
       } else {
         if (store.shoppingcarBook.length === 0) {
+          if (this.detail.quantity === 0) this.detail.quantity = 1
           store.shoppingcarBook.push(this.detail)
         } else {
           store.shoppingcarBook.forEach((item, index) => {
             if (item.id === this.detail.id) {
               if (item.quantity === 0) {
-                store.shoppingcarMage.splice(index, 1)
+                store.shoppingcarBook.splice(index, 1)
               } else {
                 item.quantity = this.detail.quantity
               }

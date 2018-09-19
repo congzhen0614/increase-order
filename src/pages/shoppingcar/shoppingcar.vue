@@ -147,7 +147,7 @@ export default {
       this.selectVerdict()
     },
     reduceQuantity (item, type) {
-      if (item.quantity === 1) {
+      if (item.quantity <= 1) {
         this.Dialog.alert({
           title: '温馨提示',
           msg: '您确定要删除吗'

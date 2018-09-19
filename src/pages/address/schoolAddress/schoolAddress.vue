@@ -5,7 +5,7 @@
       <p>暂无内容</p>
     </div>
     <ul class="school-address-list" v-if="addressList.length>0">
-      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)">
+      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="serviceArea.indexOf(item.regionName) >= -1">
         <img class="school-address-head" src="../../../assets/avatar.jpg"/>
         <img class="school-address-link" src="../../../assets/link-icon.png"/>
         <p class="school-address-title">
@@ -28,13 +28,13 @@ export default {
   data () {
     return {
       addressList: [],
+      serviceArea: '',
       sex: 0
     }
   },
   created () {
-  },
-  mounted () {
     this.loadChildList()
+    this.loadAccountListarea()
   },
   methods: {
     loadChildList () {
@@ -56,9 +56,25 @@ export default {
         })
       })
     },
+    loadAccountListarea () {
+      this.$axios.accountListarea({id: store.id}).then(res => {
+        if (res.data.code === '0') {
+          this.serviceArea = JSON.stringify(res.data.data.area)
+        } else {
+          this.Toast.fail({title: res.data.msg})
+        }
+      }, err => {
+        this.Toast.fail({title: err})
+      }).catch(err => {
+        this.Toast.fail({title: err})
+      })
+    },
     selectAddress (item) {
       store.child = item
-      this.$router.go(-1)
+      this.$router.push({
+        path: '/order',
+        query: this.$route.query
+      })
     },
     addHomeAddress () {
       this.$router.push({

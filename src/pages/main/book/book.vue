@@ -57,7 +57,7 @@ export default {
   data () {
     return {
       ageContent: '年级区间',
-      typeContent: '杂志类别'
+      typeContent: '图书类别'
     }
   },
   props: {
