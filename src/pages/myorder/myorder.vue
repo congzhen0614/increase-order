@@ -1,6 +1,10 @@
 <template>
   <div class="solicit-subscription-myorder">
-    <ul>
+    <div v-if="orderList.length === 0" class="no-content">
+      <img src="../../assets/no-content-icon.png"/>
+      <span class="go-and-see-button" @click="goAndSee">去逛逛</span>
+    </div>
+    <ul v-if="orderList.length > 0">
       <li class="order-list" v-for="items in orderList" :key="items.id" @click="toDetail(items)">
         <div class="order-title">
           <span class="order-time">下单日期: {{ items.createdAt }}</span>
@@ -66,6 +70,7 @@
 </template>
 
 <script>
+import store from '@/store/store.js'
 import nav from '@/components/nav/nav.vue'
 export default {
   name: '',
@@ -93,6 +98,14 @@ export default {
     }
   },
   methods: {
+    goAndSee () {
+      this.$router.push({
+        path: '/',
+        query: {
+          id: store.qrzdItemPackId
+        }
+      })
+    },
     loadMyOrderList () {
       this.$axios.myOrderList(this.params).then(res => {
         if (res.data.code === '0') {

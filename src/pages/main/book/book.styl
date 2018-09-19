@@ -32,7 +32,7 @@
   > ul
     float left
     width 50%
-    padding-top 0.2rem
+    padding-top 0.4rem
     > li
       overflow hidden
       padding 0.2rem
@@ -45,8 +45,13 @@
       .list-content
         .list-title
           font-size 0.34rem
-          color #333333
           margin 0.2rem 0px
+          color #333333
+          display -webkit-box
+          -webkit-box-orient vertical
+          -webkit-line-clamp 2
+          overflow hidden
+          text-overflow ellipsis
         .list-author
           font-size 0.2rem
           color #C7C7CC

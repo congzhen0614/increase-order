@@ -5,9 +5,16 @@
     padding 0 0.2rem
     padding-bottom 0.3rem
     .periodical-title
-      padding 0.2rem 0
+      padding-top 0.2rem
       color #333333
       font-size 0.3rem
+      white-space nowrap
+      overflow hidden
+      text-overflow ellipsis
+    .periodical-prese
+      font-size 0.28rem
+      color #999999
+      margin 0.1rem 0
       white-space nowrap
       overflow hidden
       text-overflow ellipsis
@@ -71,10 +78,29 @@
     margin-bottom 1.5rem
     img
       width 100%
-  .periodical-gift
+  .periodical-publ
     height 0.88rem
     line-height 0.88rem
     margin-top 0.2rem
+    background-color #ffffff
+    padding 0 0.2rem
+    > img
+      width 0.16rem
+      height 0.26rem
+      float right
+      margin-top 0.3rem
+    > p
+      font-size 0.3rem
+      color #333333
+      font-weight 500
+      text-overflow ellipsis
+      white-space nowrap
+      overflow hidden
+  .hasGift
+    border-bottom 1px solid #E6E6E6
+  .periodical-gift
+    height 0.88rem
+    line-height 0.88rem
     background-color #ffffff
     padding 0 0.2rem
     > img

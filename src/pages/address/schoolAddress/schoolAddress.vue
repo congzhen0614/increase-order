@@ -1,7 +1,7 @@
 <template>
   <div class="school-address">
     <div class="no-address-list" v-if="addressList.length===0">
-      <img src="../../../assets/no-content-icon.png"/>
+      <img src="../../../assets/girls-icon.png"/>
       <p>暂无内容</p>
     </div>
     <ul class="school-address-list" v-if="addressList.length>0">

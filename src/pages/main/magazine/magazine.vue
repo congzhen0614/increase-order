@@ -35,7 +35,7 @@ export default {
   name: 'solicit-subscription-magazine',
   data () {
     return {
-      ageContent: '年龄区间',
+      ageContent: '年级区间',
       typeContent: '杂志类别'
     }
   },

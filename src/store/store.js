@@ -2,7 +2,7 @@
  * Created by cz on 2018/8/15.
  */
 export default {
-  id: '', // 首页列表Id
+  id: '', // 业务员Id
   sendType: '', // 寄送方式
   navType: 1, // 首页类型(杂志、图书、电子读物)
   qrzdItemPackId: '', // 二维码Id

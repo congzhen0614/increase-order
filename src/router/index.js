@@ -22,6 +22,7 @@ import ageList from '@/pages/main/seekList/ageList/ageList.vue' // 年龄列表
 import typeList from '@/pages/main/seekList/typeList/typeList.vue' // 年龄列表
 import magaDetail from '@/pages/details/magaDetail/magaDetail.vue' // 杂志详情页
 import magaGift from '@/pages/details/magaDetail/gift/gift.vue' // 杂志详情页
+import magaPress from '@/pages/details/magaDetail/press/press.vue' // 杂志出版信息
 import bookDetail from '@/pages/details/bookDetail/bookDetail.vue' // 图书详情页
 import spypDetail from '@/pages/details/spypDetail/spypDetail.vue' // 视听详情页
 import detail from '@/pages/details/bookDetail/detail/detail.vue' // 图书详情信息
@@ -44,6 +45,7 @@ Router.prototype.goBack = function () {
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/login',
@@ -97,6 +99,10 @@ export default new Router({
       path: '/magaGift',
       name: '杂志礼物',
       component: magaGift
+    }, {
+      path: '/magaPress',
+      name: '出版信息',
+      component: magaPress
     }, {
       path: '/bookDetail',
       name: '图书详情',

@@ -3,6 +3,7 @@
     <v-swiper :listImg="listImg" :style="{height: bannerHeight}"></v-swiper>
     <div class="periodical-head">
       <p class="periodical-title">{{ detail.name }}</p>
+      <p class="periodical-prese">{{ detail.nameShort }}</p>
       <p class="periodical-suitable">
         <span>{{ detail.feeUnitType }} {{ detail.feeUnitNum }} {{ detail.feeUnitName }}</span>
         <span class="age" v-if="detail.ageNames !== ''">{{ detail.ageNames }}</span>
@@ -18,6 +19,10 @@
           ￥<span class="big">{{ detail.fee | getInteger }}</span>{{ detail.fee | getFixed1 }}
         </span>
       </p>
+    </div>
+    <div class="periodical-publ" :class="{hasGift: detail.giftName}" @click="publInfo">
+      <img src="../../../assets/link-icon.png"/>
+      <p>出版信息</p>
     </div>
     <div class="periodical-gift" v-if="detail.giftName" @click="toLift">
       <img src="../../../assets/link-icon.png"/>
@@ -49,7 +54,8 @@ export default {
   created () {
     this.loadMagazineDetail()
   },
-  mounted () {},
+  mounted () {
+  },
   methods: {
     loadMagazineDetail () {
       this.$axios.magazineDetail(this.query.id).then(res => {
@@ -77,6 +83,18 @@ export default {
         query: {
           giftName: this.detail.giftName,
           giftLogo: this.detail.giftLogo
+        }
+      })
+    },
+    publInfo () {
+      console.log(this.detail)
+      this.$router.push({
+        path: '/magaPress',
+        query: {
+          name: this.detail.name,
+          issn: this.detail.issn,
+          press: this.detail.press,
+          shortName: this.detail.nameShort
         }
       })
     }

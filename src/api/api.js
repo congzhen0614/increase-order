@@ -4,6 +4,8 @@
  * creationTime: 2018/06/27
  */
 import axios from 'axios'
+import Vue from 'vue'
+import router from '../router'
 import qs from 'qs'
 
 // 设置headers
@@ -20,7 +22,7 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
   if (response.data.code === '-6') {
     localStorage.clear()
-    window.location.href = 'http://192.168.0.48:8090/#/login'
+    new Vue({router}).$router.push({path: '/login'})
   }
   return response
 }, err => {
@@ -127,7 +129,7 @@ export default {
     return axios.get(`/qrzd/trade/myorder/${tradeId}/${cls}/open`)
   },
   applyRefund (params) {
-    return axios.post('/qrzd/trade/refundApply/open', params)
+    return axios.post('/qrzd/trade/refundapply/open', params)
   },
   refundCancel (params) {
     return axios.post('/qrzd/trade/refund/cancel/open', params)

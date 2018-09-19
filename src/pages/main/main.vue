@@ -12,9 +12,9 @@
             <p class="explain">{{ catalogue.tip }}</p>
           </header>
           <nav>
-            <span :class="{activity: navType === 1}" @click="navType = 1">刊物</span>
-            <span :class="{activity: navType === 2}" @click="navType = 2">图书</span>
-            <span :class="{activity: navType === 54}" @click="navType = 54">电子读物</span>
+            <span :class="{activity: navType === 1}" @click="navType = 1" v-if="hasMage === 1">刊物</span>
+            <span :class="{activity: navType === 2}" @click="navType = 2" v-if="hasBook === 1">图书</span>
+            <span :class="{activity: navType === 54}" @click="navType = 54" v-if="hasSpyp === 1">电子读物</span>
           </nav>
           <v-magazine v-if="navType === 1" :lists="lists" @ageChange="ageChange" @typeChange="typeChange"></v-magazine>
           <v-book v-if="navType === 2" :lists="lists" @ageChange="ageChange" @typeChange="typeChange"></v-book>
@@ -59,10 +59,13 @@ export default {
       lists: [],
       reload: false,
       loadMore: false,
+      hasMage: 0,
+      hasBook: 0,
+      hasSpyp: 0,
       pages: {
         pageNum: 1,
         pageSize: 10,
-        total: 10
+        total: 0
       }
     }
   },
@@ -113,6 +116,9 @@ export default {
           store.postage = res.data.data.postage
           store.postageSumBook = res.data.data.postageSumBook
           store.postageBook = res.data.data.postageBook
+          this.hasMage = res.data.data.hasMagazine
+          this.hasBook = res.data.data.hasBook
+          this.hasSpyp = res.data.data.hasPacket
           this.catalogue.title = res.data.data.title
           this.catalogue.linkman = res.data.data.linkman
           this.catalogue.linkmobile = res.data.data.linkmobile
@@ -187,7 +193,7 @@ export default {
     listenScroll () {
       this.scroller.on('scroll', pos => {
         if (pos.y >= 100 && this.reload) {
-          this.loadItempackList()
+          // this.loadItempackList()
           this.reload = false
         }
         this.scrollHeight = -pos.y
@@ -202,7 +208,12 @@ export default {
       if (val > this.$refs.content.offsetHeight - window.innerHeight && this.loadMore) {
         this.loadMore = false
         this.pages.pageNum += 1
-        if (parseInt(this.pages.total / this.pages.pageSize) < this.pages.pageNum) return false
+        if (parseInt(this.pages.total / this.pages.pageSize) < this.pages.pageNum) {
+          this.Toast.warning({
+            title: '没有更多了'
+          })
+          return
+        }
         this.loadItempackList()
       }
     },

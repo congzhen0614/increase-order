@@ -42,6 +42,7 @@ export default {
     },
     clickBuy () {
       if (this.detailType === 1) {
+        if (this.detail.quantity === 0) this.detail.quantity = 1
         this.$router.push({
           path: '/order',
           query: {

@@ -35,23 +35,23 @@
       border 1px solid #F8BD48
       color #F8BD48
   .order-voice-list
+    position relative
     padding 0.6rem 0.2rem
     overflow hidden
-    border-bottom 1px solid #D8D8D8
     .voice-list-left
-      float left
+      position absolute
+      left 0.2rem
+      top 0.6rem
       width 1.6rem
       height 1.6rem
       border-radius 0.2rem
-      margin-right 0.2rem
       overflow hidden
       > img
         display block
         height 100%
         margin 0 auto
     .voice-list-right
-      float left
-      width 4.2rem
+      margin-left 1.8rem
       .voice-list-title
         width 4.2rem
         font-size 0.32rem
@@ -97,8 +97,8 @@
           height 0.64rem
           line-height 0.64rem
           padding 0 0.3rem
-          border 1px solid #9C9890
           color #9C9890
+          background-color #F3F4F5
           border-radius 0.64rem
         > span:first-child
           color #F8BD48

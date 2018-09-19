@@ -63,7 +63,7 @@ export default {
           this.$router.push({
             path: '/',
             query: {
-              id: store.qrzdItemPackId
+              id: this.$route.query.id
             }
           })
         }
@@ -81,12 +81,11 @@ export default {
     },
     onWeixinLogin () {
       // 微信登陆返回到当前页面
-      let href = window.location.href
+      let href = window.location.href + '?id=' + store.qrzdItemPackId
       let _href = encodeURIComponent(`${href}`)
       let apiUrl = 'https://www.51weixiao.com/app-api/api/user/wxLogin'
-      let redirectUrl = encodeURIComponent(`${apiUrl}?finalUrl=${_href}?`)
+      let redirectUrl = encodeURIComponent(`${apiUrl}?finalUrl=${_href}`)
       let appId = 'wx701b0e6e6faac47c'
-      console.log(redirectUrl)
       let _url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=` + redirectUrl + `&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`
       window.location.href = _url
     }

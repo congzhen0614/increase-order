@@ -3,6 +3,7 @@
     <main>
       <div class="shoppingcar-null" v-if="mageList.length === 0 && bookList.length === 0 && spypList.length === 0">
         <img src="../../assets/shoppingcar-null.png">
+        <span class="go-and-see-button" @click="goAndSee">去逛逛</span>
       </div>
       <div class="maga-book-spyp" v-if="mageList.length > 0">
         <header>
@@ -128,6 +129,14 @@ export default {
   },
   mounted () {},
   methods: {
+    goAndSee () {
+      this.$router.push({
+        path: '/',
+        query: {
+          id: store.qrzdItemPackId
+        }
+      })
+    },
     changeSelect (item) {
       item.select = !item.select
       this.selectVerdict()
@@ -220,6 +229,12 @@ export default {
             selectSpyp.push(item)
           }
         })
+      }
+      if (selectMage.length === 0 && selectBook.length === 0 && selectSpyp.length === 0) {
+        this.Toast.warning({
+          title: '请选择至少一件商品'
+        })
+        return
       }
       this.$router.push({
         path: '/order',
