@@ -5,7 +5,7 @@
       <p>暂无内容</p>
     </div>
     <ul class="school-address-list" v-if="addressList.length>0">
-      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="serviceArea.indexOf(item.regionName) >= -1">
+      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="serviceArea.indexOf(item.regionName) > -1">
         <img class="school-address-head" src="../../../assets/avatar.jpg"/>
         <img class="school-address-link" src="../../../assets/link-icon.png"/>
         <p class="school-address-title">

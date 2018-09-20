@@ -15,9 +15,10 @@
     <ul>
       <li class="album-list" v-for="(item, index) in listData" :key="item.id">
         <span class="serial">{{ index + 1 }}</span>
-        <div class="try-play" v-if="index < 2">
-          <img src="../../../../assets/play-icon.png">
-          <!--<img src="../../../../assets/paus-icon.png">-->
+        <div class="try-play" v-show="item.preview === 1">
+          <img v-if="!item.isPlay" @click="onPlay(item, index)" src="../../../../assets/play-icon.png">
+          <img v-if="item.isPlay" @click="onPaus(item, index)" src="../../../../assets/paus-icon.png">
+          <audio ref="audio" :src="item.url"></audio>
           <span>试听</span>
         </div>
         <div class="title">
@@ -42,9 +43,13 @@ export default {
   },
   methods: {
     loadSpypaudioList () {
-      this.$axios.spypaudioList({aid: this.query.id}).then(res => {
+      this.$axios.spypaudioList({aid: this.query.id, pageNum: 1, pageSize: 10}).then(res => {
         if (res.data.code === '0') {
-          this.listData = res.data.data.list
+          this.listData = []
+          res.data.data.list.forEach(item => {
+            item.isPlay = false
+            this.listData.push(item)
+          })
         } else {
           this.Toast.fail(res.data.data.msg)
         }
@@ -53,6 +58,18 @@ export default {
       }).catch(err => {
         this.Toast.fail(err)
       })
+    },
+    onPlay (item, index) {
+      this.$refs.audio.forEach((item, index) => {
+        this.listData[index].isPlay = false
+        item.pause()
+      })
+      this.$refs.audio[index].play()
+      item.isPlay = true
+    },
+    onPaus (item, index) {
+      this.$refs.audio[index].pause()
+      item.isPlay = false
     }
   },
   watch: {}

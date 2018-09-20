@@ -44,6 +44,12 @@ export default {
   itemageList () { // 年龄列表
     return axios.get('/qrzd/sys/itemage/list/open')
   },
+  bookAge () {
+    return axios.get('/qrzd/book/age/open')
+  },
+  bookType () {
+    return axios.get('/qrzd/book/type/open')
+  },
   magazineDetail (id) {
     return axios.get(`/qrzd/magazine/qrzditem/detail/${id}/open`)
   },

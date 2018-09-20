@@ -36,11 +36,43 @@ export default {
     } else {
       this.selects = store.bookType
     }
-    this.loadItemtypeList()
+    if (this.$route.query.name === 'maga') {
+      this.loadItemtypeList()
+    } else {
+      this.loadBookType()
+    }
   },
   methods: {
     loadItemtypeList () {
       this.$axios.itemtypeList().then(res => {
+        if (res.data.code === '0') {
+          if (res.data.data.length === this.selects.length) {
+            this.selectAll = true
+          }
+          res.data.data.forEach(item => {
+            this.dataList.push({
+              id: item.id,
+              name: item.name,
+              select: JSON.stringify(this.selects).indexOf(item.id) > -1 ? 1 : 0
+            })
+          })
+        } else {
+          this.Toast.fail({
+            title: res.data.msg
+          })
+        }
+      }, err => {
+        this.Toast.fail({
+          title: err
+        })
+      }).catch(err => {
+        this.Toast.fail({
+          title: err
+        })
+      })
+    },
+    loadBookType () {
+      this.$axios.bookType().then(res => {
         if (res.data.code === '0') {
           if (res.data.data.length === this.selects.length) {
             this.selectAll = true

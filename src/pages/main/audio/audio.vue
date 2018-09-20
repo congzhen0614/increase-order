@@ -17,7 +17,7 @@
           <p class="voice-list-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
           <span class="kada">咔哒故事</span>
           <div class="voice-list-button">
-            <span>购买</span>
+            <span @click="toBuy(item)">购买</span>
             <span @click="toShoppingcar(item)">加入购物车</span>
             <span @click="toList(item)">列表</span>
           </div>
@@ -45,6 +45,17 @@ export default {
   mounted () {
   },
   methods: {
+    toBuy (item) {
+      console.log('购买')
+      this.$router.push({
+        path: '/order',
+        query: {
+          selectMage: JSON.stringify([]),
+          selectBook: JSON.stringify([]),
+          selectSpyp: JSON.stringify([item])
+        }
+      })
+    },
     toShoppingcar (item) {
       let exist = false
       if (store.shoppingcarspyp.length > 0) {

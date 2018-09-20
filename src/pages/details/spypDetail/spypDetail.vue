@@ -22,7 +22,7 @@
           </div>
         </div>
         <ul>
-          <li class="spyp-list" v-for="item in spypList" :key="item.id">
+          <li class="spyp-list" v-for="(item, index) in spypList" :key="item.id">
             <div class="spyp-list-left">
               <img class="logo-icon" src="../../../assets/avatar.jpg">
               <img class="audio-icon" v-if="item.clsName === '音频'" src="../../../assets/audio-icon.png">
@@ -33,8 +33,9 @@
               <p class="spyp-list-brief">{{ item.introductions }}</p>
               <p class="spyp-list-price">￥<span class="big">{{ item.free | getInteger }}</span>{{ item.free | getFixed1 }}</p>
               <span class="chapter" @click="toChapter(item)">章节</span>
-              <img @click="onPlay" class="play-icon" src="../../../assets/play-icon.png"/>
-              <!--<img class="play-icon" src="../../../assets/paus-icon.png"/>-->
+              <img v-if="!item.isPlay && item.freeUrls.length > 0" @click="onPlay(item, index)" class="play-icon" src="../../../assets/play-icon.png"/>
+              <img v-if="item.isPlay" @click="onPaus(item, index)" class="play-icon" src="../../../assets/paus-icon.png"/>
+              <audio hidden ref="audio" :src="item.freeUrls[0]"></audio>
             </div>
           </li>
         </ul>
@@ -87,7 +88,12 @@ export default {
     loadSpypaudioalbumList () {
       this.$axios.spypaudioalbumList(this.params).then(res => {
         if (res.data.code === '0') {
-          this.spypList = res.data.data.list
+          let spypList = []
+          res.data.data.list.forEach(item => {
+            item.isPlay = false
+            spypList.push(item)
+          })
+          this.spypList = spypList
           this.pages.total = res.data.data.total
           this.loadMore = true
           this.$nextTick(() => {
@@ -131,14 +137,30 @@ export default {
     onMore () {
       this.$router.goBack()
     },
-    onPlay () {
-      console.log('play')
+    onPlay (item, index) {
+      this.$refs.audio.forEach((item, index) => {
+        this.spypList[index].isPlay = false
+        item.pause()
+      })
+      this.$refs.audio[index].play()
+      item.isPlay = true
+    },
+    onPaus (item, index) {
+      this.$refs.audio[index].pause()
+      item.isPlay = false
     },
     clickToTop () {
       this.scroller.scrollTo(0, 0, 500) // scrollTo(x, y, time)
     },
     onBuy (item) {
-      console.log(item)
+      this.$router.push({
+        path: '/order',
+        query: {
+          selectMage: JSON.stringify([]),
+          selectBook: JSON.stringify([]),
+          selectSpyp: JSON.stringify([item])
+        }
+      })
     },
     toShoppingCar (item) {
       let exist = false
@@ -149,9 +171,11 @@ export default {
           }
         })
         if (!exist) {
+          store.quantity += 1
           store.shoppingcarspyp.push(item)
         }
       } else {
+        store.quantity += 1
         store.shoppingcarspyp.push(item)
       }
     }
