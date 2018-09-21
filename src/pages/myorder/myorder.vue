@@ -1,8 +1,8 @@
 <template>
   <div class="solicit-subscription-myorder">
-    <div v-if="orderList.length === 0" class="no-content">
+    <div v-if="notLogin" class="no-content">
       <img src="../../assets/no-content-icon.png"/>
-      <span class="go-and-see-button" @click="goAndSee">去逛逛</span>
+      <span class="go-and-see-button" @click="goAndSee">去登录</span>
     </div>
     <ul v-if="orderList.length > 0">
       <li class="order-list" v-for="items in orderList" :key="items.id" @click="toDetail(items)">
@@ -79,6 +79,7 @@ export default {
   },
   data () {
     return {
+      notLogin: false,
       orderList: []
     }
   },
@@ -100,16 +101,15 @@ export default {
   methods: {
     goAndSee () {
       this.$router.push({
-        path: '/',
-        query: {
-          id: store.qrzdItemPackId
-        }
+        path: '/login'
       })
     },
     loadMyOrderList () {
       this.$axios.myOrderList(this.params).then(res => {
         if (res.data.code === '0') {
           this.orderList = res.data.data.list
+        } else if (res.data.code === '-6') {
+          this.notLogin = true
         } else {
           this.Toast.fail({title: res.data.msg})
         }

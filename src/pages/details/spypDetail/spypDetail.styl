@@ -72,10 +72,12 @@
             font-size 0.32rem
             color #333333
             font-weight 600
-            text-overflow ellipsis
-            white-space nowrap
-            overflow hidden
             margin-bottom 5px
+            overflow hidden
+            display -webkit-box
+            -webkit-line-clamp 2
+            text-overflow ellipsis
+            -webkit-box-orient vertical
           .header-brief
             font-size 0.24rem
             color #9C9890
@@ -114,17 +116,18 @@
               display block
               font-size 0.28rem
               height 0.64rem
-              padding 0 0.3rem
+              padding 0 0.25rem
               border-radius 0.64rem
               line-height 0.64rem
               background-color #ffffff
               margin-top 0.3rem
-              margin-right 0.2rem
+              margin-right 5px
     .spyp-list
       position relative
       padding 0.4rem 0.2rem
       .spyp-list-left
         position absolute
+        overflow hidden
         left 0.2rem
         top 0.4rem
         width 1.6rem
@@ -156,10 +159,12 @@
         font-size 0.32rem
         color #333333
         font-weight 600
-        text-overflow ellipsis
-        white-space nowrap
-        overflow hidden
         margin-bottom 5px
+        overflow hidden
+        display -webkit-box
+        -webkit-line-clamp 2
+        text-overflow ellipsis
+        -webkit-box-orient vertical
       .spyp-list-brief
         font-size 0.24rem
         color #9C9890

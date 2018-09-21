@@ -92,7 +92,6 @@ export default {
       })
     },
     publInfo () {
-      console.log(this.detail)
       this.$router.push({
         path: '/magaPress',
         query: {

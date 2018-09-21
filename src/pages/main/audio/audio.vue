@@ -2,8 +2,8 @@
   <div class="solicit-subscription-audio">
     <div class="voice-seek">
       <p>
-        <input type="text" v-model="packetname">
-        <img src="../../../assets/seek-logo.png" @click="onSearch">
+        <input ref="input" type="text" v-model="packetname" placeholder="在此输入包名称">
+        <img src="../../../assets/seek-logo.png" @click.stop="onSearch">
       </p>
     </div>
     <ul v-if="lists.length > 0">
@@ -82,6 +82,7 @@ export default {
       })
     },
     onSearch () {
+      this.$refs.input.blur()
       this.$emit('packetname', this.packetname)
     }
   },

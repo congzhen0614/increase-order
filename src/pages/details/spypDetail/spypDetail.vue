@@ -20,7 +20,7 @@
               <div class="header-button">
                 <span @click="onBuy(query)" class="buy-button">购买</span>
                 <span @click="toShoppingCar(query)">加入购物车</span>
-                <!--<span>赠品</span>-->
+                <span v-if="query.giftLogo !== '' || query.giftName !== ''" @click="toGift">赠品</span>
               </div>
             </div>
           </div>
@@ -28,7 +28,7 @@
         <ul>
           <li class="spyp-list" v-for="(item, index) in spypList" :key="item.id">
             <div class="spyp-list-left">
-              <img class="logo-icon" src="../../../assets/avatar.jpg">
+              <img class="logo-icon" :src="item.logo">
               <img class="audio-icon" v-if="item.clsName === '音频'" src="../../../assets/audio-icon.png">
               <img class="video-icon" v-if="item.clsName === '视频'" src="../../../assets/video-icon.png">
             </div>
@@ -87,6 +87,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.query)
     this.loadSpypaudioalbumList()
   },
   methods: {
@@ -190,6 +191,15 @@ export default {
         store.quantity += 1
         store.shoppingcarspyp.push(item)
       }
+    },
+    toGift () {
+      this.$router.push({
+        path: '/magaGift',
+        query: {
+          giftName: this.query.giftName,
+          giftLogo: this.query.giftLogo
+        }
+      })
     }
   },
   watch: {

@@ -10,7 +10,7 @@
           <img :src="item.logo">
         </div>
         <div class="content">
-          <p class="title">{{ item.name }}</p>
+          <p class="voice-list-title">{{ item.name }}</p>
           <p class="gift" v-if="item.giftName">
             <img src="../../../assets/gift-icon.png">
             {{ item.giftName }}

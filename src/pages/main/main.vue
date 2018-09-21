@@ -107,6 +107,7 @@ export default {
     },
     search (val) {
       this.packetname = val
+      this.lists = []
       this.loadItempackList()
     },
     loadItempackList () {
@@ -225,6 +226,9 @@ export default {
     navType () {
       this.pages.pageNum = 1
       this.lists = []
+      this.ageId = ''
+      this.typeId = ''
+      this.packetname = ''
       store.navType = this.navType
       this.loadItempackList()
     }

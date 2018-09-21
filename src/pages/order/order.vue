@@ -83,12 +83,12 @@
     </div>
     <div class="order-price">
       <div>商品金额<p>￥<span class="big">{{ total | getInteger }}</span>{{ total | getFixed1 }}</p></div>
-      <div v-if="selectBook.length > 0">图书运费<p>+<span class="big">{{ postage | getInteger }}</span>{{ postage | getFixed1 }}</p></div>
-      <div v-if="selectMage.length > 0">刊物运费<p>+<span class="big">{{ postageBook | getInteger }}</span>{{ postageBook | getFixed1 }}</p></div>
+      <div v-if="selectBook.length > 0">图书运费<p>+<span class="big">{{ postageBook | getInteger }}</span>{{ postageBook | getFixed1 }}</p></div>
+      <div v-if="selectMage.length > 0">刊物运费<p>+<span class="big">{{ postage | getInteger }}</span>{{ postage | getFixed1 }}</p></div>
     </div>
     <div class="order-footer">
       <span class="order-submit" @click="onSubmit">提交订单</span>
-      <p><span>实付款: </span>￥<span class="big">{{ total | getInteger }}</span>{{ total | getFixed1 }}</p>
+      <p><span>实付款: </span>￥<span class="big">{{ total + postage + postageBook | getInteger }}</span>{{ total + postage + postageBook | getFixed1 }}</p>
     </div>
   </div>
 </template>
@@ -116,6 +116,7 @@ export default {
         this.selectMage.forEach(item => {
           total += item.quantity * item.fee
         })
+        console.log(total)
         if (total >= store.postageSum) {
           return 0
         } else {
@@ -172,6 +173,10 @@ export default {
     }
   },
   mounted () {
+    // console.log(store.postageSum) // 杂志未满
+    // console.log(store.postage) // 杂志运费
+    // console.log(store.postageSumBook) // 图书未满
+    // console.log(store.postageBook) // 图书运费
     this.setItems()
   },
   methods: {
@@ -222,13 +227,19 @@ export default {
       })
     },
     onSubmit () {
+      if (this.params.addressId === '') {
+        this.Toast.warning({
+          title: '请选择地址'
+        })
+        return false
+      }
       this.$axios.tradeConfirm(this.params).then(res => {
         if (res.data.code === '0') {
           this.$router.push({
             path: '/pay',
             query: {
               no: res.data.data.no,
-              total: this.total,
+              total: this.total + this.postage + this.postageBook,
               cls: 55
             }
           })
