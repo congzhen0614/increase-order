@@ -1,8 +1,8 @@
 <template>
   <div class="solicit-subscription-myorder">
-    <div v-if="notLogin" class="no-content">
+    <div v-if="notLogin || orderList.length === 0" class="no-content">
       <img src="../../assets/no-content-icon.png"/>
-      <span class="go-and-see-button" @click="goAndSee">去登录</span>
+      <span v-if="notLogin" class="go-and-see-button" @click="goAndSee">去登录</span>
     </div>
     <ul v-if="orderList.length > 0">
       <li class="order-list" v-for="items in orderList" :key="items.id" @click="toDetail(items)">
@@ -11,7 +11,7 @@
           <span class="delete-icon" v-if="items.tradeStatus > 4" @click.stop="onDelete(items)">
             <img src="../../assets/order/delete-icon.png"/>
           </span>
-          <span class="order-status">{{ items.tradeStatusName }}</span>
+          <span class="order-status" v-if="items.tradeStatus !== 7 && items.tradeStatus !== 14">{{ items.tradeStatusName }}</span>
           <img v-if="items.tradeStatus === 14" src="../../assets/order/finish-icon.png"/>
           <img v-if="items.tradeStatus === 7" src="../../assets/order/refunded-icon.png"/>
         </div>
@@ -70,7 +70,6 @@
 </template>
 
 <script>
-import store from '@/store/store.js'
 import nav from '@/components/nav/nav.vue'
 export default {
   name: '',

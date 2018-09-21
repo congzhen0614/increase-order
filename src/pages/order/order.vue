@@ -116,7 +116,6 @@ export default {
         this.selectMage.forEach(item => {
           total += item.quantity * item.fee
         })
-        console.log(total)
         if (total >= store.postageSum) {
           return 0
         } else {
@@ -158,7 +157,7 @@ export default {
           total += item.quantity * item.fee
         })
       }
-      return total + this.postage + this.postageBook
+      return total
     },
     params () {
       let param = {
@@ -173,10 +172,6 @@ export default {
     }
   },
   mounted () {
-    // console.log(store.postageSum) // 杂志未满
-    // console.log(store.postage) // 杂志运费
-    // console.log(store.postageSumBook) // 图书未满
-    // console.log(store.postageBook) // 图书运费
     this.setItems()
   },
   methods: {
