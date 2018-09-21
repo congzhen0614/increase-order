@@ -33,6 +33,7 @@ let cutStr = (value, len) => {
   }
 }
 
+// 截取字段
 let cutString = (value, isCut) => {
   if (isCut) {
     return value.substring(0, 20) + '...'
@@ -41,8 +42,42 @@ let cutString = (value, isCut) => {
   }
 }
 
+// 时间格式
+let timeFormat = value => {
+  let date = new Date(value)
+  let Y = date.getFullYear()
+  let M, D, h, m, s
+  if (parseInt(date.getMonth() + 1).toString().length === 1) {
+    M = '0' + parseInt(date.getMonth() + 1)
+  } else {
+    M = parseInt(date.getMonth() + 1)
+  }
+  if (date.getDate().toString().length === 1) {
+    D = '0' + date.getDate()
+  } else {
+    D = date.getDate()
+  }
+  if (date.getHours().toString().length === 1) {
+    h = '0' + date.getHours()
+  } else {
+    h = date.getHours()
+  }
+  if (date.getMinutes().toString().length === 1) {
+    m = '0' + date.getMinutes()
+  } else {
+    m = date.getMinutes()
+  }
+  if (date.getSeconds().toString().length === 1) {
+    s = '0' + date.getSeconds()
+  } else {
+    s = date.getSeconds()
+  }
+  return Y + '-' + M + '-' + D + ' ' + h + ':' + m + ':' + s
+}
+
 export {
   getInteger,
+  timeFormat,
   getFixed1,
   getFixed2,
   cutString,

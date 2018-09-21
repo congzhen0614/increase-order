@@ -29,12 +29,13 @@ export default {
   },
   mounted () {
     if (this.isWeixin) {
+      this.isAlipay = false
       this.weixinPay()
     }
   },
   methods: {
     onSubmit () {
-      if (this.isAlipay) {
+      if (this.isWeixin) {
         this.aliPay()
       } else {
         this.weixinPay()
@@ -45,9 +46,9 @@ export default {
       let protocol = window.location.protocol // 协议
       let host = window.location.host
       let returnUrl = `${protocol}//${host}/result?href=${href}&success=true`
-      // this.Toast.loading({
-      //   title: '提交中...'
-      // })
+      this.Toast.loading({
+        title: '提交中...'
+      })
       let _data = {
         cls: this.$route.query.cls,
         no: this.$route.query.no,
@@ -59,14 +60,14 @@ export default {
           document.forms[0].submit()
         }
       }, err => {
-        console.log(err)
+        this.Toast.fail(err)
       })
     },
     weixinPay () {
       let _data = {
         cls: this.$route.query.cls,
         no: this.$route.query.no,
-        ip: window.returnCitySN.cip ? window.returnCitySN.cip : '127.0.0.1',
+        ip: '127.0.0.1',
         openid: localStorage.getItem('wxOpenId')
       }
       this.$axios.getOfficialAccountPrepayInfo(_data).then(res => {
@@ -76,7 +77,7 @@ export default {
         }
         this.upWeixinPay(res.data.data)
       }, err => {
-        console.log(err)
+        this.Toast.fail(err)
       })
     }
   }

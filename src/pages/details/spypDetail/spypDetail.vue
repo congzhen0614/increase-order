@@ -3,6 +3,10 @@
     <div class="wrapper" ref="wrapper" :style="secollHeight">
       <div class="content" ref="content">
         <div class="content-header">
+          <div class="shoppingcar" @click="toShoppingcar">
+            <span class="shopping-car-quantity" v-if="quantity > 0">{{ quantity }}</span>
+            <img src="../../../assets/shoppingcar-icon.png">
+          </div>
           <span class="more-list" @click="onMore">更多</span>
           <div class="header-content">
             <div class="header-left">
@@ -12,7 +16,7 @@
               <p class="header-title">{{ query.name }}</p>
               <p class="header-brief">{{ query.introductions }}</p>
               <p class="header-price">￥<span class="big">{{ query.fee | getInteger }}</span>{{ query.fee | getFixed1 }}</p>
-              <p class="header-kada">咔哒故事</p>
+              <p class="header-kada" v-if="query.provider === 1">咔哒故事</p>
               <div class="header-button">
                 <span @click="onBuy(query)" class="buy-button">购买</span>
                 <span @click="toShoppingCar(query)">加入购物车</span>
@@ -59,6 +63,7 @@ export default {
       scroller: '',
       scrollHeight: '',
       query: JSON.parse(this.$route.query.item),
+      quantity: store.quantity,
       spypList: [],
       loadMore: false,
       pages: {
@@ -137,6 +142,11 @@ export default {
     onMore () {
       this.$router.goBack()
     },
+    toShoppingcar () {
+      this.$router.push({
+        path: '/shoppingCar'
+      })
+    },
     onPlay (item, index) {
       this.$refs.audio.forEach((item, index) => {
         this.spypList[index].isPlay = false
@@ -171,10 +181,12 @@ export default {
           }
         })
         if (!exist) {
+          this.quantity += 1
           store.quantity += 1
           store.shoppingcarspyp.push(item)
         }
       } else {
+        this.quantity += 1
         store.quantity += 1
         store.shoppingcarspyp.push(item)
       }

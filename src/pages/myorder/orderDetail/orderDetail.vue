@@ -2,7 +2,7 @@
   <div class="order-detail">
     <header class="detail-header" :class="{'detail-finish': detailItem.tradeStatus === 14}">
       <span class="detail-status">{{ detailItem.tradeStatusName }}</span>
-      <p class="detail-date">日<span class="yin">隐</span>期: <span>{{ detailItem.createdAt }}</span></p>
+      <p class="detail-date">日<span class="yin">隐</span>期: <span>{{ detailItem.createdAt | timeFormat }}</span></p>
       <p class="detail-no">订单号: <span>{{ detailItem.no }}</span></p>
       <p class="detail-amount">总金额: <span>￥{{ detailItem.totalFee }}</span></p>
       <p class="detail-postage">邮<span class="yin">隐</span>费: <span>￥{{ detailItem.deliveryFee }}</span></p>

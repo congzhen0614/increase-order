@@ -1,17 +1,18 @@
 <template>
   <div class="school-address">
     <div class="no-address-list" v-if="addressList.length===0">
-      <img src="../../../assets/girls-icon.png"/>
+      <img src="../../../assets/no-content-icon.png"/>
       <p>暂无内容</p>
     </div>
     <ul class="school-address-list" v-if="addressList.length>0">
       <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="serviceArea.indexOf(item.regionName) > -1">
-        <img class="school-address-head" src="../../../assets/avatar.jpg"/>
+        <img v-if="sex === 0" class="school-address-head" src="../../../assets/girls-icon.png"/>
+        <img v-if="sex === 1" class="school-address-head" src="../../../assets/boys-icon.png"/>
         <img class="school-address-link" src="../../../assets/link-icon.png"/>
         <p class="school-address-title">
           <span class="child-name">{{ item.name }}</span>
-          <img v-if="sex===0" class="school-address-sex" src="../../../assets/boy-icon.png"/>
-          <img v-if="sex===1" class="school-address-sex" src="../../../assets/girl-icon.png"/>
+          <img v-if="sex === 1" class="school-address-sex" src="../../../assets/boy-icon.png"/>
+          <img v-if="sex === 0" class="school-address-sex" src="../../../assets/girl-icon.png"/>
         </p>
         <p class="school-address-content">{{ item.provinceName }}{{ item.cityName }}{{ item.regionName }}{{ item.schoolName }}{{ item.gradeName }}{{ item.defaultClassName }}</p>
       </li>
@@ -78,7 +79,8 @@ export default {
     },
     addHomeAddress () {
       this.$router.push({
-        path: '/addSchoolAddress'
+        path: '/addSchoolAddress',
+        query: this.$route.query
       })
     }
   },

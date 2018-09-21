@@ -7,7 +7,7 @@
     <ul v-if="orderList.length > 0">
       <li class="order-list" v-for="items in orderList" :key="items.id" @click="toDetail(items)">
         <div class="order-title">
-          <span class="order-time">下单日期: {{ items.createdAt }}</span>
+          <span class="order-time">下单日期: {{ items.createdAt | timeFormat }}</span>
           <span class="delete-icon" v-if="items.tradeStatus > 4" @click.stop="onDelete(items)">
             <img src="../../assets/order/delete-icon.png"/>
           </span>
@@ -23,7 +23,7 @@
             <div class="details-right">
               <p class="details-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
               <p class="details-tital">{{ item.name }}</p>
-              <p class="details-fee">{{ item.feeUnit }}</p>
+              <p class="details-fee" v-if="item.feeUnit">{{ item.feeUnit }}</p>
               <span class="details-quantity">{{ item.quantity }}</span>
             </div>
           </li>

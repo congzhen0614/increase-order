@@ -320,7 +320,8 @@ export default {
       this.$axios.childUpdate(this.form).then(res => {
         if (res.data.code === '0') {
           this.$router.push({
-            path: '/schoolAddress'
+            path: '/schoolAddress',
+            query: this.$route.query
           })
         } else {
           this.Toast.fail({title: res.data.msg})

@@ -51,7 +51,9 @@ export default {
             this.listData.push(item)
           })
         } else {
-          this.Toast.fail(res.data.data.msg)
+          this.Toast.fail({
+            title: res.data.msg
+          })
         }
       }, err => {
         this.Toast.fail(err)
