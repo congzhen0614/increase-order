@@ -31,7 +31,7 @@
     <div class="maga-light">
       <div class="star-five"></div>
       <p class="light-title">杂志亮点</p>
-      <p class="light-content">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</p>
+      <p class="light-content">{{ detail.memo }}</p>
     </div>
     <div class="periodical-content" v-html="detail.content">
     </div>

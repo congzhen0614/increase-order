@@ -51,11 +51,6 @@ export default {
       type: Number
     }
   },
-  created () {
-    console.log(this.detail)
-  },
-  mounted () {},
-  computed: {},
   methods: {
     clickShoppingCar () {
       this.$router.push({

@@ -213,14 +213,12 @@ export default {
   watch: {
     scrollHeight (val) { // 下拉到最下面加载更多
       if (val > this.$refs.content.offsetHeight - window.innerHeight && this.loadMore) {
-        this.loadMore = false
-        this.pages.pageNum += 1
         if (parseInt(this.pages.total / this.pages.pageSize) < this.pages.pageNum) {
-          this.Toast.warning({
-            title: '没有更多了'
-          })
+          this.Toast.warning({title: '没有更多了'})
           return
         }
+        this.loadMore = false
+        this.pages.pageNum += 1
         this.loadItempackList()
       }
     },
