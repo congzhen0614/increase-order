@@ -22,5 +22,6 @@ export default {
   postage: '', // 杂志需要多少邮费
   postageSumBook: '', // 图书未满多少金额
   postageBook: '', // 图书需要多少邮费
-  quantity: 0
+  quantity: 0,
+  schoolLevel: '' // 学校类型
 }

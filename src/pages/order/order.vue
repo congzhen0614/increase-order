@@ -222,7 +222,7 @@ export default {
       })
     },
     onSubmit () {
-      if (this.params.addressId === '') {
+      if (this.params.addressId === '' && this.params.child === '') {
         this.Toast.warning({
           title: '请选择地址'
         })

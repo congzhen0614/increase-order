@@ -175,6 +175,7 @@ export default {
     },
     loadSchoolList () {
       let params = {
+        schoolLevel: store.schoolLevel,
         adminId: store.id,
         regionId: this.form.regionId
       }

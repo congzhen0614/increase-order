@@ -123,6 +123,7 @@ export default {
           store.postage = res.data.data.postage
           store.postageSumBook = res.data.data.postageSumBook
           store.postageBook = res.data.data.postageBook
+          store.schoolLevel = res.data.data.schoolLevel
           this.hasMage = res.data.data.hasMagazine
           this.hasBook = res.data.data.hasBook
           this.hasSpyp = res.data.data.hasPacket
