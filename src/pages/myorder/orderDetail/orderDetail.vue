@@ -100,7 +100,7 @@
         <span v-if="detail.packetsTradeStatus === 2">已购</span>
       </p>
       <ul>
-        <li v-for="item in spypList" :key="item.id">
+        <li v-for="item in spypList" :key="item.id" @click="toApp">
           <div class="detail-left">
             <img src="../../../assets/avatar.jpg"/>
           </div>
@@ -120,6 +120,8 @@ export default {
   components: {},
   data () {
     return {
+      iosDownload: 'https://itunes.apple.com/us/app/wei-xiao-wang/id885798822?l=zh&ls=1&mt=8',
+      androidDownload: 'http://a.app.qq.com/o/simple.jsp?pkgname=com.hzxuanma.wwwdr',
       detailItem: JSON.parse(this.$route.query.item),
       isCut: true,
       detail: {},
@@ -206,6 +208,20 @@ export default {
           no: this.detailItem.no,
           total: this.detailItem.receivables,
           cls: 55
+        }
+      })
+    },
+    toApp () {
+      this.Dialog.alert({
+        title: '温馨提示',
+        msg: '已购电子读物请到【校网APP】-【我的】-【我的电子读物】内查询收听'
+      }, res => {
+        if (res.buttonIndex === 2) {
+          if (this.isIos) {
+            window.location.href = this.iosDownload
+          } else {
+            window.location.href = this.androidDownload
+          }
         }
       })
     },
