@@ -13,11 +13,11 @@
         </span>
         <!--<span class="price-black">(8.5折)</span>-->
       </p>
-      <div class="shoppingCar-quantity">
-        <img src="../../../assets/minus-icon.png" v-if="query.quantity > 0" @click.stop="clickReduce(query)"/>
-        <span v-if="query.quantity > 0">{{ query.quantity }}</span>
-        <img src="../../../assets/add-icon.png" @click.stop="clickAdd(query)"/>
-      </div>
+      <!--<div class="shoppingCar-quantity">-->
+        <!--<img src="../../../assets/minus-icon.png" v-if="query.quantity > 0" @click.stop="clickReduce(query)"/>-->
+        <!--<span v-if="query.quantity > 0">{{ query.quantity }}</span>-->
+        <!--<img src="../../../assets/add-icon.png" @click.stop="clickAdd(query)"/>-->
+      <!--</div>-->
       <p class="original-price">原价: {{ detail.originalFee | getInteger }}{{  detail.originalFee | getFixed1 }}</p>
       <!--<p class="detail-points">-->
         <!--<img src="../../../assets/points-icon.png"/>-->

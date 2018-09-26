@@ -9,11 +9,11 @@
         <span class="age" v-if="detail.ageNames !== ''">{{ detail.ageNames }}</span>
       </p>
       <p class="transport-costs">运费: <span>免运费</span></p>
-      <div class="shoppingCar-quantity">
-        <img src="../../../assets/minus-icon.png" v-if="query.quantity > 0" @click="clickReduce(query)"/>
-        <span v-if="query.quantity > 0">{{ query.quantity }}</span>
-        <img src="../../../assets/add-icon.png" @click="clickAdd(query)"/>
-      </div>
+      <!--<div class="shoppingCar-quantity">-->
+        <!--<img src="../../../assets/minus-icon.png" v-if="query.quantity > 0" @click="clickReduce(query)"/>-->
+        <!--<span v-if="query.quantity > 0">{{ query.quantity }}</span>-->
+        <!--<img src="../../../assets/add-icon.png" @click="clickAdd(query)"/>-->
+      <!--</div>-->
       <p class="detail-price">
         <span class="price-red">
           ￥<span class="big">{{ detail.fee | getInteger }}</span>{{ detail.fee | getFixed1 }}
