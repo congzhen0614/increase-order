@@ -4,8 +4,6 @@
  * creationTime: 2018/06/27
  */
 import axios from 'axios'
-// import Vue from 'vue'
-// import router from '../router'
 import qs from 'qs'
 
 // 设置headers
@@ -20,10 +18,6 @@ axios.interceptors.request.use(config => {
 
 // 设置重定向
 axios.interceptors.response.use(response => {
-  // if (response.data.code === '-6') {
-  //   localStorage.clear()
-  //   new Vue({router}).$router.push({path: '/login'})
-  // }
   return response
 }, err => {
   return Promise.reject(err)
