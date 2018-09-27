@@ -5,7 +5,7 @@
       <p>暂无内容</p>
     </div>
     <ul class="address-list" v-if="addressList.length>0">
-      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)">
+      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="serviceArea.indexOf(item.regionName) > -1">
         <div class="address-list-right">
           <img src="../../../assets/link-icon.png"/>
         </div>
@@ -29,13 +29,15 @@ export default {
   components: {},
   data () {
     return {
-      addressList: []
+      addressList: [],
+      serviceArea: ''
     }
   },
   created () {
   },
   mounted () {
     this.loadAddress()
+    this.loadAccountListarea()
   },
   computed: {},
   methods: {
@@ -56,6 +58,20 @@ export default {
         this.Toast.fail({
           title: err
         })
+      })
+    },
+    loadAccountListarea () {
+      this.$axios.accountListarea({id: store.id}).then(res => {
+        if (res.data.code === '0') {
+          this.serviceArea = JSON.stringify(res.data.data.area)
+          console.log(this.serviceArea)
+        } else {
+          this.Toast.fail({title: res.data.msg})
+        }
+      }, err => {
+        this.Toast.fail({title: err})
+      }).catch(err => {
+        this.Toast.fail({title: err})
       })
     },
     selectAddress (item) {
