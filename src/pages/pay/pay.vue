@@ -36,9 +36,9 @@ export default {
   methods: {
     onSubmit () {
       if (this.isWeixin) {
-        this.aliPay()
-      } else {
         this.weixinPay()
+      } else {
+        this.aliPay()
       }
     },
     aliPay () {

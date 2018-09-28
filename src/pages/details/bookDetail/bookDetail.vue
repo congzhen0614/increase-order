@@ -6,28 +6,28 @@
         <span>{{ detail.name }}</span>
         <img v-if="detail.hardcover === '精装'" src="../../../assets/hardback-icon.png"/>
       </p>
-      <p class="age-bracket">{{ detail.ageNames }}</p>
+      <p class="age-bracket">适读年龄({{ detail.ageNames }})</p>
       <p class="detail-price">
         <span class="price-red">
           ￥<span class="big">{{ detail.lastFee | getInteger }}</span>{{ detail.lastFee | getFixed1 }}
         </span>
-        <!--<span class="price-black">(8.5折)</span>-->
+        <span class="price-black" v-if="detail.originalFee">({{ discount }}折)</span>
       </p>
       <!--<div class="shoppingCar-quantity">-->
         <!--<img src="../../../assets/minus-icon.png" v-if="query.quantity > 0" @click.stop="clickReduce(query)"/>-->
         <!--<span v-if="query.quantity > 0">{{ query.quantity }}</span>-->
         <!--<img src="../../../assets/add-icon.png" @click.stop="clickAdd(query)"/>-->
       <!--</div>-->
-      <p class="original-price">原价: {{ detail.originalFee | getInteger }}{{  detail.originalFee | getFixed1 }}</p>
+      <p class="original-price" v-if="detail.originalFee">原价: {{ detail.originalFee | getInteger }}{{  detail.originalFee | getFixed1 }}</p>
       <!--<p class="detail-points">-->
         <!--<img src="../../../assets/points-icon.png"/>-->
         <!--<span>100积分=0.10元 (最多可用500积分)</span>-->
       <!--</p>-->
     </section>
-    <div class="title-bottom">
-      <p>运费:<span>免运费</span></p>
-      <p>全网销量:<span>1000</span></p>
-    </div>
+    <!--<div class="title-bottom">-->
+      <!--<p>运费:<span>免运费</span></p>-->
+      <!--<p>全网销量:<span>1000</span></p>-->
+    <!--</div>-->
     <div class="detile-interval"></div>
     <div class="store-info">
       <p><span class="shipments-icon"></span>由微校网发货&售后</p>
@@ -57,6 +57,14 @@ export default {
     'v-comment': comment,
     'v-details-footer': detailsFooter
   },
+  computed: {
+    discount () {
+      if (this.detail.originalFee) {
+        let discount = this.detail.lastFee / this.detail.originalFee
+        return Math.ceil(discount * 10)
+      }
+    }
+  },
   data () {
     return {
       bannerHeight: window.innerWidth * 0.6 + 'px',
@@ -76,6 +84,7 @@ export default {
         if (res.data.code === '0') {
           this.listImg = res.data.data.detailImgs
           this.detail = res.data.data
+          console.log(this.detail)
         } else {
           this.Toast.fail({title: res.data.msg})
         }
