@@ -16,17 +16,10 @@ axios.interceptors.request.use(config => {
   return Promise.reject(err)
 })
 
-// 设置重定向
-axios.interceptors.response.use(response => {
-  return response
-}, err => {
-  return Promise.reject(err)
-})
-
 export default {
   login (params) { // 登录
     let param = qs.stringify(params)
-    return axios.get(`api/user/login?${param}`)
+    return axios.get(`/api/user/login?${param}`)
   },
   itempackList (params) { // 首页数据
     let param = qs.stringify(params)

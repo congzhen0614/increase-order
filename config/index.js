@@ -6,23 +6,21 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/qrzd': {
-        target: 'http://192.168.0.230:8081/qrzd',
+      '/qrzd': { // 正式: https://qrapi.51weixiao.com/qrzd 测试: http://192.168.0.230:8081/qrzd
+        target: 'https://qrapi.51weixiao.com/qrzd',
         changeOrigin: true,
         pathRewrite: {'^/qrzd': ''}
       },
       '/api': {// 正式: http://app.51weixiao.com/app-api/api 测试: http://192.168.0.231:8080/app-api/api
-        target: 'http://192.168.0.231:8080/app-api/api',
+        target: 'http://app.51weixiao.com/app-api/api',
         changeOrigin: true,
         pathRewrite: {'^/api': ''}
       }
     },
-
     // Various Dev Server settings
     host: '192.168.0.48', // can be overwritten by process.env.HOST
     port: 8090, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
