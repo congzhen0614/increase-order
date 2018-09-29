@@ -61,7 +61,7 @@ export default {
     discount () {
       if (this.detail.originalFee) {
         let discount = this.detail.lastFee / this.detail.originalFee
-        return Math.ceil(discount * 10)
+        return (discount * 10).toFixed(1)
       }
     }
   },
@@ -84,7 +84,6 @@ export default {
         if (res.data.code === '0') {
           this.listImg = res.data.data.detailImgs
           this.detail = res.data.data
-          console.log(this.detail)
         } else {
           this.Toast.fail({title: res.data.msg})
         }

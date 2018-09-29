@@ -100,6 +100,7 @@ export default {
       })
     },
     onCheckAll () {
+      this.selects = []
       this.dataList.forEach(item => {
         this.selects.push(item)
         item.select = 1

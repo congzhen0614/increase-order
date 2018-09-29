@@ -58,6 +58,10 @@ export default {
       })
     },
     clickBuy () {
+      if (this.detail.quantity <= 0) {
+        this.Toast.warning({title: '请先选择商品数量才能下单'})
+        return
+      }
       if (this.detailType === 1) {
         if (this.detail.quantity === 0) this.detail.quantity = 1
         this.$router.push({
@@ -80,52 +84,47 @@ export default {
       }
     },
     addShoppingCar () {
-      if (!this.isShowShadow) {
-        this.isShowShadow = true
-      } else {
-        this.isShowShadow = false
-        if (this.detailType === 1) {
-          if (store.shoppingcarMage.length === 0) {
-            if (this.detail.quantity === 0) this.detail.quantity = 1
-            store.shoppingcarMage.push(this.detail)
-          } else {
-            store.shoppingcarMage.forEach((item, index) => {
-              if (item.id === this.detail.id) {
-                if (item.quantity === 0) {
-                  store.shoppingcarMage.splice(index, 1)
-                } else {
-                  item.quantity = this.detail.quantity
-                }
-              }
-            })
-          }
+      if (this.detailType === 1) {
+        if (store.shoppingcarMage.length === 0) {
+          if (this.detail.quantity === 0) this.detail.quantity = 1
+          store.shoppingcarMage.push(this.detail)
         } else {
-          if (store.shoppingcarBook.length === 0) {
-            if (this.detail.quantity === 0) this.detail.quantity = 1
-            store.shoppingcarBook.push(this.detail)
-          } else {
-            store.shoppingcarBook.forEach((item, index) => {
-              if (item.id === this.detail.id) {
-                if (item.quantity === 0) {
-                  store.shoppingcarBook.splice(index, 1)
-                } else {
-                  item.quantity = this.detail.quantity
-                }
+          store.shoppingcarMage.forEach((item, index) => {
+            if (item.id === this.detail.id) {
+              if (item.quantity === 0) {
+                store.shoppingcarMage.splice(index, 1)
+              } else {
+                item.quantity += 1
               }
-            })
-          }
+            }
+          })
         }
-        store.quantity = 0
-        store.shoppingcarMage.forEach(item => {
-          store.quantity += item.quantity
-        })
-        store.shoppingcarBook.forEach(item => {
-          store.quantity += item.quantity
-        })
-        store.shoppingcarspyp.forEach(item => {
-          store.quantity += item.quantity
-        })
+      } else {
+        if (store.shoppingcarBook.length === 0) {
+          if (this.detail.quantity === 0) this.detail.quantity = 1
+          store.shoppingcarBook.push(this.detail)
+        } else {
+          store.shoppingcarBook.forEach((item, index) => {
+            if (item.id === this.detail.id) {
+              if (item.quantity === 0) {
+                store.shoppingcarBook.splice(index, 1)
+              } else {
+                item.quantity += 1
+              }
+            }
+          })
+        }
       }
+      store.quantity = 0
+      store.shoppingcarMage.forEach(item => {
+        store.quantity += item.quantity
+      })
+      store.shoppingcarBook.forEach(item => {
+        store.quantity += item.quantity
+      })
+      store.shoppingcarspyp.forEach(item => {
+        store.quantity += item.quantity
+      })
     }
   },
   watch: {

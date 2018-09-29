@@ -2,7 +2,7 @@
   <div class="spyp-album">
     <div class="spyp-album-header">
       <div class="header-left">
-        <img class="logo-icon" src="../../../../assets/avatar.jpg">
+        <img class="logo-icon" :src="query.logo">
         <img class="play-icon" src="../../../../assets/audio-icon.png">
         <img class="play-icon" src="../../../../assets/video-icon.png">
       </div>
@@ -39,6 +39,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.query)
     this.loadSpypaudioList()
   },
   methods: {

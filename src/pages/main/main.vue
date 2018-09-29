@@ -70,11 +70,12 @@ export default {
     }
   },
   created () {
+    this.Toast.loading({
+      title: '加载中...'
+    })
     store.qrzdItemPackId = this.$route.query.id
     setTimeout(() => {
-      if (this.ageId === '' && this.typeId === '') {
-        this.loadItempackList()
-      }
+      this.loadItempackList()
     }, 300)
   },
   computed: {
@@ -97,13 +98,9 @@ export default {
   methods: {
     ageChange (val) {
       this.ageId = val
-      this.lists = []
-      this.loadItempackList()
     },
     typeChange (val) {
       this.typeId = val
-      this.lists = []
-      this.loadItempackList()
     },
     search (val) {
       this.packetname = val
