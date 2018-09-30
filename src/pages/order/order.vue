@@ -95,13 +95,14 @@
 
 <script>
 import store from '@/store/store.js'
+import shoppingcar from '@/store/shoppingcar.js'
 export default {
   name: 'order-list',
   data () {
     return {
-      selectMage: JSON.parse(this.$route.query.selectMage),
-      selectBook: JSON.parse(this.$route.query.selectBook),
-      selectSpyp: JSON.parse(this.$route.query.selectSpyp),
+      selectMage: shoppingcar.list.selectMage,
+      selectBook: shoppingcar.list.selectBook,
+      selectSpyp: shoppingcar.list.selectSpyp,
       sendType: store.sendType,
       address: store.address,
       child: store.child,
@@ -172,6 +173,7 @@ export default {
     }
   },
   mounted () {
+    console.log(shoppingcar)
     this.setItems()
   },
   methods: {

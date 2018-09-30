@@ -105,6 +105,7 @@
 
 <script>
 import store from '@/store/store.js'
+import shoppingcar from '@/store/shoppingcar.js'
 import nav from '@/components/nav/nav.vue'
 export default {
   name: 'solicit-subscription-shoppingcar',
@@ -236,13 +237,11 @@ export default {
         })
         return
       }
+      shoppingcar.list.selectMage = selectMage
+      shoppingcar.list.selectBook = selectBook
+      shoppingcar.list.selectSpyp = selectSpyp
       this.$router.push({
-        path: '/order',
-        query: {
-          selectMage: JSON.stringify(selectMage),
-          selectBook: JSON.stringify(selectBook),
-          selectSpyp: JSON.stringify(selectSpyp)
-        }
+        path: '/order'
       })
     }
   },
