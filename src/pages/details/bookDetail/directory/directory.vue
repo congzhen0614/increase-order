@@ -13,11 +13,12 @@
 </template>
 
 <script>
+import detail from '@/store/detail.js'
 export default {
   name: 'book-directory',
   data () {
     return {
-      detail: JSON.parse(this.$route.query.item)
+      detail: detail.detail
     }
   }
 }

@@ -3,8 +3,8 @@
     <div class="spyp-album-header">
       <div class="header-left">
         <img class="logo-icon" :src="query.logo">
-        <img class="play-icon" src="../../../../assets/audio-icon.png">
-        <img class="play-icon" src="../../../../assets/video-icon.png">
+        <img class="play-icon" v-if="query.clsName === '音频'" src="../../../../assets/audio-icon.png">
+        <img class="play-icon" v-if="query.clsName === '视频'" src="../../../../assets/video-icon.png">
       </div>
       <div class="header-right">
         <p class="spyp-list-title">{{ query.name }}</p>
@@ -39,7 +39,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.query)
     this.loadSpypaudioList()
   },
   methods: {

@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import detail from '@/store/detail.js'
 import swiper from '@/components/swiper/swiper.vue'
 import comment from '@/components/comment/comment.vue'
 import detailsFooter from '@/components/detailsFooter/detailsFooter.vue'
@@ -113,25 +114,19 @@ export default {
     },
     toProductDetail (type) {
       if (type === 1) {
+        detail.detail = this.detail
         this.$router.push({
-          path: '/detail',
-          query: {
-            item: JSON.stringify(this.detail)
-          }
+          path: '/detail'
         })
       } else if (type === 2) {
+        detail.detail = this.detail
         this.$router.push({
-          path: '/directory',
-          query: {
-            item: JSON.stringify(this.detail)
-          }
+          path: '/directory'
         })
       } else {
+        detail.detail = this.detail
         this.$router.push({
-          path: '/published',
-          query: {
-            item: JSON.stringify(this.detail)
-          }
+          path: '/published'
         })
       }
     },

@@ -1,6 +1,6 @@
 <template>
   <div class="book-details">
-    <div class="no-detaails" v-if="!detail.html">
+    <div class="no-detaails" v-if="!detail">
       <img src="../../../../assets/no-content-icon.png"/>
       <p>暂无内容</p>
     </div>
@@ -9,11 +9,12 @@
 </template>
 
 <script>
+import detail from '@/store/detail.js'
 export default {
   name: 'book-details',
   data () {
     return {
-      detail: JSON.parse(this.$route.query.item)
+      detail: detail.detail
     }
   }
 }
