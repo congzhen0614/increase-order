@@ -16,38 +16,38 @@
           <img v-if="items.tradeStatus === 7" src="../../assets/order/refunded-icon.png"/>
         </div>
         <ul class="maga-list" v-if="items.tradeDetails.magazines.length > 0">
-          <li class="details-list" v-for="item in items.tradeDetails.magazines" :key="item.id">
+          <li class="details-list">
             <div class="details-left">
-              <img :src="item.logo">
+              <img :src="items.tradeDetails.magazines[0].logo">
             </div>
             <div class="details-right">
-              <p class="details-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
-              <p class="details-tital">{{ item.name }}</p>
-              <p class="details-fee" v-if="item.feeUnit">{{ item.feeUnit }}</p>
-              <span class="details-quantity">{{ item.quantity }}</span>
+              <p class="details-price">￥<span class="big">{{ items.tradeDetails.magazines[0].fee | getInteger }}</span>{{ items.tradeDetails.magazines[0].fee | getFixed1 }}</p>
+              <p class="details-tital">{{ items.tradeDetails.magazines[0].name }}</p>
+              <p class="details-fee" v-if="items.tradeDetails.magazines[0].feeUnit">{{ items.tradeDetails.magazines[0].feeUnit }}</p>
+              <span class="details-quantity">{{ items.tradeDetails.magazines[0].quantity }}</span>
             </div>
           </li>
         </ul>
         <ul class="book-list" v-if="items.tradeDetails.books.length > 0">
-          <li class="details-list" v-for="item in items.tradeDetails.books" :key="item.id">
+          <li class="details-list">
             <div class="details-left">
-              <img :src="item.logo">
+              <img :src="items.tradeDetails.books[0].logo">
             </div>
             <div class="details-right">
-              <p class="details-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
-              <p class="details-tital">{{ item.name }}</p>
-              <span class="details-quantity">{{ item.quantity }}</span>
+              <p class="details-price">￥<span class="big">{{ items.tradeDetails.books[0].fee | getInteger }}</span>{{ items.tradeDetails.books[0].fee | getFixed1 }}</p>
+              <p class="details-tital">{{ items.tradeDetails.books[0].name }}</p>
+              <span class="details-quantity">{{ items.tradeDetails.books[0].quantity }}</span>
             </div>
           </li>
         </ul>
         <ul class="spyp-list" v-if="items.tradeDetails.packets.length > 0">
-          <li class="details-list" v-for="item in items.tradeDetails.packets" :key="item.id">
+          <li class="details-list">
             <div class="details-left">
-              <img :src="item.logo">
+              <img :src="items.tradeDetails.packets[0].logo">
             </div>
             <div class="details-right">
-              <p class="details-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
-              <p class="details-tital">{{ item.name }}</p>
+              <p class="details-price">￥<span class="big">{{ items.tradeDetails.packets[0].fee | getInteger }}</span>{{ items.tradeDetails.packets[0].fee | getFixed1 }}</p>
+              <p class="details-tital">{{ items.tradeDetails.packets[0].name }}</p>
               <!--<span class="details-quantity">{{ item.quantity }}</span>-->
             </div>
           </li>
