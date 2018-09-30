@@ -173,7 +173,6 @@ export default {
     }
   },
   mounted () {
-    console.log(shoppingcar)
     this.setItems()
   },
   methods: {
@@ -250,6 +249,10 @@ export default {
               total: this.total + this.postage + this.postageBook,
               cls: 55
             }
+          })
+        } if (res.data.code === '-6') {
+          this.$router.push({
+            path: '/login'
           })
         } else {
           this.Toast.fail({title: res.data.msg})

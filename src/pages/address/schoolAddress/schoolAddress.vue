@@ -3,6 +3,7 @@
     <div class="no-address-list" v-if="addressList.length===0">
       <img src="../../../assets/no-content-icon.png"/>
       <p>暂无内容</p>
+      <span class="go-login" @click="goLogin">去登录</span>
     </div>
     <ul class="school-address-list" v-if="addressList.length>0">
       <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="serviceArea.indexOf(item.regionName) > -1">
@@ -17,7 +18,7 @@
         <p class="school-address-content">{{ item.provinceName }}{{ item.cityName }}{{ item.regionName }}{{ item.schoolName }}{{ item.gradeName }}{{ item.defaultClassName }}</p>
       </li>
     </ul>
-    <div class="add-adress" @click.stop="addHomeAddress()">添加</div>
+    <div class="add-adress" @click.stop="addHomeAddress()" v-if="isLogin">添加</div>
   </div>
 </template>
 
@@ -30,6 +31,7 @@ export default {
     return {
       addressList: [],
       serviceArea: '',
+      isLogin: false,
       sex: 0
     }
   },
@@ -42,6 +44,9 @@ export default {
       this.$axios.childList().then(res => {
         if (res.data.code === '0') {
           this.addressList = res.data.data
+          this.isLogin = true
+        } else if (res.data.code === '-6') {
+          this.isLogin = false
         } else {
           this.Toast.fail({
             title: res.data.msg
@@ -81,6 +86,11 @@ export default {
       this.$router.push({
         path: '/addSchoolAddress',
         query: this.$route.query
+      })
+    },
+    goLogin () {
+      this.$router.push({
+        path: '/login'
       })
     }
   },

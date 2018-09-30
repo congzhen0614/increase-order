@@ -3,9 +3,10 @@
     <div class="no-address-list" v-if="addressList.length===0">
       <img src="../../../assets/no-content-icon.png"/>
       <p>暂无内容</p>
+      <span v-if="!isLogin" class="go-login" @click="goLogin">去登录</span>
     </div>
     <ul class="address-list" v-if="addressList.length>0">
-      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="serviceArea.indexOf(item.regionName) > -1">
+      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)">
         <div class="address-list-right">
           <img src="../../../assets/link-icon.png"/>
         </div>
@@ -18,7 +19,7 @@
         </div>
       </li>
     </ul>
-    <div class="add-adress" @click.stop="addHomeAddress()">添加</div>
+    <div v-if="isLogin" class="add-adress" @click.stop="addHomeAddress()">添加</div>
   </div>
 </template>
 
@@ -30,14 +31,15 @@ export default {
   data () {
     return {
       addressList: [],
-      serviceArea: ''
+      serviceArea: '',
+      isLogin: false
     }
   },
   created () {
   },
   mounted () {
     this.loadAddress()
-    this.loadAccountListarea()
+    // this.loadAccountListarea()
   },
   computed: {},
   methods: {
@@ -45,6 +47,9 @@ export default {
       this.$axios.addressList().then(res => {
         if (res.data.code === '0') {
           this.addressList = res.data.data
+          this.isLogin = true
+        } else if (res.data.code === '-6') {
+          this.isLogin = false
         } else {
           this.Toast.fail({
             title: res.data.msg
@@ -64,7 +69,6 @@ export default {
       this.$axios.accountListarea({id: store.id}).then(res => {
         if (res.data.code === '0') {
           this.serviceArea = JSON.stringify(res.data.data.area)
-          console.log(this.serviceArea)
         } else {
           this.Toast.fail({title: res.data.msg})
         }
@@ -84,6 +88,11 @@ export default {
     addHomeAddress () {
       this.$router.push({
         path: '/addHomeAddress'
+      })
+    },
+    goLogin () {
+      this.$router.push({
+        path: '/login'
       })
     }
   },

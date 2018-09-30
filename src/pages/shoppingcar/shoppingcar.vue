@@ -10,6 +10,7 @@
           <img v-if="!selectMage" @click="selectMage = true" src="../../assets/check-icon.png">
           <img v-if="selectMage" @click="selectMage = false" src="../../assets/checked-icon.png">
           <span>刊物</span>
+          <span class="postage" v-if="postageSum > 0">满{{ postageSum }}元包邮</span>
         </header>
         <ul>
           <li v-for="(item, index) in mageList" :key="item.id" :class="{lastChild: mageLength === index + 1}">
@@ -39,6 +40,7 @@
           <img v-if="!selectBook" @click="selectBook = true" src="../../assets/check-icon.png">
           <img v-if="selectBook" @click="selectBook = false" src="../../assets/checked-icon.png">
           <span>图书</span>
+          <span class="postage" v-if="postageSum > 0">满{{ postageSumBook }}元包邮</span>
         </header>
         <ul>
           <li v-for="(item, index) in bookList" :key="item.id" :class="{lastChild: mageLength === index + 1}">
@@ -125,7 +127,9 @@ export default {
       selectBook: false,
       selectSpyp: false,
       accounts: store.accounts,
-      total: store.total
+      total: store.total,
+      postageSum: store.postageSum,
+      postageSumBook: store.postageSumBook
     }
   },
   mounted () {},
