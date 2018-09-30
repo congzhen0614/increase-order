@@ -5,7 +5,7 @@
         <span class="text">退款原因</span>
         <img src="./must_select.png">
       </p>
-      <div @click="showSelector()" class="refund-type" :class="{ hasVal: reason }">{{ reason || '请选择退款类型'}}</div>
+      <div @click="showSelector()" class="refund-type" :class="{ hasVal: refundReason }">{{ refundReason || '请选择退款类型'}}</div>
     </section>
     <!-- 退款说明 -->
     <section class="refund-explain">
@@ -14,7 +14,7 @@
         <img src="./not_must_select.png">
       </p>
       <div class="explain-box">
-        <textarea class="explain-area" placeholder="请在此输入退款说明" v-model="refundReason"></textarea>
+        <textarea class="explain-area" placeholder="请在此输入退款说明" v-model="reason"></textarea>
       </div>
     </section>
     <!-- 图片 -->
@@ -78,7 +78,7 @@ export default {
   mounted () {
     // 选择
     this.picker.on('picker.select', (index, selectedIndex) => {
-      this.reason = this.relationList[index].text
+      this.refundReason = this.relationList[index].text
     })
   },
   computed: {

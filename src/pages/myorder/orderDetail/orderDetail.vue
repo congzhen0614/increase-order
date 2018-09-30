@@ -212,6 +212,7 @@ export default {
       })
     },
     toApp () {
+      if (this.detailItem.tradeStatus !== 2) return
       this.Dialog.alert({
         title: '温馨提示',
         msg: '已购电子读物请到【校网APP】-【我的】-【我的电子读物】内查询收听'

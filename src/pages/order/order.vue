@@ -1,6 +1,6 @@
 <template>
   <div class="order-list">
-    <div class="order-address" v-if="selectBook.length > 0 || sendType === 1">
+    <div class="order-address" v-if="selectBook.length > 0">
       <div class="order-address-bg"></div>
       <div class="order-address-content" @click="checkBookAddress">
         <div class="content-left">
@@ -15,11 +15,28 @@
       </div>
       <div class="order-address-bg"></div>
     </div>
+    <!-- 杂志地址 -->
+    <div class="order-address" v-if="selectMage.length > 0 && sendType === 1">
+      <div class="order-address-bg"></div>
+      <div class="order-address-content" @click="checkBookAddress">
+        <div class="content-left">
+          <p class="no-address" v-if="address === ''">请填写您的杂志收货地址</p>
+          <span v-if="address !== ''" class="address-name">{{ address.name}}</span>
+          <span  v-if="address !== ''" class="address-phone">{{ address.mobile }}</span>
+          <p  v-if="address !== ''" class="address-content">{{ address.provinceName }}{{ address.cityName }}{{ address.regionName }}{{ address.address }}</p>
+        </div>
+        <div class="content-right">
+          <img src="../../assets/link-icon.png">
+        </div>
+      </div>
+      <div class="order-address-bg"></div>
+    </div>
+    <!-- 孩子 -->
     <div class="order-address" v-if="selectMage.length > 0 && sendType === 0">
       <div class="order-address-bg"></div>
       <div class="order-address-content" @click="checkMagaAddress">
         <div class="content-left">
-          <p class="no-address" v-if="child === ''">请填写您的杂志收货地址</p>
+          <p class="no-address" v-if="child === ''">请填写您的孩子</p>
           <span class="address-name" v-if="child !== ''">{{ child.name }}</span>
           <span class="address-phone" v-if="child !== ''">{{ child.mobile }}</span>
           <p class="address-content" v-if="child !== ''">{{ child.provinceName }}{{ child.cityName }}{{ child.regionName }}{{ child.schoolName }}{{ child.gradeName }}{{ child.defaultClassName }}</p>
@@ -164,10 +181,15 @@ export default {
       let param = {
         uid: JSON.parse(localStorage.getItem('user')).id,
         childId: store.child.id ? store.child.id : '',
-        addressId: store.address.id ? store.address.id : '',
         qrzdItemPackId: store.qrzdItemPackId,
         remark: store.remark,
         items: this.items
+      }
+      if (this.selectBook.length > 0) {
+        param.bookAddressId = store.address.id ? store.address.id : ''
+      }
+      if (this.selectMage.length > 0 && this.sendType === 1) {
+        param.addressId = store.address.id ? store.address.id : ''
       }
       return param
     }
@@ -223,6 +245,7 @@ export default {
       })
     },
     onSubmit () {
+      console.log(this.params)
       if (this.selectMage.length > 0 && this.sendType === 0 && this.params.child === '') {
         this.Toast.warning({
           title: '请选择孩子'
@@ -263,8 +286,7 @@ export default {
         this.Toast.fail({title: err})
       })
     }
-  },
-  watch: {}
+  }
 }
 </script>
 
