@@ -55,7 +55,7 @@
         <div class="order-total" :class="{'order-total-border': items.tradeStatus === 1}">
           <p class="total-price">
             <span class="big">合计</span>
-            ￥<span class="big">{{ items.totalFee | getInteger }}</span>{{ items.totalFee | getFixed1 }}
+            ￥<span class="big">{{ items.receivables | getInteger }}</span>{{ items.totalFee | getFixed1 }}
             <span class="medium">(含运费 ¥{{ items.deliveryFee }})</span>
           </p>
           <span class="total-quantity">商品  {{ items.itemQuantity }}</span>
