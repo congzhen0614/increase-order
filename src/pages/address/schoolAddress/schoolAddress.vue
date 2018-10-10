@@ -3,7 +3,7 @@
     <div class="no-address-list" v-if="addressList.length===0">
       <img src="../../../assets/no-content-icon.png"/>
       <p>暂无内容</p>
-      <span class="go-login" @click="goLogin">去登录</span>
+      <span v-if="!isLogin" class="go-login" @click="goLogin">去登录</span>
     </div>
     <ul class="school-address-list" v-if="addressList.length>0">
       <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="serviceArea.indexOf(item.regionName) > -1">

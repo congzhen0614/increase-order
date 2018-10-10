@@ -54,12 +54,14 @@ export default {
   },
   created () {
     // 判断浏览器
+    alert(JSON.stringify(this.$route.query))
     if (this.isWeixin) {
       // 判断微信登陆返回 status
       if (this.$route.query.hasOwnProperty('status')) {
         if (parseInt(this.$route.query.status) === 0) {
           localStorage.setItem('userId', this.$route.query.uid)
           localStorage.setItem('wxOpenId', this.$route.query.openid)
+          localStorage.setItem('ak', this.$route.query.ak)
           this.$router.push({
             path: '/',
             query: {
@@ -71,8 +73,8 @@ export default {
     }
   },
   mounted () {
+    alert(JSON.stringify(this.$route.query))
   },
-  computed: {},
   methods: {
     onPhoneLogin () {
       this.$router.push({
@@ -89,8 +91,7 @@ export default {
       let _url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=` + redirectUrl + `&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`
       window.location.href = _url
     }
-  },
-  watch: {}
+  }
 }
 </script>
 

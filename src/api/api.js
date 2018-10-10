@@ -10,6 +10,8 @@ import qs from 'qs'
 axios.interceptors.request.use(config => {
   if (JSON.parse(localStorage.getItem('user'))) {
     config.headers.Authorization = JSON.parse(localStorage.getItem('user')).auth
+  } else if (localStorage.getItem('ak')) {
+    config.headers.Authorization = localStorage.getItem('ak')
   }
   return config
 }, err => {

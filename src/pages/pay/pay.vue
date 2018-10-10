@@ -72,13 +72,102 @@ export default {
       }
       this.$axios.getOfficialAccountPrepayInfo(_data).then(res => {
         if (this.isIos) {
-          this.weixinConfig(res.data.data)
+          this.weixinConfig(res.data.data.map)
           return
         }
-        this.upWeixinPay(res.data.data)
+        this.upWeixinPay(res.data.data.map)
       }, err => {
         this.Toast.fail(err)
       })
+    },
+    // 微信 config 接口
+    weixinConfig (data) {
+      window.wx.config({
+        debug: false,
+        appId: data.appId,
+        timestamp: data.timeStamp,
+        nonceStr: data.nonceStr,
+        signature: data.sign,
+        jsApiList: [
+          'chooseWXPay', 'onMenuShareTimeline', 'onMenuShareAppMessage'
+        ]
+      })
+      window.wx.ready(() => {
+        window.wx.onMenuShareTimeline({
+          title: '这是title',
+          desc: '这是desc',
+          link: window.location.href,
+          imgUrl: ''
+        })
+        window.wx.chooseWXPay({
+          timestamp: data.timeStamp,
+          nonceStr: data.nonceStr,
+          package: data.package,
+          signType: data.signType,
+          paySign: data.sign,
+          success: function (res) {
+            console.log(res)
+          }
+        })
+      })
+    },
+    // 调起微信支付
+    upWeixinPay (data) {
+      // alert('href: ' + window.location.href)
+      if (typeof window.WeixinJSBridge === 'undefined') {
+        if (document.addEventListener) {
+          document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady(data), false)
+        } else if (document.attachEvent) {
+          document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady(data))
+          document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady(data))
+        }
+      } else {
+        this.onBridgeReady(data)
+      }
+      document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady, false)
+    },
+    // 调起微信 bridge
+    onBridgeReady (data) {
+      // alert('ready: ' + JSON.stringify(data))
+      var _sendObj = {
+        // 公众号名称
+        'appId': data.appId,
+        'timeStamp': data.timeStamp,
+        // 随机串
+        'nonceStr': data.nonceStr,
+        'package': data.package,
+        // 微信签名方式
+        'signType': data.signType,
+        // 微信签名
+        'paySign': data.sign
+      }
+      window.WeixinJSBridge.invoke(
+        'getBrandWCPayRequest', _sendObj,
+        (res) => {
+          if (res.err_msg === 'get_brand_wcpay_request:ok') {
+            // 设置 history
+            // this.$store.commit('setHistory', this.$store.state.history + 1)
+            this.$router.push({
+              path: '/result',
+              query: {
+                total_amount: this.fee,
+                success: true,
+                href: this.$route.query.href
+              }
+            })
+          } else {
+            // 设置 history
+            this.$router.push({
+              path: '/result',
+              query: {
+                total_amount: this.fee,
+                success: false,
+                href: this.$route.query.href
+              }
+            })
+          }
+        }
+      )
     }
   }
 }

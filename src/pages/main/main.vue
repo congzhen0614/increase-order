@@ -70,9 +70,6 @@ export default {
     }
   },
   created () {
-    this.Toast.loading({
-      title: '加载中...'
-    })
     store.qrzdItemPackId = this.$route.query.id
     setTimeout(() => {
       this.loadItempackList()

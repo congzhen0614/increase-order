@@ -98,7 +98,7 @@ export default {
       relationList: relation.relationList,
       relationName: '',
       form: {
-        uid: JSON.parse(localStorage.getItem('user')).id, // 用户id
+        uid: localStorage.getItem('userId'), // 用户id
         avatar: '', // 头像
         classId: '', // 班级id
         className: '', // 自定义班级名称

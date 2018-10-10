@@ -72,6 +72,7 @@ export default {
       this.$axios.login({mobile: this.mobile, password: this.password}).then(res => {
         if (res.data.status === '0') {
           localStorage.setItem('user', JSON.stringify(res.data.data))
+          localStorage.setItem('userId', res.data.data.id)
           this.$router.push({
             path: '/',
             query: {

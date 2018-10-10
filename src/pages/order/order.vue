@@ -179,7 +179,7 @@ export default {
     },
     params () {
       let param = {
-        uid: JSON.parse(localStorage.getItem('user')).id,
+        uid: localStorage.getItem('userId'),
         childId: store.child.id ? store.child.id : '',
         qrzdItemPackId: store.qrzdItemPackId,
         remark: store.remark,
@@ -245,7 +245,6 @@ export default {
       })
     },
     onSubmit () {
-      console.log(this.params)
       if (this.selectMage.length > 0 && this.sendType === 0 && this.params.child === '') {
         this.Toast.warning({
           title: '请选择孩子'
@@ -273,7 +272,7 @@ export default {
               cls: 55
             }
           })
-        } if (res.data.code === '-6') {
+        } else if (res.data.code === '-6') {
           this.$router.push({
             path: '/login'
           })
