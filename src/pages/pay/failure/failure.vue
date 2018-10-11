@@ -26,7 +26,6 @@ export default {
       }
     }, 1000)
   },
-  computed: {},
   methods: {},
   watch: {}
 }

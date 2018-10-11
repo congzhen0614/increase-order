@@ -5,7 +5,7 @@
     <p class="paysuccess">支付成功</p>
     <!--<img class="checkorder" src="../../../assets/pay/checkorder.png"/>-->
     <p class="spyp">已购电子读物请到【校网APP】-【我的】-【我的电子读物】内查询收听</p>
-    <img class="download" src="../../../assets/pay/download.png"/>
+    <img class="download" @click="clickDownload" src="../../../assets/pay/download.png"/>
     <img class="logo" src="../../../assets/pay/logo.png"/>
     <img class="font" src="../../../assets/pay/font.png"/>
   </div>
@@ -28,8 +28,15 @@ export default {
       }
     }, 1000)
   },
-  computed: {},
-  methods: {},
+  methods: {
+    clickDownload () {
+      if (this.isIos) {
+        window.location.href = this.iosDownload
+      } else {
+        window.location.href = this.androidDownload
+      }
+    }
+  },
   watch: {}
 }
 </script>
