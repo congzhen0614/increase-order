@@ -70,14 +70,12 @@ export default {
     }
   },
   created () {
+    this.setLogin()
+    this.loginInfo()
     store.qrzdItemPackId = this.$route.query.id
     setTimeout(() => {
       this.loadItempackList()
     }, 300)
-  },
-  mounted () {
-    this.setLogin()
-    this.loginInfo()
   },
   computed: {
     params () {
