@@ -70,8 +70,10 @@ export default {
     }
   },
   created () {
-    this.setLogin()
-    this.loginInfo()
+    if (this.isWeixin) {
+      this.setLogin()
+      this.loginInfo()
+    }
     store.qrzdItemPackId = this.$route.query.id
     setTimeout(() => {
       this.loadItempackList()

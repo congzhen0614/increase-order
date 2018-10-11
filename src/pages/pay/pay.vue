@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import store from '@/store/store.js'
 export default {
   name: 'pay',
   data () {
@@ -30,7 +31,7 @@ export default {
   mounted () {
     if (this.isWeixin) {
       this.isAlipay = false
-      this.weixinPay()
+      // this.weixinPay()
     }
   },
   methods: {
@@ -42,14 +43,10 @@ export default {
       }
     },
     aliPay () {
-      let href = window.location.href
       let protocol = window.location.protocol // 协议
       let host = window.location.host
+      let href = `${protocol}//${host}/#/success?id=${store.qrzdItemPackId}`
       let returnUrl = `${protocol}//${host}/result?href=${href}&success=true`
-      console.log(href)
-      console.log(protocol)
-      console.log(host)
-      console.log(returnUrl)
       this.Toast.loading({
         title: '提交中...'
       })
@@ -151,22 +148,21 @@ export default {
           if (res.err_msg === 'get_brand_wcpay_request:ok') {
             // 设置 history
             // this.$store.commit('setHistory', this.$store.state.history + 1)
+            // window.location.href = 'https://m.51weixiao.com/zd/#/success?id=59'
             this.$router.push({
-              path: '/result',
+              path: '/success',
               query: {
-                total_amount: this.fee,
-                success: true,
-                href: this.$route.query.href
+                id: store.qrzdItemPackId
               }
             })
           } else {
             // 设置 history
             this.$router.push({
-              path: '/result',
+              path: '/failure',
               query: {
-                total_amount: this.fee,
-                success: false,
-                href: this.$route.query.href
+                no: this.$route.query.no,
+                total: this.$route.query.total,
+                cls: this.$route.query.cls
               }
             })
           }
