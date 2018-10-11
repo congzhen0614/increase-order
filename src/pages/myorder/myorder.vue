@@ -100,7 +100,7 @@ export default {
   methods: {
     goAndSee () {
       this.$router.push({
-        path: '/login'
+        path: '/mobileLogin'
       })
     },
     loadMyOrderList () {

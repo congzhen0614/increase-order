@@ -75,6 +75,10 @@ export default {
       this.loadItempackList()
     }, 300)
   },
+  mounted () {
+    this.setLogin()
+    this.loginInfo()
+  },
   computed: {
     params () {
       let param = {
@@ -202,6 +206,46 @@ export default {
     },
     clickToTop () {
       this.scroller.scrollTo(0, 0, 500) // scrollTo(x, y, time)
+    },
+    loginInfo () {
+      if (this.isWeixin) {
+        let loginTime = new Date().getTime() - localStorage.getItem('loginTime')
+        let oneDate = 24 * 60 * 60 * 1000
+        if (loginTime > oneDate) {
+          this.onWeixinLogin()
+        }
+      }
+    },
+    setLogin () {
+      // 判断浏览器
+      if (this.isWeixin) {
+        // 判断微信登陆返回 status
+        if (this.$route.query.hasOwnProperty('status')) {
+          if (parseInt(this.$route.query.status) === 0) {
+            localStorage.setItem('userId', this.$route.query.uid)
+            localStorage.setItem('wxOpenId', this.$route.query.openid)
+            localStorage.setItem('loginTime', new Date().getTime())
+            localStorage.setItem('ak', this.$route.query.ak)
+            // console.log(this.$route.query.id)
+            this.$router.push({
+              path: '/',
+              query: {
+                id: this.$route.query.id
+              }
+            })
+          }
+        }
+      }
+    },
+    onWeixinLogin () {
+      // 微信登陆返回到当前页面
+      let href = window.location.href
+      let _href = encodeURIComponent(`${href}`)
+      let apiUrl = 'https://www.51weixiao.com/app-api/api/user/wxLogin'
+      let redirectUrl = encodeURIComponent(`${apiUrl}?finalUrl=${_href}`)
+      let appId = 'wx701b0e6e6faac47c'
+      let _url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=` + redirectUrl + `&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`
+      window.location.href = _url
     }
   },
   watch: {

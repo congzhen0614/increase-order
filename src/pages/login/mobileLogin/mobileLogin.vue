@@ -17,9 +17,9 @@
       <span class="user-registration" @click="onRegister">用户注册</span>
       <span class="forget-password" @click="onForgetPsw">忘记密码</span>
     </div>
-    <div class="weixin-login" @click="onWeixinLogin">
-      <img src="../../../assets/weixin-icon.png">
-    </div>
+    <!--<div class="weixin-login" @click="onWeixinLogin">-->
+      <!--<img src="../../../assets/weixin-icon.png">-->
+    <!--</div>-->
   </div>
 </template>
 

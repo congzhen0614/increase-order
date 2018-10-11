@@ -54,7 +54,6 @@ export default {
   },
   created () {
     // 判断浏览器
-    alert(JSON.stringify(this.$route.query))
     if (this.isWeixin) {
       // 判断微信登陆返回 status
       if (this.$route.query.hasOwnProperty('status')) {
@@ -71,9 +70,6 @@ export default {
         }
       }
     }
-  },
-  mounted () {
-    alert(JSON.stringify(this.$route.query))
   },
   methods: {
     onPhoneLogin () {

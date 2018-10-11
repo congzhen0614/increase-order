@@ -90,7 +90,7 @@ export default {
     },
     goLogin () {
       this.$router.push({
-        path: '/login'
+        path: '/mobileLogin'
       })
     }
   },

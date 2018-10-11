@@ -274,7 +274,7 @@ export default {
           })
         } else if (res.data.code === '-6') {
           this.$router.push({
-            path: '/login'
+            path: '/mobileLogin'
           })
         } else {
           this.Toast.fail({title: res.data.msg})
