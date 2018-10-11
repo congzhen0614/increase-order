@@ -36,6 +36,8 @@ import schoolAddress from '@/pages/address/schoolAddress/schoolAddress.vue' // �
 import addHomeAddress from '@/pages/address/homeAddress/addHomeAddress/addHomeAddress.vue' // 添加家庭地址
 import addSchoolAddress from '@/pages/address/schoolAddress/addSchoolAddress/addSchoolAddress.vue' // 添加学校地址
 import pay from '@/pages/pay/pay.vue' // 支付
+import failure from '@/pages/pay/failure/failure.vue'
+import success from '@/pages/pay/success/success.vue'
 
 // 路由返回上一页
 Router.prototype.goBack = function () {
@@ -157,6 +159,14 @@ export default new Router({
       path: '/pay',
       name: '支付页面',
       component: pay
+    }, {
+      path: '/failure',
+      name: '支付失败',
+      component: failure
+    }, {
+      path: '/success',
+      name: '支付成功',
+      component: success
     }, {
       path: '/orderDetail',
       name: '订单详情',

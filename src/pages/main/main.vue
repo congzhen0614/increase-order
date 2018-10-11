@@ -24,7 +24,7 @@
     </div>
     <v-nav :navName="'首页'"></v-nav>
     <img class="to-top" v-if="toTop" @click.stop="clickToTop()" src="../../assets/toTop-icon.png">
-    <a href="tel:4008808888"><img class="contact-service" src="../../assets/service_icon.png"></a>
+    <a href="tel:4008470068"><img class="contact-service" src="../../assets/service_icon.png"></a>
   </div>
 </template>
 

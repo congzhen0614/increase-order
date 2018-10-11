@@ -33,6 +33,7 @@
 
 <script>
 import store from '@/store/store.js'
+import shoppingcar from '@/store/shoppingcar.js'
 export default {
   name: 'detail-footer',
   components: {},
@@ -63,23 +64,19 @@ export default {
         return
       }
       if (this.detailType === 1) {
+        shoppingcar.list.selectMage = [this.detail]
+        shoppingcar.list.selectBook = []
+        shoppingcar.list.selectSpyp = []
         if (this.detail.quantity === 0) this.detail.quantity = 1
         this.$router.push({
-          path: '/order',
-          query: {
-            selectMage: JSON.stringify([this.detail]),
-            selectBook: JSON.stringify([]),
-            selectSpyp: JSON.stringify([])
-          }
+          path: '/order'
         })
       } else {
+        shoppingcar.list.selectMage = []
+        shoppingcar.list.selectBook = [this.detail]
+        shoppingcar.list.selectSpyp = []
         this.$router.push({
-          path: '/order',
-          query: {
-            selectBook: JSON.stringify([this.detail]),
-            selectMage: JSON.stringify([]),
-            selectSpyp: JSON.stringify([])
-          }
+          path: '/order'
         })
       }
     },

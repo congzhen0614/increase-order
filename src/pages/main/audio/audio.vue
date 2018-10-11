@@ -30,6 +30,7 @@
 
 <script>
 import store from '@/store/store.js'
+import shoppingcar from '@/store/shoppingcar.js'
 export default {
   name: 'solicit-subscription-audio',
   data () {
@@ -46,14 +47,11 @@ export default {
   },
   methods: {
     toBuy (item) {
-      console.log('购买')
+      shoppingcar.list.selectMage = []
+      shoppingcar.list.selectBook = []
+      shoppingcar.list.selectSpyp = [item]
       this.$router.push({
-        path: '/order',
-        query: {
-          selectMage: JSON.stringify([]),
-          selectBook: JSON.stringify([]),
-          selectSpyp: JSON.stringify([item])
-        }
+        path: '/order'
       })
     },
     toShoppingcar (item) {

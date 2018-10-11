@@ -46,6 +46,10 @@ export default {
       let protocol = window.location.protocol // 协议
       let host = window.location.host
       let returnUrl = `${protocol}//${host}/result?href=${href}&success=true`
+      console.log(href)
+      console.log(protocol)
+      console.log(host)
+      console.log(returnUrl)
       this.Toast.loading({
         title: '提交中...'
       })
