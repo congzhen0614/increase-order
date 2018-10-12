@@ -75,6 +75,7 @@
             <p class="detail-name">{{ item.name }}</p>
             <p class="detail-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
             <span class="detail-quantity">{{ item.quantity }}</span>
+            <span class="refuse-refund" v-if="item.refundStatus === 2">拒绝退款</span>
             <span class="refunding-button" v-if="item.refundStatus === 1">退款中...</span>
             <span class="cancel-refund" v-if="item.refundStatus === 1" @click="cancelRefund(item)">取消退款</span>
             <p class="refund-content" v-if="item.refundStatus > 0 && item.refundStatus !== 2">

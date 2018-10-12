@@ -23,5 +23,6 @@ export default {
   postageSumBook: '', // 图书未满多少金额
   postageBook: '', // 图书需要多少邮费
   quantity: 0,
-  schoolLevel: '' // 学校类型
+  schoolLevel: '', // 学校类型
+  scroll: 0 // 滚动位置
 }
