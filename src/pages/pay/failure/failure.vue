@@ -1,9 +1,9 @@
 <template>
   <div class="failure">
-    <span class="close">关闭{{ countTime }}S</span>
+    <span @click="clickClose" class="close">关闭{{ countTime }}S</span>
     <p class="amount">￥<span class="big">1000</span>.00</p>
     <p class="payfailure">支付失败</p>
-    <img class="payagain" src="../../../assets/pay/payagain.png"/>
+    <img @click="clickPayAgain" class="payagain" src="../../../assets/pay/payagain.png"/>
     <img class="logo" src="../../../assets/pay/logo.png"/>
     <img class="font" src="../../../assets/pay/font.png"/>
   </div>
@@ -26,7 +26,26 @@ export default {
       }
     }, 1000)
   },
-  methods: {},
+  methods: {
+    clickPayAgain () {
+      this.$router.push({
+        path: '/pay',
+        query: {
+          no: this.$route.query.no,
+          total: this.$route.query.total,
+          cls: this.$route.query.cls
+        }
+      })
+    },
+    clickClose () {
+      this.$router.push({
+        path: '/',
+        query: {
+          id: this.$route.query.id
+        }
+      })
+    }
+  },
   watch: {}
 }
 </script>

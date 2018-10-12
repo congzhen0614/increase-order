@@ -71,10 +71,10 @@ export default new Router({
     }, {
       path: '/',
       name: '首页',
-      component: main
-      // meta: {
-      //   keepAlive: false
-      // }
+      component: main,
+      meta: {
+        keepAlive: false
+      }
     }, {
       path: '/shoppingCar',
       name: '购物车',
