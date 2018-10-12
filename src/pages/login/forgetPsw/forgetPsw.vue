@@ -61,7 +61,7 @@ export default {
           this.gettedCode = true
           this.setSeconds()
         } else {
-          this.Toast.fail({title: res.data.msg})
+          this.Toast.fail({title: res.data.data.tip})
         }
       }, err => {
         this.Toast.fail({title: err})
@@ -95,7 +95,8 @@ export default {
             }
           })
         } else {
-          this.Toast.fail({title: res.data.msg})
+          console.log(res.data)
+          this.Toast.fail({title: res.data.data.tip})
         }
       }, err => {
         this.Toast.fail({title: err})

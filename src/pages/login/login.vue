@@ -84,7 +84,7 @@ export default {
       let apiUrl = 'https://www.51weixiao.com/app-api/api/user/wxLogin'
       let redirectUrl = encodeURIComponent(`${apiUrl}?finalUrl=${_href}`)
       let appId = 'wx701b0e6e6faac47c'
-      let _url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=` + redirectUrl + `&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect`
+      let _url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=` + redirectUrl + `&response_type=code&scope=snsapi_base&state=1#wechat_redirect`
       window.location.href = _url
     }
   }

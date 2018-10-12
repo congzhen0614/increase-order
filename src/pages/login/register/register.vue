@@ -87,12 +87,12 @@ export default {
     },
     onSubmit () {
       if (this.checked) {
-        this.$ajax.userValidateVerifyCode({
+        this.$axios.userValidateVerifyCode({
           mobile: this.mobile,
           code: this.code,
           sign: getMd5(this.mobile)
         }).then(res => {
-          this.$ajax.userRegister({
+          this.$axios.userRegister({
             mobile: this.mobile,
             password: this.password
           }).then(res => {

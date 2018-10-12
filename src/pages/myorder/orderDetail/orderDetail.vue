@@ -43,7 +43,7 @@
     <div class="detail-list" v-if="magaList.length > 0">
       <p class="detail-title">
         刊物
-        <span v-if="detail.magazinesTradeStatus === 2">已付款</span>
+        <span>{{ magaStatusName }}</span>
       </p>
       <ul>
         <li :class="{'refunded-icon': item.refundStatus === 3}" v-for="item in magaList" :key="item.id">
@@ -63,7 +63,7 @@
     <div class="detail-list" v-if="bookList.length > 0">
       <p class="detail-title">
         图书
-        <span v-if="detail.booksTradeStatus === 2">已付款</span>
+        <span>{{ bookStatusName }}</span>
         <span class="refund-button" v-if="detail.booksTradeStatus === 2 && detail.booksTradeStatus !== 7" @click="applyRefund">申请退款</span>
       </p>
       <ul>
@@ -79,12 +79,12 @@
             <span class="cancel-refund" v-if="item.refundStatus === 1" @click="cancelRefund(item)">取消退款</span>
             <p class="refund-content" v-if="item.refundStatus > 0 && item.refundStatus !== 2">
               <span>退款原因: </span>
-              <span :class="{'no-refund': item.refundStatus !== 3}">{{ item.refundNote }}</span>
+              <span :class="{'no-refund': item.refundStatus !== 3}">{{ item.refundReason }}</span>
             </p>
             <p class="refund-content"  v-if="item.refundStatus > 0 && item.refundStatus !== 2">
               <span>退款说明: </span>
-              <span :class="{'no-refund': item.refundStatus !== 3}">{{ item.refundReason | cutString(isCut) }}
-                <span class="if-show" @click="isCut = !isCut">{{ isCut ? '查看全部' : '收起' }}
+              <span :class="{'no-refund': item.refundStatus !== 3}">{{ item.refundNote | cutString(isCut) }}
+                <span v-if="item.refundNote.length > 20" class="if-show" @click="isCut = !isCut">{{ isCut ? '查看全部' : '收起' }}
                   <img v-if="!isCut" src="../../../assets/order/up-icon.png">
                   <img v-if="isCut" src="../../../assets/order/down-icon.png">
                 </span>
@@ -97,12 +97,12 @@
     </div>
     <div class="detail-list" v-if="spypList.length > 0">
       <p class="detail-title">电子读物
-        <span v-if="detail.packetsTradeStatus === 2">已购</span>
+        <span>{{ spypStatusName }}</span>
       </p>
       <ul>
         <li v-for="item in spypList" :key="item.id" @click="toApp">
           <div class="detail-left">
-            <img src="../../../assets/avatar.jpg"/>
+            <img :src="item.logo"/>
           </div>
           <div class="detail-right">
             <p class="detail-name">{{ item.name }}</p>
@@ -125,6 +125,9 @@ export default {
       detailItem: JSON.parse(this.$route.query.item),
       isCut: true,
       detail: {},
+      magaStatusName: '',
+      bookStatusName: '',
+      spypStatusName: '',
       magaList: [],
       bookList: [],
       spypList: []
@@ -154,6 +157,9 @@ export default {
     loadTradeListDetail () {
       this.$axios.tradeListDetail(this.detailItem.id).then(res => {
         if (res.data.code === '0') {
+          this.magaStatusName = res.data.data.magazineTypeTradeStatusName
+          this.bookStatusName = res.data.data.bookTypeTradeStatusName
+          this.spypStatusName = res.data.data.packetTypeTradeStatusName
           this.magaList = res.data.data.magazines
           this.bookList = res.data.data.books
           this.spypList = res.data.data.packets
