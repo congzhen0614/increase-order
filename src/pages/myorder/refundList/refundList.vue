@@ -7,7 +7,7 @@
         </div>
         <div class="refund-right">
           <p class="refund-title">{{ item.name }}</p>
-          <p class="refund-price">￥<span class="big">{{ item.fee }}</span>{{ item.fee }}</p>
+          <p class="refund-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
           <span class="refund-quantity">{{ item.quantity }}</span>
           <span class="refund-btn apply-refund" v-if="item.refundStatus === 0" @click="applyRefund(item)">申请退款</span>
           <span class="refund-btn refundding" v-if="item.refundStatus === 1">退款中...</span>
@@ -15,12 +15,12 @@
           <span class="refund-btn refuse-refund" v-if="item.refundStatus === 2">拒绝退款</span>
           <p class="refund-content" v-if="item.refundStatus > 0 && item.refundStatus !== 2">
             <span>退款原因: </span>
-            <span :class="{'no-refund': item.refundStatus !== 3}">{{ item.refundNote }}</span>
+            <span :class="{'no-refund': item.refundStatus !== 3}">{{ item.refundReason }}</span>
           </p>
           <p class="refund-content" v-if="item.refundStatus > 0 && item.refundStatus !== 2">
             <span>退款说明: </span>
-            <span :class="{'no-refund': item.refundStatus !== 3}">{{ item.refundReason | cutString(isCut) }}
-              <span class="if-show" @click="isCut = !isCut">{{ isCut ? '查看全部' : '收起' }}
+            <span :class="{'no-refund': item.refundStatus !== 3}">{{ item.refundNote | cutString(isCut) }}
+              <span v-if="item.refundNote.length > 20" class="if-show" @click="isCut = !isCut">{{ isCut ? '查看全部' : '收起' }}
                 <img v-if="!isCut" src="../../../assets/order/up-icon.png">
                 <img v-if="isCut" src="../../../assets/order/down-icon.png">
               </span>

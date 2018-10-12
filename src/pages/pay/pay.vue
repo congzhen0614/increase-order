@@ -45,8 +45,8 @@ export default {
     aliPay () {
       let protocol = window.location.protocol // 协议
       let host = window.location.host
-      let href = `${protocol}//${host}/#/success?id=${store.qrzdItemPackId}`
-      let returnUrl = `${protocol}//${host}/result?href=${href}&success=true`
+      let href = `${protocol}//${host}/zd/#/success?id=${store.qrzdItemPackId}`
+      let returnUrl = `${href}&success=true`
       this.Toast.loading({
         title: '提交中...'
       })
