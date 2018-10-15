@@ -127,19 +127,26 @@ export default {
       })
     },
     onDelete (item) {
-      this.$axios.tradeDel({id: item.id}).then(res => {
-        if (res.data.code === '0') {
-          this.Toast.success({
-            title: '操作成功'
+      this.Dialog.alert({
+        title: '温馨提示',
+        msg: '您确定要删除吗'
+      }, res => {
+        if (res.buttonIndex === 2) {
+          this.$axios.tradeDel({id: item.id}).then(res => {
+            if (res.data.code === '0') {
+              this.Toast.success({
+                title: '操作成功'
+              })
+              this.loadMyOrderList()
+            } else {
+              this.Toast.fail({title: res.data.msg})
+            }
+          }, err => {
+            this.Toast.fail({title: err})
+          }).catch(err => {
+            this.Toast.fail({title: err})
           })
-          this.loadMyOrderList()
-        } else {
-          this.Toast.fail({title: res.data.msg})
         }
-      }, err => {
-        this.Toast.fail({title: err})
-      }).catch(err => {
-        this.Toast.fail({title: err})
       })
     },
     toPay (item) {
