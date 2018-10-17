@@ -7,7 +7,7 @@
       <img class="eye-icon" @click="inputType = !inputType" v-if="inputType" src="../../../../assets/show-pws-icon.png"/>
       <img class="eye-icon" @click="inputType = !inputType" v-if="!inputType" src="../../../../assets/icon-visible-active.png"/>
     </div>
-    <div class="submit-button" @click="onsubmit">确认</div>
+    <div class="submit-button" :class="{'submit-button-act': submitFlag}" @click="onsubmit">确认</div>
   </div>
 </template>
 
@@ -25,7 +25,15 @@ export default {
   },
   mounted () {
   },
-  computed: {},
+  computed: {
+    submitFlag () {
+      if (this.password.length > 5) {
+        return true
+      } else {
+        return false
+      }
+    }
+  },
   methods: {
     onsubmit () {
       let _data = {
@@ -33,10 +41,15 @@ export default {
         password: this.password
       }
       this.$axios.userUpdatePass(_data).then(res => {
-        if (res.data.code === '0') {
-          console.log(res)
+        if (res.data.status === '0') {
+          this.Toast.success({title: '密码修改成功'})
+          setTimeout(() => {
+            this.$router.push({
+              path: '/mobileLogin'
+            })
+          }, 1000)
         } else {
-          this.Toast.fail({title: res.data.msg})
+          this.Toast.fail({title: res.data.data.tip})
         }
       }, err => {
         this.Toast.fail({title: err})

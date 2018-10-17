@@ -3,7 +3,7 @@
     <div class="mobile-number">
       <img class="phone-icon" src="../../../assets/phone-icon.png"/>
       <input type="text" placeholder="请输入注册手机号码" v-model="mobile">
-      <img class="close-icon" src="../../../assets/close-icon.png"/>
+      <img class="close-icon" @click.stop="mobile = ''" src="../../../assets/close-icon.png"/>
     </div>
     <div class="security-code">
       <img class="security-icon" src="../../../assets/security-icon.png"/>
@@ -57,7 +57,7 @@ export default {
       if (!this.mobileFlag) return
       this.$axios.userGetPass({mobile: this.mobile, sign: getMd5(this.mobile)}).then(res => {
         if (res.data.status === '0') {
-          this.uid = res.data.id
+          this.uid = res.data.data.id
           this.gettedCode = true
           this.setSeconds()
         } else {
@@ -87,10 +87,9 @@ export default {
         sign: getMd5(this.mobile)
       }
       this.$axios.userValidateVerifyCode(data).then(res => {
-        console.log(res.data.status)
         if (res.data.status === '0') {
-          this.$rputer.push({
-            path: '/',
+          this.$router.push({
+            path: '/newPassword',
             query: {
               uid: this.uid
             }

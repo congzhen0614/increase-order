@@ -94,34 +94,26 @@ export default {
       }, 1000)
     },
     onSubmit () {
-      if (this.submitFlag) return
-      if (this.checked) {
-        this.$axios.userValidateVerifyCode({
+      if (!this.submitFlag) return
+      this.$axios.userValidateVerifyCode({
+        mobile: this.mobile,
+        code: this.code,
+        sign: getMd5(this.mobile)
+      }).then(res => {
+        this.$axios.userRegister({
           mobile: this.mobile,
-          code: this.code,
-          sign: getMd5(this.mobile)
+          password: this.password
         }).then(res => {
-          this.$axios.userRegister({
-            mobile: this.mobile,
-            password: this.password
-          }).then(res => {
-            this.Toast.success({
-              title: '注册成功！'
-            })
-            this.$router.goBack()
-          }, err => {
-            console.log(err)
+          this.Toast.success({
+            title: '注册成功！'
           })
+          this.$router.goBack()
         }, err => {
           console.log(err)
         })
-      } else {
-        this.Dialog.alert({
-          title: '您当前未确认已阅读并同意',
-          msg: '《微校网用户协议》',
-          buttons: ['知道了']
-        })
-      }
+      }, err => {
+        console.log(err)
+      })
     }
   },
   watch: {}

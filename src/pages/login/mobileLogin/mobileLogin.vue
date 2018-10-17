@@ -80,7 +80,7 @@ export default {
             }
           })
         } else {
-          this.Toast.fail({title: res.data.msg})
+          this.Toast.fail({title: res.data.data.tip})
         }
       }, err => {
         this.Toast.fail({title: err})

@@ -10,7 +10,7 @@
           <img v-if="!selectMage" @click="selectMage = true" src="../../assets/check-icon.png">
           <img v-if="selectMage" @click="selectMage = false" src="../../assets/checked-icon.png">
           <span>刊物</span>
-          <span class="postage" v-if="postageSum > 0">满{{ postageSum }}元包邮</span>
+          <span class="postage" v-if="sendType === 1">满{{ postageSum }}元包邮,还差{{ shortPrice | getFixed2 }}元</span>
         </header>
         <ul>
           <li v-for="(item, index) in mageList" :key="item.id" :class="{lastChild: mageLength === index + 1}">
@@ -40,7 +40,7 @@
           <img v-if="!selectBook" @click="selectBook = true" src="../../assets/check-icon.png">
           <img v-if="selectBook" @click="selectBook = false" src="../../assets/checked-icon.png">
           <span>图书</span>
-          <span class="postage" v-if="postageSum > 0">满{{ postageSumBook }}元包邮</span>
+          <span class="postage">满{{ postageSumBook }}元包邮,还差{{ shortPriceBook | getFixed2 }}元</span>
         </header>
         <ul>
           <li v-for="(item, index) in bookList" :key="item.id" :class="{lastChild: mageLength === index + 1}">
@@ -126,13 +126,41 @@ export default {
       selectMage: false,
       selectBook: false,
       selectSpyp: false,
+      sendType: store.sendType,
       accounts: store.accounts,
       total: store.total,
       postageSum: store.postageSum,
       postageSumBook: store.postageSumBook
     }
   },
-  mounted () {},
+  computed: {
+    shortPrice () {
+      let total = 0
+      if (this.mageList.length > 0) {
+        this.mageList.forEach(item => {
+          total += item.fee * item.quantity
+        })
+      }
+      if (this.postageSum > total) {
+        return this.postageSum - total
+      } else {
+        return 0
+      }
+    },
+    shortPriceBook () {
+      let total = 0
+      if (this.bookList.length > 0) {
+        this.bookList.forEach(item => {
+          total += item.fee * item.quantity
+        })
+      }
+      if (this.postageSumBook > total) {
+        return this.postageSumBook - total
+      } else {
+        return 0
+      }
+    }
+  },
   methods: {
     goAndSee () {
       this.$router.push({
