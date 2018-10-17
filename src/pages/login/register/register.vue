@@ -23,7 +23,7 @@
       <img v-if="checked" @click="checked = !checked" class="check-icon" src="../../../assets/checked-icon.png"/>
       <span>我已阅读并同意《微校网用户协议》</span>
     </div>
-    <div class="submit-button" @click="onSubmit">提交</div>
+    <div class="submit-button" :class="{'submit-background': submitFlag}" @click="onSubmit">提交</div>
   </div>
 </template>
 
@@ -51,6 +51,14 @@ export default {
     mobileFlag () {
       var mobile = /^[1][3,4,5,7,8][0-9]{9}$/
       if (mobile.test(this.mobile)) {
+        return true
+      } else {
+        return false
+      }
+    },
+    submitFlag () {
+      var mobile = /^[1][3,4,5,7,8][0-9]{9}$/
+      if (mobile.test(this.mobile) && this.checked && this.code !== '' && this.password !== '') {
         return true
       } else {
         return false
@@ -86,6 +94,7 @@ export default {
       }, 1000)
     },
     onSubmit () {
+      if (this.submitFlag) return
       if (this.checked) {
         this.$axios.userValidateVerifyCode({
           mobile: this.mobile,

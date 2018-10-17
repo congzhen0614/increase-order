@@ -87,7 +87,8 @@ export default {
         sign: getMd5(this.mobile)
       }
       this.$axios.userValidateVerifyCode(data).then(res => {
-        if (res.data.code === '0') {
+        console.log(res.data.status)
+        if (res.data.status === '0') {
           this.$rputer.push({
             path: '/',
             query: {
@@ -95,7 +96,6 @@ export default {
             }
           })
         } else {
-          console.log(res.data)
           this.Toast.fail({title: res.data.data.tip})
         }
       }, err => {
