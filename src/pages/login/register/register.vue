@@ -104,10 +104,14 @@ export default {
           mobile: this.mobile,
           password: this.password
         }).then(res => {
-          this.Toast.success({
-            title: '注册成功！'
-          })
-          this.$router.goBack()
+          if (res.data.status === '0') {
+            this.Toast.success({title: '注册成功!'})
+            this.$router.push({
+              path: '/mobileLogin'
+            })
+          } else {
+            this.Toast.fail({title: res.data.data.tip})
+          }
         }, err => {
           console.log(err)
         })

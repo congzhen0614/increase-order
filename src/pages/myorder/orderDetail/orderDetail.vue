@@ -65,6 +65,7 @@
         图书
         <span>{{ bookStatusName }}</span>
         <span class="refund-button" v-if="detail.booksTradeStatus === 2 && detail.booksTradeStatus !== 7" @click="applyRefund">申请退款</span>
+        <span class="refund-button" v-if="bookStatusName === '已发货'" @click="getConfirm">确认收货</span>
       </p>
       <ul>
         <li :class="{'refunded-icon': item.refundStatus === 3}" v-for="item in bookList" :key="item.id">
@@ -240,6 +241,23 @@ export default {
           tradeId: this.detailItem.id,
           cls: 2
         }
+      })
+    },
+    getConfirm () {
+      this.$axios.tradeTakeover({id: this.detailItem.id}).then(res => {
+        if (res.data.code === '0') {
+          this.Toast.success({title: '操作成功!'})
+          setTimeout(() => {
+            this.loadMyOrderDeteil()
+            this.loadTradeListDetail()
+          }, 1000)
+        } else {
+          this.Toast.fail({title: res.data.msg})
+        }
+      }, err => {
+        this.Toast.fail({title: err})
+      }).catch(err => {
+        this.Toast.fail({title: err})
       })
     }
   },
