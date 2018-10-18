@@ -100,8 +100,8 @@
     </div>
     <div class="order-price">
       <div>商品金额<p>￥<span class="big">{{ total | getInteger }}</span>{{ total | getFixed1 }}</p></div>
-      <div v-if="selectBook.length > 0">图书运费<p>+<span class="big">{{ postageBook | getInteger }}</span>{{ postageBook | getFixed1 }}</p></div>
       <div v-if="selectMage.length > 0">刊物运费<p>+<span class="big">{{ postage | getInteger }}</span>{{ postage | getFixed1 }}</p></div>
+      <div v-if="selectBook.length > 0">图书运费<p>+<span class="big">{{ postageBook | getInteger }}</span>{{ postageBook | getFixed1 }}</p></div>
     </div>
     <div class="order-footer">
       <span class="order-submit" @click="onSubmit">提交订单</span>
@@ -130,7 +130,7 @@ export default {
   computed: {
     postage () {
       let total = 0
-      if (this.selectMage.length > 0) {
+      if (this.selectMage.length > 0 && store.sendType === 1) {
         this.selectMage.forEach(item => {
           total += item.quantity * item.fee
         })
