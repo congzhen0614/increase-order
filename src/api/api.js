@@ -146,6 +146,6 @@ export default {
     return axios.post('/qrzd/trade/cancel/open', params)
   },
   tradeTakeover (params) {
-    return axios.post('/qrzd/trade/takeover', params)
+    return axios.post('/qrzd/trade/takeover/open', params)
   }
 }
