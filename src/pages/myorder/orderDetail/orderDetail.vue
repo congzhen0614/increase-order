@@ -9,6 +9,7 @@
       <p class="detail-actual">实付款: <span>￥{{ detailItem.receivables }}</span></p>
       <span class="detail-button pay-button" v-if="detail.magazinesTradeStatus === 1" @click="toPay">去付款</span>
       <span class="detail-button cancel-button" v-if="detail.magazinesTradeStatus === 1" @click="cancelOrder">取消订单</span>
+      <span class="detail-button cancel-button" v-if="detail.tradeStatus > 4" @click="clickDeleteOrder">删除订单</span>
     </header>
     <main class="detail-address" v-if="detail.address">
       <div class="address-left">
@@ -139,9 +140,6 @@ export default {
     this.loadMyOrderDeteil()
     this.loadTradeListDetail()
   },
-  mounted () {
-  },
-  computed: {},
   methods: {
     loadMyOrderDeteil () {
       this.$axios.myOrderDeteil(this.detailItem.id).then(res => {
@@ -258,6 +256,31 @@ export default {
         this.Toast.fail({title: err})
       }).catch(err => {
         this.Toast.fail({title: err})
+      })
+    },
+    clickDeleteOrder () {
+      this.Dialog.alert({
+        title: '温馨提示',
+        msg: '您确定要删除吗'
+      }, res => {
+        if (res.buttonIndex === 2) {
+          this.$axios.tradeDel({id: this.detailItem.id}).then(res => {
+            if (res.data.code === '0') {
+              setTimeout(() => {
+                this.$router.push({path: '/myOrder'})
+                this.Toast.success({
+                  title: '操作成功'
+                })
+              }, 1000)
+            } else {
+              this.Toast.fail({title: res.data.msg})
+            }
+          }, err => {
+            this.Toast.fail({title: err})
+          }).catch(err => {
+            this.Toast.fail({title: err})
+          })
+        }
       })
     }
   },
