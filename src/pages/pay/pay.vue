@@ -83,6 +83,7 @@ export default {
     },
     // 微信 config 接口
     weixinConfig (data) {
+      let _that = this
       window.wx.config({
         debug: false,
         appId: data.appId,
@@ -108,14 +109,14 @@ export default {
           paySign: data.sign,
           success: function (res) {
             if (res.errMsg === 'chooseWXPay:ok') {
-              this.$router.push({
+              _that.$router.push({
                 path: '/success',
                 query: {
                   id: store.qrzdItemPackId
                 }
               })
             } else {
-              this.$router.push({
+              _that.$router.push({
                 path: '/failure',
                 query: {
                   no: this.$route.query.no,
@@ -126,6 +127,9 @@ export default {
             }
           }
         })
+        // window.wx.error(function (res) {
+        //   alert(JSON.stringify(res))
+        // })
       })
     },
     // 调起微信支付

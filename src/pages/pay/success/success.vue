@@ -17,14 +17,15 @@ export default {
   name: 'success',
   data () {
     return {
-      countTime: 10
+      countTime: 10,
+      t: ''
     }
   },
   mounted () {
     store.qrzdItemPackId = this.$route.query.id
-    let t = setInterval(() => {
+    this.t = setInterval(() => {
       if (this.countTime === 0) {
-        clearInterval(t)
+        clearInterval(this.t)
         this.clickClose()
       } else {
         this.countTime -= 1
@@ -40,11 +41,13 @@ export default {
       }
     },
     clickCheckOrder () {
+      clearInterval(this.t)
       this.$router.push({
         path: '/myOrder'
       })
     },
     clickClose () {
+      clearInterval(this.t)
       this.$router.push({
         path: '/',
         query: {
