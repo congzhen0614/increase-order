@@ -1,11 +1,12 @@
 <template>
   <div class="school-address">
-    <div class="no-address-list" v-if="addressList.length===0">
+    <div class="no-address-list" v-if="addressList.length === 0 || (!areaHaveSchool)">
       <img src="../../../assets/no-content-icon.png"/>
-      <p>暂无内容</p>
+      <p v-if="areaHaveSchool">暂无内容</p>
+      <p v-if="!areaHaveSchool">该地区没有孩子</p>
       <span v-if="!isLogin" class="go-login" @click="goLogin">去登录</span>
     </div>
-    <ul class="school-address-list" v-if="addressList.length>0">
+    <ul class="school-address-list" v-if="addressList.length > 0 && areaHaveSchool">
       <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="serviceArea.indexOf(item.regionName) > -1">
         <img v-if="sex === 0" class="school-address-head" src="../../../assets/girls-icon.png"/>
         <img v-if="sex === 1" class="school-address-head" src="../../../assets/boys-icon.png"/>
@@ -29,6 +30,7 @@ export default {
   components: {},
   data () {
     return {
+      areaHaveSchool: false,
       addressList: [],
       serviceArea: '',
       isLogin: false,
@@ -36,7 +38,6 @@ export default {
     }
   },
   created () {
-    this.loadChildList()
     this.loadAccountListarea()
   },
   methods: {
@@ -45,6 +46,12 @@ export default {
         if (res.data.code === '0') {
           this.addressList = res.data.data
           this.isLogin = true
+          res.data.data.forEach(item => {
+            this.serviceArea.indexOf(item.regionName)
+            if (this.serviceArea.indexOf(item.regionName) > 0) {
+              this.areaHaveSchool = true
+            }
+          })
         } else if (res.data.code === '-6') {
           this.isLogin = false
         } else {
@@ -66,6 +73,7 @@ export default {
       this.$axios.accountListarea({id: store.id}).then(res => {
         if (res.data.code === '0') {
           this.serviceArea = JSON.stringify(res.data.data.area)
+          this.loadChildList()
         } else {
           this.Toast.fail({title: res.data.msg})
         }

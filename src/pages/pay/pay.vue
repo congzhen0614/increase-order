@@ -107,14 +107,29 @@ export default {
           signType: data.signType,
           paySign: data.sign,
           success: function (res) {
-            console.log(res)
+            if (res.errMsg === 'chooseWXPay:ok') {
+              this.$router.push({
+                path: '/success',
+                query: {
+                  id: store.qrzdItemPackId
+                }
+              })
+            } else {
+              this.$router.push({
+                path: '/failure',
+                query: {
+                  no: this.$route.query.no,
+                  total: this.$route.query.total,
+                  cls: this.$route.query.cls
+                }
+              })
+            }
           }
         })
       })
     },
     // 调起微信支付
     upWeixinPay (data) {
-      // alert('href: ' + window.location.href)
       if (typeof window.WeixinJSBridge === 'undefined') {
         if (document.addEventListener) {
           document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady(data), false)
@@ -129,45 +144,33 @@ export default {
     },
     // 调起微信 bridge
     onBridgeReady (data) {
-      // alert('ready: ' + JSON.stringify(data))
       var _sendObj = {
-        // 公众号名称
         'appId': data.appId,
         'timeStamp': data.timeStamp,
-        // 随机串
         'nonceStr': data.nonceStr,
         'package': data.package,
-        // 微信签名方式
         'signType': data.signType,
-        // 微信签名
         'paySign': data.sign
       }
-      window.WeixinJSBridge.invoke(
-        'getBrandWCPayRequest', _sendObj,
-        (res) => {
-          if (res.err_msg === 'get_brand_wcpay_request:ok') {
-            // 设置 history
-            // this.$store.commit('setHistory', this.$store.state.history + 1)
-            // window.location.href = 'https://m.51weixiao.com/zd/#/success?id=59'
-            this.$router.push({
-              path: '/success',
-              query: {
-                id: store.qrzdItemPackId
-              }
-            })
-          } else {
-            // 设置 history
-            this.$router.push({
-              path: '/failure',
-              query: {
-                no: this.$route.query.no,
-                total: this.$route.query.total,
-                cls: this.$route.query.cls
-              }
-            })
-          }
+      window.WeixinJSBridge.invoke('getBrandWCPayRequest', _sendObj, res => {
+        if (res.err_msg === 'get_brand_wcpay_request:ok') {
+          this.$router.push({
+            path: '/success',
+            query: {
+              id: store.qrzdItemPackId
+            }
+          })
+        } else {
+          this.$router.push({
+            path: '/failure',
+            query: {
+              no: this.$route.query.no,
+              total: this.$route.query.total,
+              cls: this.$route.query.cls
+            }
+          })
         }
-      )
+      })
     }
   }
 }
