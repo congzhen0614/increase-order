@@ -116,20 +116,20 @@ export default {
                 }
               })
             } else {
-              _that.$router.push({
-                path: '/failure',
-                query: {
-                  no: this.$route.query.no,
-                  total: this.$route.query.total,
-                  cls: this.$route.query.cls
-                }
-              })
+              this.Toast.fail({title: res.errMsg})
             }
+          },
+          cancel: function () {
+            _that.$router.push({
+              path: '/failure',
+              query: {
+                no: this.$route.query.no,
+                total: this.$route.query.total,
+                cls: this.$route.query.cls
+              }
+            })
           }
         })
-        // window.wx.error(function (res) {
-        //   alert(JSON.stringify(res))
-        // })
       })
     },
     // 调起微信支付
