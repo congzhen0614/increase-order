@@ -104,17 +104,22 @@ export default {
     },
     onAdd (item) {
       store.quantity += 1
-      item.quantity += 1
       let exist = false
       if (store.shoppingcarMage.length > 0) {
         store.shoppingcarMage.forEach(obj => {
           if (item.id === obj.id) {
+            item.quantity = obj.quantity
+            item.quantity += 1
             exist = true
             obj = item
           }
         })
-        if (!exist) store.shoppingcarMage.push(item)
+        if (!exist) {
+          item.quantity += 1
+          store.shoppingcarMage.push(item)
+        }
       } else {
+        item.quantity += 1
         store.shoppingcarMage.push(item)
       }
     },

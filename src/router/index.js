@@ -73,7 +73,8 @@ export default new Router({
       name: '首页',
       component: main,
       meta: {
-        keepAlive: false
+        keepAlive: true,
+        isBack: false
       }
     }, {
       path: '/shoppingCar',
