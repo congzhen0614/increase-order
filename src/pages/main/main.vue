@@ -140,7 +140,7 @@ export default {
           this.$nextTick(() => {
             setTimeout(() => {
               this.initializeScroll()
-            }, 300)
+            }, 500)
           })
         } else {
           this.Toast.fail({

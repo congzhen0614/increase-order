@@ -120,6 +120,7 @@ export default {
             }
           },
           cancel: function () {
+            alert('cancel')
             _that.$router.push({
               path: '/failure',
               query: {
@@ -168,6 +169,7 @@ export default {
           this.$router.push({
             path: '/failure',
             query: {
+              id: store.qrzdItemPackId,
               no: this.$route.query.no,
               total: this.$route.query.total,
               cls: this.$route.query.cls
