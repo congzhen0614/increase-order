@@ -228,9 +228,8 @@ export default {
             localStorage.setItem('wxOpenId', this.$route.query.openid)
             localStorage.setItem('loginTime', new Date().getTime())
             localStorage.setItem('ak', this.$route.query.ak)
-            // console.log(this.$route.query.id)
             this.$router.push({
-              path: '/',
+              path: '/zd',
               query: {
                 id: this.$route.query.id
               }

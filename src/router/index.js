@@ -47,6 +47,7 @@ Router.prototype.goBack = function () {
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/login',
@@ -69,12 +70,11 @@ export default new Router({
       name: '注册',
       component: register
     }, {
-      path: '/',
+      path: '/zd/',
       name: '首页',
       component: main,
       meta: {
-        keepAlive: true,
-        isBack: false
+        keepAlive: false
       }
     }, {
       path: '/shoppingCar',

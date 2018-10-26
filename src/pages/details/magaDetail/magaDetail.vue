@@ -28,7 +28,7 @@
       <img src="../../../assets/link-icon.png"/>
       <p>{{ detail.giftName }}</p>
     </div>
-    <div class="maga-light">
+    <div class="maga-light" v-if="detail.memo">
       <div class="star-five"></div>
       <p class="light-title">杂志亮点</p>
       <p class="light-content">{{ detail.memo }}</p>

@@ -2,7 +2,7 @@
   <div class="solicit-subscription-nav">
     <nav>
       <ul>
-        <li @click="clickSwitch('/')">
+        <li @click="clickSwitch('/zd')">
           <img v-if="navName === '首页'" src="../../assets/classifyed-icon.png">
           <img v-else src="../../assets/classify-icon.png">
           <p :class="{activity: navName === '首页'}">首页</p>
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     clickSwitch (path) {
-      if (path === '/') {
+      if (path === '/zd') {
         this.$router.push({
           path: path,
           query: {
