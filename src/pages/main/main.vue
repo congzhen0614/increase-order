@@ -70,13 +70,13 @@ export default {
     }
   },
   created () {
+    store.qrzdItemPackId = this.$route.query.id
     if (this.isWeixin) {
       setTimeout(() => {
         this.setLogin()
         this.loginInfo()
       }, 100)
     }
-    store.qrzdItemPackId = this.$route.query.id
     setTimeout(() => {
       this.loadItempackList()
     }, 300)
@@ -117,7 +117,8 @@ export default {
       this.$axios.itempackList(this.params).then(res => {
         this.Toast.hide()
         if (res.data.code === '0') {
-          store.id = res.data.data.id
+          store.id = res.data.data.createUser
+          store.qrzdId = res.data.data.id
           store.sendType = res.data.data.sendType
           store.postageSum = res.data.data.postageSum
           store.postage = res.data.data.postage
@@ -229,7 +230,7 @@ export default {
             localStorage.setItem('loginTime', new Date().getTime())
             localStorage.setItem('ak', this.$route.query.ak)
             this.$router.push({
-              path: '/zd',
+              path: '/',
               query: {
                 id: this.$route.query.id
               }

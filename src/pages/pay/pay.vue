@@ -45,8 +45,8 @@ export default {
     aliPay () {
       let protocol = window.location.protocol // 协议
       let host = window.location.host
-      let href = `${protocol}//${host}/zd/#/success?id=${store.qrzdItemPackId}`
-      let returnUrl = `${href}&success=true`
+      let href = `${protocol}//${host}/zd/success?id=${store.qrzdItemPackId}`
+      let returnUrl = `${href}`
       this.Toast.loading({
         title: '提交中...'
       })
@@ -112,7 +112,8 @@ export default {
               _that.$router.push({
                 path: '/success',
                 query: {
-                  id: store.qrzdItemPackId
+                  id: store.qrzdItemPackId,
+                  total_amount: this.amount
                 }
               })
             } else {
@@ -120,13 +121,13 @@ export default {
             }
           },
           cancel: function () {
-            alert('cancel')
             _that.$router.push({
               path: '/failure',
               query: {
                 no: this.$route.query.no,
                 total: this.$route.query.total,
-                cls: this.$route.query.cls
+                cls: this.$route.query.cls,
+                total_amount: this.amount
               }
             })
           }
@@ -162,7 +163,8 @@ export default {
           this.$router.push({
             path: '/success',
             query: {
-              id: store.qrzdItemPackId
+              id: store.qrzdItemPackId,
+              total_amount: this.amount
             }
           })
         } else {
@@ -172,7 +174,8 @@ export default {
               id: store.qrzdItemPackId,
               no: this.$route.query.no,
               total: this.$route.query.total,
-              cls: this.$route.query.cls
+              cls: this.$route.query.cls,
+              total_amount: this.amount
             }
           })
         }

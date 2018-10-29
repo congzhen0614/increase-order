@@ -48,6 +48,7 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
+  base: '/zd',
   routes: [
     {
       path: '/login',
@@ -70,7 +71,7 @@ export default new Router({
       name: '注册',
       component: register
     }, {
-      path: '/zd/',
+      path: '/',
       name: '首页',
       component: main,
       meta: {

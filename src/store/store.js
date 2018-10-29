@@ -3,6 +3,7 @@
  */
 export default {
   id: '', // 业务员Id
+  qrzdId: '', // 二维码id不加密
   sendType: '', // 寄送方式
   navType: 1, // 首页类型(杂志、图书、电子读物)
   qrzdItemPackId: '', // 二维码Id

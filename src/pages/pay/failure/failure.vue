@@ -1,7 +1,7 @@
 <template>
   <div class="failure">
     <span @click="clickClose" class="close">关闭{{ countTime }}S</span>
-    <p class="amount">￥<span class="big">1000</span>.00</p>
+    <p class="amount">￥<span class="big">{{ total | getInteger }}</span>{{ total | getFixed1 }}</p>
     <p class="payfailure">支付失败</p>
     <img @click="clickPayAgain" class="payagain" src="../../../assets/pay/payagain.png"/>
     <img class="logo" src="../../../assets/pay/logo.png"/>
@@ -14,10 +14,12 @@ export default {
   name: 'failure',
   data () {
     return {
-      countTime: 10
+      countTime: 10,
+      total: 0
     }
   },
   mounted () {
+    this.total = this.$route.query.total_amount
     let t = setInterval(() => {
       if (this.countTime === 0) {
         clearInterval(t)

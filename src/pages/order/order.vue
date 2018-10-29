@@ -181,7 +181,7 @@ export default {
       let param = {
         uid: localStorage.getItem('userId'),
         childId: store.child.id ? store.child.id : '',
-        qrzdItemPackId: store.qrzdItemPackId,
+        qrzdItemPackId: store.qrzdId,
         remark: store.remark,
         items: this.items
       }

@@ -1,7 +1,7 @@
 <template>
   <div class="success">
     <span class="close" @click="clickClose">关闭{{ countTime }}S</span>
-    <p class="amount">￥<span class="big">1000</span>.00</p>
+    <p class="amount">￥<span class="big">{{ total | getInteger }}</span>{{ total | getFixed1 }}</p>
     <p class="paysuccess">支付成功</p>
     <img class="checkorder" @click="clickCheckOrder" src="../../../assets/pay/checkorder.png"/>
     <!--<p class="spyp">已购电子读物请到【校网APP】-【我的】-【我的电子读物】内查询收听</p>-->
@@ -18,10 +18,12 @@ export default {
   data () {
     return {
       countTime: 10,
+      total: 0,
       t: ''
     }
   },
   mounted () {
+    this.total = this.$route.query.total_amount
     store.qrzdItemPackId = this.$route.query.id
     this.t = setInterval(() => {
       if (this.countTime === 0) {
