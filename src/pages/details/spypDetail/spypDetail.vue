@@ -20,7 +20,7 @@
               <div class="header-button">
                 <span @click="onBuy(query)" class="buy-button">购买</span>
                 <span @click="toShoppingCar(query)">加入购物车</span>
-                <span v-if="query.giftLogo !== '' || query.giftName !== ''" @click="toGift">赠品</span>
+                <span v-if="query.giftLogo !== 'http://www.res.51weixiao.com/upload/mdef.png' && query.giftName !== ''" @click="toGift">赠品</span>
               </div>
             </div>
           </div>
