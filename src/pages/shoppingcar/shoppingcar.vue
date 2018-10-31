@@ -94,12 +94,13 @@
       <span class="settle" @click="toSettle">去结算({{ total }})</span>
       <div class="accounts">
         <p>合计:￥<span class="big">{{ accounts |getInteger }}</span>{{ accounts | getFixed1 }}</p>
+        <p style="margin-top: -4px">原价:{{ originalFee | getInteger}}{{ originalFee | getFixed1}} 优惠: {{ discounts | getInteger }}{{ discounts | getFixed1 }}</p>
       </div>
-      <div class="checked-all">
-        <img v-if="!checkedAll" @click="checkedAll = true" src="../../assets/check-icon.png">
-        <img v-if="checkedAll" @click="checkedAll = false" src="../../assets/checked-icon.png">
-        <span>全选</span>
-      </div>
+      <!--<div class="checked-all">-->
+        <!--<img v-if="!checkedAll" @click="checkedAll = true" src="../../assets/check-icon.png">-->
+        <!--<img v-if="checkedAll" @click="checkedAll = false" src="../../assets/checked-icon.png">-->
+        <!--<span>全选</span>-->
+      <!--</div>-->
     </div>
     <v-nav :navName="'购物车'"></v-nav>
   </div>
@@ -128,6 +129,7 @@ export default {
       selectSpyp: false,
       sendType: store.sendType,
       accounts: store.accounts,
+      originalFee: store.originalFee,
       total: store.total,
       postageSum: store.postageSum,
       postageSumBook: store.postageSumBook
@@ -138,7 +140,9 @@ export default {
       let total = 0
       if (this.mageList.length > 0) {
         this.mageList.forEach(item => {
-          total += item.fee * item.quantity
+          if (item.select) {
+            total += item.fee * item.quantity
+          }
         })
       }
       if (this.postageSum > total) {
@@ -151,7 +155,9 @@ export default {
       let total = 0
       if (this.bookList.length > 0) {
         this.bookList.forEach(item => {
-          total += item.fee * item.quantity
+          if (item.select) {
+            total += item.fee * item.quantity
+          }
         })
       }
       if (this.postageSumBook > total) {
@@ -159,6 +165,9 @@ export default {
       } else {
         return 0
       }
+    },
+    discounts () {
+      return this.originalFee - this.accounts
     }
   },
   methods: {
@@ -209,12 +218,14 @@ export default {
       this.selectVerdict()
     },
     selectVerdict () {
+      this.originalFee = 0
       this.accounts = 0
       this.total = 0
       if (this.mageList.length > 0) {
         this.mageList.forEach(item => {
           if (item.select) {
             this.accounts += item.quantity * item.fee
+            this.originalFee += item.quantity * item.fee
             this.total += item.quantity
           }
         })
@@ -223,6 +234,7 @@ export default {
         this.bookList.forEach(item => {
           if (item.select) {
             this.accounts += item.quantity * item.fee
+            this.originalFee += item.quantity * item.originalFee
             this.total += item.quantity
           }
         })
@@ -231,12 +243,14 @@ export default {
         this.spypList.forEach(item => {
           if (item.select) {
             this.accounts += item.fee
+            this.originalFee += item.fee
             this.total += item.quantity
           }
         })
       }
-      store.accounts = this.accounts
       store.total = this.total
+      store.accounts = this.accounts
+      store.originalFee = this.originalFee
     },
     toSettle () {
       let selectMage = []

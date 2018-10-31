@@ -15,6 +15,7 @@ export default {
   shoppingcarBook: [], // 图书添加购物车
   shoppingcarspyp: [], // 电子读物添加购物车
   accounts: 0, // 购物车选中价钱
+  originalFee: 0, // 购物车原价
   total: 0, // 购物车选中数量
   remark: '', // 订单留言
   address: '', // 订单选中地址

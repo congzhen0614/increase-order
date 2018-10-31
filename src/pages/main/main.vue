@@ -251,15 +251,16 @@ export default {
     }
   },
   watch: {
-    scrollHeight (val) { // 下拉到最下面加载更多
+    scrollHeight (val) {
       if (val > this.$refs.content.offsetHeight - window.innerHeight && this.loadMore) {
-        this.pages.pageNum += 1
-        if (Math.ceil(this.pages.total / this.pages.pageSize) < this.pages.pageNum) {
+        if (Math.ceil(this.pages.total / this.pages.pageSize) <= this.pages.pageNum) {
           this.Toast.warning({title: '没有更多了'})
-          return
+          this.scroller.refresh()
+        } else {
+          this.pages.pageNum += 1
+          this.loadMore = false
+          this.loadItempackList()
         }
-        this.loadMore = false
-        this.loadItempackList()
       }
     },
     navType () {
