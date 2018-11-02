@@ -12,8 +12,8 @@
             <p class="explain">{{ catalogue.tip }}</p>
           </header>
           <nav>
-            <span :class="{activity: navType === 1}" @click="navType = 1" v-if="hasMage === 1">刊物</span>
-            <span :class="{activity: navType === 2}" @click="navType = 2" v-if="hasBook === 1">图书</span>
+            <span :class="{activity: navType === 1}"  @click="navType = 1"  v-if="hasMage === 1">刊物</span>
+            <span :class="{activity: navType === 2}"  @click="navType = 2"  v-if="hasBook === 1">图书</span>
             <span :class="{activity: navType === 54}" @click="navType = 54" v-if="hasSpyp === 1">电子读物</span>
           </nav>
           <v-magazine v-if="navType === 1" :lists="lists" @ageChange="ageChange" @typeChange="typeChange"></v-magazine>
@@ -72,14 +72,21 @@ export default {
   created () {
     store.qrzdItemPackId = this.$route.query.id
     if (this.isWeixin) {
-      setTimeout(() => {
-        this.setLogin()
-        this.loginInfo()
-      }, 100)
+      this.setLogin()
+      this.loginInfo()
     }
     setTimeout(() => {
       this.loadItempackList()
-    }, 300)
+    }, 100)
+    setTimeout(() => {
+      if (this.hasMage === 1) {
+        this.navType = 1
+      } else if (this.hasBook === 1) {
+        this.navType = 2
+      } else {
+        this.navType = 54
+      }
+    }, 500)
   },
   computed: {
     params () {
