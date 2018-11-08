@@ -109,6 +109,7 @@ export default {
           paySign: data.sign,
           success: function (res) {
             if (res.errMsg === 'chooseWXPay:ok') {
+              store.total_amount = this.amount
               _that.$router.push({
                 path: '/success',
                 query: {

@@ -17,6 +17,7 @@ export default {
   accounts: 0, // 购物车选中价钱
   originalFee: 0, // 购物车原价
   total: 0, // 购物车选中数量
+  total_amount: 0, // 付款成功价钱
   remark: '', // 订单留言
   address: '', // 订单选中地址
   child: '', // 订单选中孩子

@@ -23,7 +23,7 @@ export default {
     }
   },
   mounted () {
-    this.total = this.$route.query.total_amount
+    this.total = isIos ? store.total_amount : this.$route.query.total_amount
     store.qrzdItemPackId = this.$route.query.id
     this.t = setInterval(() => {
       if (this.countTime === 0) {
