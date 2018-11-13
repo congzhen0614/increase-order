@@ -79,12 +79,12 @@ export default {
       this.loadItempackList()
     }, 100)
     setTimeout(() => {
-      if (this.hasMage === 1) {
-        this.navType = 1
-      } else if (this.hasBook === 1) {
-        this.navType = 2
-      } else {
-        this.navType = 54
+      if (this.hasMage === 0) {
+        if (this.hasBook === 1) {
+          this.navType = 2
+        } else {
+          this.navType = 54
+        }
       }
     }, 500)
   },
