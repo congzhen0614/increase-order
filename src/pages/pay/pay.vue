@@ -114,7 +114,7 @@ export default {
                 path: '/success',
                 query: {
                   id: store.qrzdItemPackId,
-                  total_amount: this.amount
+                  total_amount: _that.amount
                 }
               })
             } else {

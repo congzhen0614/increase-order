@@ -3,7 +3,7 @@
     <v-swiper :listImg="listImg" :style="{height: bannerHeight}"></v-swiper>
     <div class="periodical-head">
       <p class="periodical-title">{{ detail.name }}</p>
-      <p class="periodical-prese">{{ detail.nameShort }}</p>
+      <!--<p class="periodical-prese">{{ detail.nameShort }}</p>-->
       <p class="periodical-suitable">
         <span>{{ detail.feeUnitType }} {{ detail.feeUnitNum }} {{ detail.feeUnitName }}</span>
         <span class="age" v-if="detail.ageNames !== ''">{{ detail.ageNames }}</span>
@@ -26,7 +26,7 @@
     </div>
     <div class="periodical-gift" v-if="detail.giftName" @click="toLift">
       <img src="../../../assets/link-icon.png"/>
-      <p>{{ detail.giftName }}</p>
+      <p>礼品信息</p>
     </div>
     <div class="maga-light" v-if="detail.memo">
       <div class="star-five"></div>

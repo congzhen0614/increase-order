@@ -1,6 +1,7 @@
 <template>
   <div class="gift-list">
-    <p class="gift-title">{{ giftName }}</p>
+    <img class="gift-icon" src="../../../../assets/gift-icon.png"/>
+    <span class="gift-title">礼品：{{ giftName }}</span>
     <img class="gift-logo" :src="giftLogo"/>
   </div>
 </template>

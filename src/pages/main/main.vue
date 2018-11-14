@@ -51,7 +51,7 @@ export default {
       windowHeight: window.innerHeight - 80 + 'px',
       scroller: '',
       scrollHeight: '',
-      navType: store.navType,
+      navType: 1,
       ageId: '',
       typeId: '',
       packetname: '',

@@ -5,37 +5,37 @@
         <span class="item-title">姓名</span>
         <input class="item-content" type="text" placeholder="请输入孩子姓名" v-model="form.name">
       </li>
-      <li class="item-list">
-        <span class="item-title">性别</span>
-        <div class="item-content">
-          <div class="boy">
-            <img v-if="form.sex === 1" @click="form.sex = 0" src="../../../../assets/check-icon.png"/>
-            <img v-if="form.sex === 0" @click="form.sex = 1" src="../../../../assets/checked-icon.png"/>
-            <img src="../../../../assets/boy-icon.png"/>
-            <span>男</span>
-          </div>
-          <div class="gril">
-            <img v-if="form.sex === 0" @click="form.sex = 1" src="../../../../assets/check-icon.png"/>
-            <img v-if="form.sex === 1" @click="form.sex = 0" src="../../../../assets/checked-icon.png"/>
-            <img src="../../../../assets/girl-icon.png"/>
-            <span>女</span>
-          </div>
-        </div>
-      </li>
+      <!--<li class="item-list">-->
+        <!--<span class="item-title">性别</span>-->
+        <!--<div class="item-content">-->
+          <!--<div class="boy">-->
+            <!--<img v-if="form.sex === 1" @click="form.sex = 0" src="../../../../assets/check-icon.png"/>-->
+            <!--<img v-if="form.sex === 0" @click="form.sex = 1" src="../../../../assets/checked-icon.png"/>-->
+            <!--<img src="../../../../assets/boy-icon.png"/>-->
+            <!--<span>男</span>-->
+          <!--</div>-->
+          <!--<div class="gril">-->
+            <!--<img v-if="form.sex === 0" @click="form.sex = 1" src="../../../../assets/check-icon.png"/>-->
+            <!--<img v-if="form.sex === 1" @click="form.sex = 0" src="../../../../assets/checked-icon.png"/>-->
+            <!--<img src="../../../../assets/girl-icon.png"/>-->
+            <!--<span>女</span>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</li>-->
       <li class="item-list">
         <span class="item-title">地区</span>
         <img class="link-icon" src="../../../../assets/link-icon.png">
         <span class="item-content" @click="onCheckArea">{{ address || '请选择地区' }}</span>
       </li>
       <li class="item-list">
-        <span class="item-title">入学年份</span>
-        <img class="link-icon" src="../../../../assets/link-icon.png">
-        <span class="item-content" @click="onCheckEnrollment">{{ enrollmentName || '请选择孩子入学年份' }}</span>
-      </li>
-      <li class="item-list">
         <span class="item-title">学校</span>
         <img class="link-icon" src="../../../../assets/link-icon.png">
         <span class="item-content" @click="onCheckSchool">{{ schoolName || '请选择学校' }}</span>
+      </li>
+      <li class="item-list">
+        <span class="item-title">入学年份</span>
+        <img class="link-icon" src="../../../../assets/link-icon.png">
+        <span class="item-content" @click="onCheckEnrollment">{{ enrollmentName || '请选择孩子入学年份' }}</span>
       </li>
       <li class="item-list">
         <span class="item-title">年级</span>
@@ -55,19 +55,19 @@
         <img class="checked" v-if="!isSelect" @click="isSelect = !isSelect" src="../../../../assets/checked-icon.png"/>
         <input class="item-content" type="text" placeholder="请输入班级名称" v-model="form.className" :disabled="isSelect">
       </li>
-      <li class="item-list">
-        <span class="item-title">家长</span>
-        <input class="item-content" type="text" placeholder="请输入家长姓名" v-model="form.parent">
-      </li>
+      <!--<li class="item-list">-->
+        <!--<span class="item-title">家长</span>-->
+        <!--<input class="item-content" type="text" placeholder="请输入家长姓名" v-model="form.parent">-->
+      <!--</li>-->
       <li class="item-list">
         <span class="item-title">电话</span>
         <input class="item-content" type="text" placeholder="请输入孩子家长联系电话" v-model="form.mobile">
       </li>
-      <li class="item-list">
-        <span class="item-title">关系</span>
-        <img class="link-icon" src="../../../../assets/link-icon.png">
-        <span class="item-content" @click="onCheckRelation">{{ relationName || '请输入家长与孩子关系' }}</span>
-      </li>
+      <!--<li class="item-list">-->
+        <!--<span class="item-title">关系</span>-->
+        <!--<img class="link-icon" src="../../../../assets/link-icon.png">-->
+        <!--<span class="item-content" @click="onCheckRelation">{{ relationName || '请输入家长与孩子关系' }}</span>-->
+      <!--</li>-->
     </ul>
     <div class="submit" @click="onSubmit()">完成</div>
   </div>
@@ -108,7 +108,7 @@ export default {
         mobile: '', // 电话
         name: '', // 孩子姓名
         parent: '', // 家长姓名
-        relation: '', // 关系
+        relation: 0, // 关系
         schoolId: '', // 学校id
         sex: 0, // 性别 0: 男; 1: 女
         provinceId: '', // 省
@@ -342,6 +342,9 @@ export default {
         delete this.form['classId']
         this.className = ''
       }
+    },
+    'form.name' (val) {
+      this.form.parent = val
     },
     'form.regionId' () {
       this.loadSchoolList()
