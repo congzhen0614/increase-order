@@ -147,5 +147,9 @@ export default {
   },
   tradeTakeover (params) {
     return axios.post('/qrzd/trade/takeover/open', params)
+  },
+  kadaResource (params) {
+    let param = qs.stringify(params)
+    return axios.get(`/api/kada/resource?${param}`)
   }
 }

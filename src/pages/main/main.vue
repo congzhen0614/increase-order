@@ -51,7 +51,7 @@ export default {
       windowHeight: window.innerHeight - 80 + 'px',
       scroller: '',
       scrollHeight: '',
-      navType: 1,
+      navType: store.navType,
       ageId: '',
       typeId: '',
       packetname: '',
@@ -76,17 +76,8 @@ export default {
       this.loginInfo()
     }
     setTimeout(() => {
-      this.loadItempackList()
+      this.loadItempackList('loading')
     }, 100)
-    setTimeout(() => {
-      if (this.hasMage === 0) {
-        if (this.hasBook === 1) {
-          this.navType = 2
-        } else {
-          this.navType = 54
-        }
-      }
-    }, 500)
   },
   computed: {
     params () {
@@ -117,7 +108,7 @@ export default {
       this.lists = []
       this.loadItempackList()
     },
-    loadItempackList () {
+    loadItempackList (type) {
       this.Toast.loading({
         title: '加载中...'
       })
@@ -143,6 +134,15 @@ export default {
           res.data.data.page.list.forEach(item => {
             this.setQuantity(item)
           })
+          if (type === 'loading') {
+            if (this.hasMage === 0) {
+              if (this.hasBook === 1) {
+                this.navType = 2
+              } else {
+                this.navType = 54
+              }
+            }
+          }
           this.reload = true
           this.loadMore = true
           this.$nextTick(() => {

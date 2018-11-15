@@ -1,41 +1,55 @@
 <template>
   <div class="spyp-album">
-    <div class="spyp-album-header">
-      <div class="header-left">
-        <img class="logo-icon" :src="query.logo">
-        <img class="play-icon" v-if="query.clsName === '音频'" src="../../../../assets/audio-icon.png">
-        <img class="play-icon" v-if="query.clsName === '视频'" src="../../../../assets/video-icon.png">
-      </div>
-      <div class="header-right">
-        <p class="spyp-list-title">{{ query.name }}</p>
-        <p class="spyp-list-brief">{{ query.introductions }}</p>
-        <p class="spyp-list-price">￥<span class="big">{{ query.fee | getInteger }}</span>{{ query.fee | getFixed1 }}</p>
+    <div class="wrapper" ref="wrapper" :style="{height: innerHeight}">
+      <div class="content" ref="content">
+        <div class="spyp-album-header">
+          <div class="header-left">
+            <img class="logo-icon" :src="query.logo">
+            <img class="play-icon" v-if="query.clsName === '音频'" src="../../../../assets/audio-icon.png">
+            <img class="play-icon" v-if="query.clsName === '视频'" src="../../../../assets/video-icon.png">
+          </div>
+          <div class="header-right">
+            <p class="spyp-list-title">{{ query.name }}</p>
+            <p class="spyp-list-brief">{{ query.introductions }}</p>
+            <p class="spyp-list-price">￥<span class="big">{{ query.fee | getInteger }}</span>{{ query.fee | getFixed1 }}</p>
+          </div>
+        </div>
+        <ul>
+          <li class="album-list" v-for="(item, index) in listData" :key="item.id">
+            <span class="serial">{{ index + 1 }}</span>
+            <div class="try-play" v-show="item.preview === 1">
+              <img v-if="!item.isPlay" @click="onPlay(item, index)" src="../../../../assets/play-icon.png">
+              <img v-if="item.isPlay" @click="onPaus(item, index)" src="../../../../assets/paus-icon.png">
+              <audio ref="audio" :src="item.url"></audio>
+              <span>试听</span>
+            </div>
+            <div class="title">
+              <p>{{ item.name }}</p>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
-    <ul>
-      <li class="album-list" v-for="(item, index) in listData" :key="item.id">
-        <span class="serial">{{ index + 1 }}</span>
-        <div class="try-play" v-show="item.preview === 1">
-          <img v-if="!item.isPlay" @click="onPlay(item, index)" src="../../../../assets/play-icon.png">
-          <img v-if="item.isPlay" @click="onPaus(item, index)" src="../../../../assets/paus-icon.png">
-          <audio ref="audio" :src="item.url"></audio>
-          <span>试听</span>
-        </div>
-        <div class="title">
-          <p>{{ item.name }}</p>
-        </div>
-      </li>
-    </ul>
   </div>
 </template>
 
 <script>
+import BScroll from 'better-scroll'
 export default {
   name: 'spyp-album',
   data () {
     return {
+      innerHeight: window.innerHeight + 'px',
       query: JSON.parse(this.$route.query.item),
-      listData: []
+      listData: [],
+      loadMore: false,
+      scroller: '',
+      scrollHeight: '',
+      pages: {
+        total: 0,
+        pageNum: 1,
+        pageSize: 10
+      }
     }
   },
   mounted () {
@@ -43,12 +57,22 @@ export default {
   },
   methods: {
     loadSpypaudioList () {
-      this.$axios.spypaudioList({aid: this.query.id, pageNum: 1, pageSize: 10}).then(res => {
+      this.$axios.spypaudioList({
+        aid: this.query.id,
+        pageNum: this.pages.pageNum,
+        pageSize: this.pages.pageSize
+      }).then(res => {
         if (res.data.code === '0') {
-          this.listData = []
+          this.pages.total = res.data.data.total
+          this.loadMore = true
           res.data.data.list.forEach(item => {
             item.isPlay = false
             this.listData.push(item)
+          })
+          this.$nextTick(() => {
+            setTimeout(() => {
+              this.initializeScroll()
+            }, 500)
           })
         } else {
           this.Toast.fail({
@@ -59,6 +83,22 @@ export default {
         this.Toast.fail(err)
       }).catch(err => {
         this.Toast.fail(err)
+      })
+    },
+    initializeScroll () {
+      if (this.scroller === '') {
+        this.scroller = new BScroll(this.$refs.wrapper, {
+          probeType: 3,
+          click: true
+        })
+        this.listenScroll()
+      } else {
+        this.scroller.refresh()
+      }
+    },
+    listenScroll () {
+      this.scroller.on('scroll', pos => {
+        this.scrollHeight = -pos.y
       })
     },
     onPlay (item, index) {
@@ -74,7 +114,17 @@ export default {
       item.isPlay = false
     }
   },
-  watch: {}
+  watch: {
+    scrollHeight (val) { // 下拉到最下面加载更多
+      if (val > this.$refs.content.offsetHeight - window.innerHeight && this.loadMore) {
+        this.loadMore = false
+        if (parseInt(this.pages.total / this.pages.pageSize) >= this.pages.pageNum) {
+          this.pages.pageNum += 1
+          this.loadSpypaudioList()
+        }
+      }
+    }
+  }
 }
 </script>
 
