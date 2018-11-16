@@ -2,8 +2,8 @@
   <div class="play" :class="{miniPlay: mini}" @click="mini = false">
     <img class="mini-img" v-show="mini" :src="logo">
     <audio class="my-audio" ref="myAudio" :src="url"></audio>
-    <img class="close-icon" src="../../assets/play/close-icon.png" v-show="!mini"/>
-    <img class="mini-icon"  src="../../assets/play/mini-icon.png" @click.stop="mini = !mini" v-show="!mini"/>
+    <img class="close-icon" src="../../assets/play/close-icon.png" @click="clickClose" v-show="!mini"/>
+    <!--<img class="mini-icon"  src="../../assets/play/mini-icon.png" @click.stop="mini = !mini" v-show="!mini"/>-->
     <img class="play-icon"  src="../../assets/play/play-icon.png" @click="clickPlay" v-show="!play && !mini"/>
     <img class="paus-icon"  src="../../assets/play/paus-icon.png" @click="clickPaus" v-show="play && !mini"/>
     <!-- 进度条背景 -->
@@ -49,6 +49,7 @@ export default {
   mounted () {
     this.lengthOfSong = 0
     this.lengthOfPlay = 0
+    this.clickPaus()
     this.clickPlay()
   },
   computed: {
@@ -97,6 +98,9 @@ export default {
       this.play = false
       audio.pause()
       clearInterval(this.player)
+    },
+    clickClose () {
+      this.$emit('playerClose')
     }
   },
   watch: {}

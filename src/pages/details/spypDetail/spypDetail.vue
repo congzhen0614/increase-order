@@ -45,7 +45,7 @@
         </ul>
       </div>
     </div>
-    <v-play v-if="isplay" :logo="playLogo" :url="playUrl"></v-play>
+    <v-play v-if="isplay" :logo="playLogo" :url="playUrl" @playerClose="playerClose"></v-play>
     <img class="to-top" v-if="toTop" @click.stop="clickToTop()" src="../../../assets/toTop-icon.png">
     <a href="tel:4008808888"><img class="contact-service" src="../../../assets/service_icon.png"></a>
   </div>
@@ -140,6 +140,7 @@ export default {
       })
     },
     toChapter (item) {
+      item.provider = this.query.provider
       this.$router.push({
         path: '/album',
         query: {
@@ -165,7 +166,6 @@ export default {
         this.playLogo = item.logo
         this.kadaResource(param)
       } else {
-        console.log(1)
         this.playLogo = item.logo
         this.playUrl = item.freeUrls[0]
         this.isplay = true
@@ -229,6 +229,9 @@ export default {
           giftLogo: this.query.giftLogo
         }
       })
+    },
+    playerClose () {
+      this.isplay = false
     }
   },
   watch: {

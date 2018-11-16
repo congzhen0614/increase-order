@@ -30,19 +30,27 @@
         </ul>
       </div>
     </div>
+    <v-play v-if="isplay" :logo="playLogo" :url="playUrl" @playerClose="playerClose"></v-play>
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
+import play from '@/components/play/play.vue'
 export default {
   name: 'spyp-album',
+  components: {
+    'v-play': play
+  },
   data () {
     return {
       innerHeight: window.innerHeight + 'px',
       query: JSON.parse(this.$route.query.item),
       listData: [],
       loadMore: false,
+      isplay: false,
+      playLogo: '',
+      playUrl: '',
       scroller: '',
       scrollHeight: '',
       pages: {
@@ -57,11 +65,7 @@ export default {
   },
   methods: {
     loadSpypaudioList () {
-      this.$axios.spypaudioList({
-        aid: this.query.id,
-        pageNum: this.pages.pageNum,
-        pageSize: this.pages.pageSize
-      }).then(res => {
+      this.$axios.spypaudioList({aid: this.query.id, pageNum: this.pages.pageNum, pageSize: this.pages.pageSize}).then(res => {
         if (res.data.code === '0') {
           this.pages.total = res.data.data.total
           this.loadMore = true
@@ -101,17 +105,42 @@ export default {
         this.scrollHeight = -pos.y
       })
     },
-    onPlay (item, index) {
-      this.$refs.audio.forEach((item, index) => {
-        this.listData[index].isPlay = false
-        item.pause()
+    onPlay (item) {
+      if (this.query.provider === 1) {
+        let param = {
+          itemid: this.query.itemid,
+          collectid: this.query.collectid,
+          contentid: item.contentid
+        }
+        this.playLogo = this.query.logo
+        this.isplay = false
+        this.kadaResource(param)
+      } else {
+        this.playLogo = item.logo
+        this.playUrl = item.freeUrls[0]
+        this.isplay = true
+      }
+    },
+    kadaResource (param) {
+      this.$axios.kadaResource(param).then(res => {
+        if (res.data.result.status === '0') {
+          this.playUrl = res.data.resourceUrl
+          this.isplay = true
+        } else {
+          this.Toast.fail({title: '操作失败'})
+        }
+      }, err => {
+        this.Toast.fail({title: err})
+      }).catch(err => {
+        this.Toast.fail({title: err})
       })
-      this.$refs.audio[index].play()
-      item.isPlay = true
     },
     onPaus (item, index) {
       this.$refs.audio[index].pause()
       item.isPlay = false
+    },
+    playerClose () {
+      this.isplay = false
     }
   },
   watch: {
