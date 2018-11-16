@@ -37,24 +37,29 @@
               <p class="spyp-list-brief">{{ item.introductions }}</p>
               <p class="spyp-list-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
               <span class="chapter" @click="toChapter(item)">章节</span>
-              <img v-if="!item.isPlay && item.freeUrls.length > 0" @click="onPlay(item, index)" class="play-icon" src="../../../assets/play-icon.png"/>
-              <img v-if="item.isPlay" @click="onPaus(item, index)" class="play-icon" src="../../../assets/paus-icon.png"/>
+              <img v-if="!item.isPlay && (item.freeUrls.length > 0 || item.kadaFree)" @click="onPlay(item, index)" class="play-icons" src="../../../assets/play-icon.png"/>
+              <img v-if="item.isPlay" @click="onPaus(item, index)" class="play-icons" src="../../../assets/paus-icon.png"/>
               <audio hidden ref="audio" :src="item.freeUrls[0]"></audio>
             </div>
           </li>
         </ul>
       </div>
     </div>
+    <v-play v-if="isplay" :logo="playLogo" :url="playUrl"></v-play>
     <img class="to-top" v-if="toTop" @click.stop="clickToTop()" src="../../../assets/toTop-icon.png">
     <a href="tel:4008808888"><img class="contact-service" src="../../../assets/service_icon.png"></a>
   </div>
 </template>
 
 <script>
+import play from '@/components/play/play.vue'
 import BScroll from 'better-scroll'
 import store from '@/store/store.js'
 export default {
   name: 'spyp-detail',
+  components: {
+    'v-play': play
+  },
   data () {
     return {
       secollHeight: {
@@ -66,6 +71,9 @@ export default {
       quantity: store.quantity,
       spypList: [],
       loadMore: false,
+      isplay: false,
+      playLogo: '',
+      playUrl: '',
       pages: {
         total: 0,
         pageNum: 1,
@@ -87,7 +95,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.query)
     this.loadSpypaudioalbumList()
   },
   methods: {
@@ -148,17 +155,39 @@ export default {
         path: '/shoppingCar'
       })
     },
-    onPlay (item, index) {
-      this.$refs.audio.forEach((item, index) => {
-        this.spypList[index].isPlay = false
-        item.pause()
-      })
-      this.$refs.audio[index].play()
-      item.isPlay = true
+    onPlay (item) {
+      if (this.query.provider === 1) {
+        let param = {
+          itemid: item.itemid,
+          collectid: item.collectid,
+          contentid: item.kadaFree.contentid
+        }
+        this.playLogo = item.logo
+        this.kadaResource(param)
+      } else {
+        console.log(1)
+        this.playLogo = item.logo
+        this.playUrl = item.freeUrls[0]
+        this.isplay = true
+      }
     },
     onPaus (item, index) {
       this.$refs.audio[index].pause()
       item.isPlay = false
+    },
+    kadaResource (param) {
+      this.$axios.kadaResource(param).then(res => {
+        if (res.data.result.status === '0') {
+          this.playUrl = res.data.resourceUrl
+          this.isplay = true
+        } else {
+          this.Toast.fail({title: '操作失败'})
+        }
+      }, err => {
+        this.Toast.fail({title: err})
+      }).catch(err => {
+        this.Toast.fail({title: err})
+      })
     },
     clickToTop () {
       this.scroller.scrollTo(0, 0, 500) // scrollTo(x, y, time)

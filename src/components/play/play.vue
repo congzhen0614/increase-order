@@ -1,7 +1,7 @@
 <template>
   <div class="play" :class="{miniPlay: mini}" @click="mini = false">
-    <!--<img class="mini-img" v-show="mini" src="../../../static/images/avatar.jpg">-->
-    <audio class="my-audio" ref="myAudio" src="../../../static/mp3/董又霖%20-%20一个人去巴黎.mp3"></audio>
+    <img class="mini-img" v-show="mini" :src="logo">
+    <audio class="my-audio" ref="myAudio" :src="url"></audio>
     <img class="close-icon" src="../../assets/play/close-icon.png" v-show="!mini"/>
     <img class="mini-icon"  src="../../assets/play/mini-icon.png" @click.stop="mini = !mini" v-show="!mini"/>
     <img class="play-icon"  src="../../assets/play/play-icon.png" @click="clickPlay" v-show="!play && !mini"/>
@@ -11,7 +11,7 @@
       <!-- 进度条进度 -->
       <div class="progress-bar-jd" :style="{width: playWidth}" v-show="!mini"></div>
       <div class="progress-bar-bs" :style="{left: playPlace}" v-show="!mini">
-        <!--<img class="progress-bar-tp" src="../../../static/images/avatar.jpg" v-show="!mini"/>-->
+        <img class="progress-bar-tp" :src="logo" v-show="!mini"/>
       </div>
     </div>
     <!-- 进度条开始时间 -->
@@ -39,13 +39,17 @@ export default {
     }
   },
   props: {
-    itemId: {
-      type: Number
+    logo: {
+      type: String
+    },
+    url: {
+      type: String
     }
   },
   mounted () {
     this.lengthOfSong = 0
     this.lengthOfPlay = 0
+    this.clickPlay()
   },
   computed: {
     lengthOfSong: {
