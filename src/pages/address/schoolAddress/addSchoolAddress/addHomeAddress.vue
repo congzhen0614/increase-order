@@ -25,16 +25,20 @@
 
 <script>
 import Picker from 'better-picker'
-import area from '../../../../../static/data/area.json'
+import store from '@/store/store.js'
+// import area from '../../../../../static/data/area.json'
 export default {
   name: '',
   data () {
     return {
       cityIndex: 0,
       picker: '',
-      data: area.result,
+      data: [],
       tempIndex: [0, 0, 0],
       address: {},
+      provinces: [],
+      cities: [],
+      areas: [],
       rules: {
         name: false,
         phone: false
@@ -51,29 +55,30 @@ export default {
   },
   computed: {
     // 动态城市选择数据
-    linkageData () {
-      let provinces = []
-      let cities = []
-      let areas = []
-      this.data.forEach(item => {
-        provinces.push({
-          text: item.provincename,
-          value: item.provinceid
+    linkageData: {
+      get () {
+        return [this.provinces, this.cities, this.areas]
+      },
+      set (val) {
+        val.forEach(item => {
+          this.provinces.push({
+            text: item.provinceName,
+            value: item.provinceId
+          })
         })
-      })
-      this.data[this.tempIndex[0]].citylist.forEach(item => {
-        cities.push({
-          text: item.cityname,
-          value: item.cityid
+        val[this.tempIndex[0]].cities.forEach(item => {
+          this.cities.push({
+            text: item.cityName,
+            value: item.cityId
+          })
         })
-      })
-      this.data[this.tempIndex[0]].citylist[this.tempIndex[1]].regionlist.forEach(item => {
-        areas.push({
-          text: item.regionname,
-          value: item.regionid
+        val[this.tempIndex[0]].cities[this.tempIndex[1]].regions.forEach(item => {
+          this.areas.push({
+            text: item.regionName,
+            value: item.regionId
+          })
         })
-      })
-      return [provinces, cities, areas]
+      }
     },
     // 省市区
     cityArea () {
@@ -83,41 +88,59 @@ export default {
       return this.address.provinceName + ',' + this.address.cityName + ',' + this.address.regionName
     }
   },
+  // created () {},
   mounted () {
-    // 初始化选择器
-    this.address = {
-      provinceName: '',
-      cityName: '',
-      regionName: ''
-    }
-    this.picker = new Picker({
-      data: this.linkageData,
-      selectedIndex: [0, 0, 0],
-      title: '请选择地区'
-    })
-    // 选中
-    this.picker.on('picker.select', (selectedVal, selectedIndex) => {
-      this.form.cityId = selectedVal[1]
-      this.form.provinceId = selectedVal[0]
-      this.form.regionId = selectedVal[2]
-      this.address.provinceName = this.linkageData[0][selectedIndex[0]].text
-      this.address.cityName = this.linkageData[1][selectedIndex[1]].text
-      this.address.regionName = this.linkageData[2][selectedIndex[2]].text
-    })
-    // 改变
-    this.picker.on('picker.change', (index, selectedIndex) => {
-      this.tempIndex[index] = selectedIndex
-      if (index > 1) {
-        return
-      }
-      if (index === 0) {
-        this.tempIndex = [selectedIndex, this.tempIndex[1], this.tempIndex[2]]
-      } else {
-        this.tempIndex = [this.tempIndex[0], selectedIndex, this.tempIndex[2]]
-      }
-    })
+    this.loadAccountListarea()
   },
   methods: {
+    loadAccountListarea () {
+      this.$axios.accountListarea({id: store.id}).then(res => {
+        if (res.data.code === '0') {
+          this.linkageData = [res.data.data.area]
+          this.setPicker()
+        } else {
+          this.Toast.fail({title: res.data.msg})
+        }
+      }, err => {
+        this.Toast.fail({title: err})
+      }).catch(err => {
+        this.Toast.fail({title: err})
+      })
+    },
+    setPicker () {
+      // 初始化选择器
+      this.address = {
+        provinceName: '',
+        cityName: '',
+        regionName: ''
+      }
+      this.picker = new Picker({
+        data: this.linkageData,
+        selectedIndex: [0, 0, 0],
+        title: '请选择地区'
+      })
+      // 选中
+      this.picker.on('picker.select', (selectedVal, selectedIndex) => {
+        this.form.cityId = selectedVal[1]
+        this.form.provinceId = selectedVal[0]
+        this.form.regionId = selectedVal[2]
+        this.address.provinceName = this.linkageData[0][selectedIndex[0]].text
+        this.address.cityName = this.linkageData[1][selectedIndex[1]].text
+        this.address.regionName = this.linkageData[2][selectedIndex[2]].text
+      })
+      // 改变
+      this.picker.on('picker.change', (index, selectedIndex) => {
+        this.tempIndex[index] = selectedIndex
+        if (index > 1) {
+          return
+        }
+        if (index === 0) {
+          this.tempIndex = [selectedIndex, this.tempIndex[1], this.tempIndex[2]]
+        } else {
+          this.tempIndex = [this.tempIndex[0], selectedIndex, this.tempIndex[2]]
+        }
+      })
+    },
     // 展示城市列表
     showPicker () {
       this.picker.data = this.linkageData
@@ -163,6 +186,7 @@ export default {
     'form.name' (val) {
       let name = /^[\u4e00-\u9fa5]{0,}$/
       this.rules.name = name.test(val)
+      console.log(this.rules.name)
       if (!name.test(val)) {
         this.form.name = val.substring(0, 4)
       }

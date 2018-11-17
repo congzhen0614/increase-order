@@ -79,11 +79,21 @@ let timeFormat = value => {
   return Y + '-' + M + '-' + D + ' ' + h + ':' + m + ':' + s
 }
 
+// 去掉空格
+let Trim = value => {
+  if (value.length > 0) {
+    return value.replace(/(^\s*)|(\s*$)/g, '')
+  } else {
+    return ''
+  }
+}
+
 export {
   getInteger,
   timeFormat,
   getFixed1,
   getFixed2,
   cutString,
-  cutStr
+  cutStr,
+  Trim
 }

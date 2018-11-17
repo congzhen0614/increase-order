@@ -7,7 +7,7 @@
       </p>
     </div>
     <ul v-if="lists.length > 0">
-      <li class="order-voice-list" v-for="(item, index) in lists" :key="index">
+      <li class="order-voice-list" v-for="(item, index) in lists" :key="index" @click="toList(item)">
         <div class="voice-list-left">
           <img :src="item.logo"/>
         </div>

@@ -2,9 +2,9 @@
   <div class="order-list">
     <div class="order-address" v-if="selectBook.length > 0">
       <div class="order-address-bg"></div>
-      <div class="order-address-content" @click="checkBookAddress">
+      <div class="order-address-content" @click="checkBookAddress(0)">
         <div class="content-left">
-          <p class="no-address" v-if="address === ''">请填写您的商品收货地址</p>
+          <p class="no-address" v-if="address === ''">请填写您的图书收货地址</p>
           <span v-if="address !== ''" class="address-name">{{ address.name}}</span>
           <span  v-if="address !== ''" class="address-phone">{{ address.mobile }}</span>
           <p  v-if="address !== ''" class="address-content">{{ address.provinceName }}{{ address.cityName }}{{ address.regionName }}{{ address.address }}</p>
@@ -18,7 +18,7 @@
     <!-- 杂志地址 -->
     <div class="order-address" v-if="selectMage.length > 0 && sendType === 1">
       <div class="order-address-bg"></div>
-      <div class="order-address-content" @click="checkBookAddress">
+      <div class="order-address-content" @click="checkBookAddress(1)">
         <div class="content-left">
           <p class="no-address" v-if="address === ''">请填写您的杂志收货地址</p>
           <span v-if="address !== ''" class="address-name">{{ address.name}}</span>
@@ -227,10 +227,12 @@ export default {
         })
       }
     },
-    checkBookAddress () {
+    checkBookAddress (sendType) {
       this.$router.push({
         path: '/homeAddress',
-        query: this.$route.query
+        query: {
+          sendType: sendType
+        }
       })
     },
     checkMagaAddress () {

@@ -111,7 +111,7 @@ export default {
             item.quantity = obj.quantity
             item.quantity += 1
             exist = true
-            obj = item
+            obj.quantity = item.quantity
           }
         })
         if (!exist) {

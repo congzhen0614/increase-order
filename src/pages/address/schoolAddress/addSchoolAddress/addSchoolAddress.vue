@@ -97,6 +97,9 @@ export default {
       className: '',
       relationList: relation.relationList,
       relationName: '',
+      rules: {
+        phone: false
+      },
       form: {
         uid: localStorage.getItem('userId'), // 用户id
         avatar: '', // 头像
@@ -107,7 +110,7 @@ export default {
         isDefault: 0, // 默认选中
         mobile: '', // 电话
         name: '', // 孩子姓名
-        parent: '', // 家长姓名
+        parent: '家长', // 家长姓名
         relation: 0, // 关系
         schoolId: '', // 学校id
         sex: 0, // 性别 0: 男; 1: 女
@@ -318,20 +321,25 @@ export default {
       this.picker.show()
     },
     onSubmit () {
-      this.$axios.childUpdate(this.form).then(res => {
-        if (res.data.code === '0') {
-          this.$router.push({
-            path: '/schoolAddress',
-            query: this.$route.query
-          })
-        } else {
-          this.Toast.fail({title: res.data.msg})
-        }
-      }, err => {
-        this.Toast.fail({title: err})
-      }).catch(err => {
-        this.Toast.fail({title: err})
-      })
+      this.form.name = this.Trim(this.form.name)
+      if (!this.rules.phone) {
+        this.Toast.warning({title: '请输入正确的手机号'})
+      } else {
+        this.$axios.childUpdate(this.form).then(res => {
+          if (res.data.code === '0') {
+            this.$router.push({
+              path: '/schoolAddress',
+              query: this.$route.query
+            })
+          } else {
+            this.Toast.fail({title: res.data.msg})
+          }
+        }, err => {
+          this.Toast.fail({title: err})
+        }).catch(err => {
+          this.Toast.fail({title: err})
+        })
+      }
     }
   },
   watch: {
@@ -344,7 +352,16 @@ export default {
       }
     },
     'form.name' (val) {
-      this.form.parent = val
+      let name = /^[\u4e00-\u9fa5]{0,}$/
+      if (!name.test(val)) {
+        this.form.name = val.substring(0, 4)
+      }
+    },
+    'form.mobile' (val) {
+      let phone = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/
+      if (val.length === 11) {
+        this.rules.phone = phone.test(val)
+      }
     },
     'form.regionId' () {
       this.loadSchoolList()

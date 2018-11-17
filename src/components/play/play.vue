@@ -1,9 +1,12 @@
 <template>
   <div class="play" :class="{miniPlay: mini}" @click="mini = false">
     <img class="mini-img" v-show="mini" :src="logo">
-    <audio class="my-audio" ref="myAudio" :src="url"></audio>
+    <audio class="my-audio" ref="myAudio">
+      <source :src="url" type="audio/ogg">
+      <source :src="url" type="audio/mpeg">
+    </audio>
     <img class="close-icon" src="../../assets/play/close-icon.png" @click="clickClose" v-show="!mini"/>
-    <!--<img class="mini-icon"  src="../../assets/play/mini-icon.png" @click.stop="mini = !mini" v-show="!mini"/>-->
+    <img class="mini-icon"  src="../../assets/play/mini-icon.png" @click.stop="mini = !mini" v-show="!mini"/>
     <img class="play-icon"  src="../../assets/play/play-icon.png" @click="clickPlay" v-show="!play && !mini"/>
     <img class="paus-icon"  src="../../assets/play/paus-icon.png" @click="clickPaus" v-show="play && !mini"/>
     <!-- 进度条背景 -->
@@ -49,7 +52,6 @@ export default {
   mounted () {
     this.lengthOfSong = 0
     this.lengthOfPlay = 0
-    this.clickPaus()
     this.clickPlay()
   },
   computed: {
@@ -121,10 +123,6 @@ export default {
     background: rgba(248, 189, 72, 0.99);
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
-    transition: width 1s;
-    -moz-transition: width 1s;
-    -webkit-transition: width 1s;
-    -o-transition: width 1s;
   }
   .miniPlay {
     width: 1.2rem;
@@ -132,6 +130,7 @@ export default {
     border-radius: 50%;
     border: 3px solid #FFFFFF;
     background: rgba(248, 189, 72, 0.99);
+    bottom: 1.4rem;
   }
   .mini-img {
     width: 100%;
@@ -144,10 +143,6 @@ export default {
     height: 0.32rem;
     margin: 0.2rem;
     margin-bottom: 0;
-    transition: width 1s;
-    -moz-transition: width 1s;
-    -webkit-transition: width 1s;
-    -o-transition: width 1s;
   }
   .play-icon, .paus-icon {
     width: 0.8rem;
@@ -156,10 +151,6 @@ export default {
     left: 0.3rem;
     top: 50%;
     margin-top: -0.4rem;
-    transition: width 1s;
-    -moz-transition: width 1s;
-    -webkit-transition: width 1s;
-    -o-transition: width 1s;
   }
   .progress-bar-bg {
     height: 4px;
@@ -169,19 +160,11 @@ export default {
     margin-top: -2px;
     left: 1.55rem;
     top: 50%;
-    transition: width 1s;
-    -moz-transition: width 1s;
-    -webkit-transition: width 1s;
-    -o-transition: width 1s;
   }
   .progress-bar-jd {
     height: 4px;
     border-radius: 2px;
     background: #ffffff;
-    transition: width 1s;
-    -moz-transition: width 1s;
-    -webkit-transition: width 1s;
-    -o-transition: width 1s;
   }
   .progress-bar-bs {
     width: 0.52rem;
@@ -194,10 +177,6 @@ export default {
     margin-left: -0.3rem;
     position: absolute;
     top: 50%;
-    transition: width 1s;
-    -moz-transition: width 1s;
-    -webkit-transition: width 1s;
-    -o-transition: width 1s;
   }
   .progress-bar-tp {
     width: 100%;
@@ -209,23 +188,11 @@ export default {
     color: #655022;
     position: absolute;
     top: 70%;
-    transition: width 1s;
-    -moz-transition: width 1s;
-    -webkit-transition: width 1s;
-    -o-transition: width 1s;
   }
   .progress-bar-st {
     left: 1.4rem;
-    transition: width 1s;
-    -moz-transition: width 1s;
-    -webkit-transition: width 1s;
-    -o-transition: width 1s;
   }
   .progress-bar-et {
     right: 0.3rem;
-    transition: width 1s;
-    -moz-transition: width 1s;
-    -webkit-transition: width 1s;
-    -o-transition: width 1s;
   }
 </style>

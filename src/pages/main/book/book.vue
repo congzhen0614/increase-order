@@ -129,10 +129,10 @@ export default {
       if (store.shoppingcarBook.length > 0) {
         store.shoppingcarBook.forEach(obj => {
           if (item.id === obj.id) {
-            item.quantity += obj.quantity
+            item.quantity = obj.quantity
             item.quantity += 1
             exist = true
-            obj = item
+            obj.quantity = item.quantity
           }
         })
         if (!exist) {

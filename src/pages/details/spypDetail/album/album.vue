@@ -116,18 +116,22 @@ export default {
         this.isplay = false
         this.kadaResource(param)
       } else {
-        this.playLogo = item.logo
-        this.playUrl = item.freeUrls[0]
+        this.playLogo = this.query.logo
+        this.playUrl = item.url
         this.isplay = true
       }
     },
     kadaResource (param) {
+      this.Toast.loading({
+        title: '加载中...'
+      })
       this.$axios.kadaResource(param).then(res => {
+        this.Toast.hide()
         if (res.data.result.status === '0') {
           this.playUrl = res.data.resourceUrl
           this.isplay = true
         } else {
-          this.Toast.fail({title: '操作失败'})
+          this.Toast.fail({title: '获取资源失败'})
         }
       }, err => {
         this.Toast.fail({title: err})

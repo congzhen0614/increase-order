@@ -34,6 +34,7 @@ import remarks from '@/pages/order/remarks/remarks.vue' // 订单留言
 import homeAddress from '@/pages/address/homeAddress/homeAddress.vue' // 家庭地址
 import schoolAddress from '@/pages/address/schoolAddress/schoolAddress.vue' // 学校地址
 import addHomeAddress from '@/pages/address/homeAddress/addHomeAddress/addHomeAddress.vue' // 添加家庭地址
+import addMagaAddress from '@/pages/address/schoolAddress/addSchoolAddress/addHomeAddress.vue' // 添加家庭地址
 import addSchoolAddress from '@/pages/address/schoolAddress/addSchoolAddress/addSchoolAddress.vue' // 添加学校地址
 import pay from '@/pages/pay/pay.vue' // 支付
 import failure from '@/pages/pay/failure/failure.vue'
@@ -48,7 +49,7 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  base: '/zd',
+  // base: '/zd',
   routes: [
     {
       path: '/login',
@@ -145,6 +146,10 @@ export default new Router({
       path: '/homeAddress',
       name: '家庭地址',
       component: homeAddress
+    }, {
+      path: '/addMagaAddress',
+      name: '杂志地址',
+      component: addMagaAddress
     }, {
       path: '/schoolAddress',
       name: '学校地址',

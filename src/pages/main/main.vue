@@ -24,7 +24,7 @@
     </div>
     <v-nav :navName="'首页'"></v-nav>
     <img class="to-top" v-if="toTop" @click.stop="clickToTop()" src="../../assets/toTop-icon.png">
-    <a href="tel:4008470068"><img class="contact-service" src="../../assets/service_icon.png"></a>
+    <!--<a href="tel:4008470068"><img class="contact-service" src="../../assets/service_icon.png"></a>-->
   </div>
 </template>
 
@@ -261,8 +261,8 @@ export default {
     scrollHeight (val) {
       if (val > this.$refs.content.offsetHeight - window.innerHeight && this.loadMore) {
         if (Math.ceil(this.pages.total / this.pages.pageSize) <= this.pages.pageNum) {
-          this.Toast.warning({title: '没有更多了'})
-          this.scroller.refresh()
+          // this.Toast.warning({title: '没有更多了'})
+          // this.scroller.refresh()
         } else {
           this.pages.pageNum += 1
           this.loadMore = false

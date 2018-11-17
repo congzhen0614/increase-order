@@ -26,7 +26,7 @@
           </div>
         </div>
         <ul>
-          <li class="spyp-list" v-for="(item, index) in spypList" :key="item.id">
+          <li class="spyp-list" v-for="item in spypList" :key="item.id" @click="toChapter(item)">
             <div class="spyp-list-left">
               <img class="logo-icon" :src="item.logo">
               <img class="audio-icon" v-if="item.clsName === '音频'" src="../../../assets/audio-icon.png">
@@ -37,8 +37,8 @@
               <p class="spyp-list-brief">{{ item.introductions }}</p>
               <p class="spyp-list-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
               <span class="chapter" @click="toChapter(item)">章节</span>
-              <img v-if="!item.isPlay && (item.freeUrls.length > 0 || item.kadaFree)" @click="onPlay(item, index)" class="play-icons" src="../../../assets/play-icon.png"/>
-              <img v-if="item.isPlay" @click="onPaus(item, index)" class="play-icons" src="../../../assets/paus-icon.png"/>
+              <!--<img v-if="!item.isPlay && (item.freeUrls.length > 0 || item.kadaFree)" @click="onPlay(item, index)" class="play-icons" src="../../../assets/play-icon.png"/>-->
+              <!--<img v-if="item.isPlay" @click="onPaus(item, index)" class="play-icons" src="../../../assets/paus-icon.png"/>-->
               <audio hidden ref="audio" :src="item.freeUrls[0]"></audio>
             </div>
           </li>
@@ -47,7 +47,7 @@
     </div>
     <v-play v-if="isplay" :logo="playLogo" :url="playUrl" @playerClose="playerClose"></v-play>
     <img class="to-top" v-if="toTop" @click.stop="clickToTop()" src="../../../assets/toTop-icon.png">
-    <a href="tel:4008808888"><img class="contact-service" src="../../../assets/service_icon.png"></a>
+    <!--<a href="tel:4008808888"><img class="contact-service" src="../../../assets/service_icon.png"></a>-->
   </div>
 </template>
 
@@ -163,9 +163,11 @@ export default {
           collectid: item.collectid,
           contentid: item.kadaFree.contentid
         }
+        this.isplay = false
         this.playLogo = item.logo
         this.kadaResource(param)
       } else {
+        console.log(item)
         this.playLogo = item.logo
         this.playUrl = item.freeUrls[0]
         this.isplay = true
