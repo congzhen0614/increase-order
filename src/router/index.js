@@ -49,7 +49,7 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  // base: '/zd',
+  base: '/zd',
   routes: [
     {
       path: '/login',
