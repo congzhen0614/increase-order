@@ -82,34 +82,38 @@ export default {
     },
     addShoppingCar () {
       if (this.detailType === 1) {
+        let exist = false
         if (store.shoppingcarMage.length === 0) {
           if (this.detail.quantity === 0) this.detail.quantity = 1
           store.shoppingcarMage.push(this.detail)
         } else {
-          store.shoppingcarMage.forEach((item, index) => {
+          store.shoppingcarMage.forEach(item => {
             if (item.id === this.detail.id) {
-              if (item.quantity === 0) {
-                store.shoppingcarMage.splice(index, 1)
-              } else {
-                item.quantity += 1
-              }
+              item.quantity += 1
+              exist = true
             }
           })
+          if (!exist) {
+            this.detail.quantity += 1
+            store.shoppingcarMage.push(this.detail)
+          }
         }
       } else {
+        let exist = false
         if (store.shoppingcarBook.length === 0) {
           if (this.detail.quantity === 0) this.detail.quantity = 1
           store.shoppingcarBook.push(this.detail)
         } else {
           store.shoppingcarBook.forEach((item, index) => {
             if (item.id === this.detail.id) {
-              if (item.quantity === 0) {
-                store.shoppingcarBook.splice(index, 1)
-              } else {
-                item.quantity += 1
-              }
+              item.quantity += 1
+              exist = true
             }
           })
+          if (!exist) {
+            this.detail.quantity += 1
+            store.shoppingcarBook.push(this.detail)
+          }
         }
       }
       store.quantity = 0

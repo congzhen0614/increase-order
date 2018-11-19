@@ -322,6 +322,9 @@ export default {
     },
     onSubmit () {
       this.form.name = this.Trim(this.form.name)
+      if (this.form.name === '') {
+        this.Toast.warning({title: '请输入姓名'})
+      }
       if (!this.rules.phone) {
         this.Toast.warning({title: '请输入正确的手机号'})
       } else {
@@ -349,12 +352,6 @@ export default {
       } else {
         delete this.form['classId']
         this.className = ''
-      }
-    },
-    'form.name' (val) {
-      let name = /^[\u4e00-\u9fa5]{0,}$/
-      if (!name.test(val)) {
-        this.form.name = val.substring(0, 4)
       }
     },
     'form.mobile' (val) {
