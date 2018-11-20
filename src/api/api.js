@@ -64,11 +64,11 @@ export default {
     let param = qs.stringify(params)
     return axios.get(`/qrzd/spyp/spypaudio/list/open?${param}`)
   },
-  addressList () { // 地址列表
-    return axios.get('/qrzd/sys/address/list/open')
+  addressList (params) { // 地址列表
+    return axios.post('/qrzd/sys/address/list/open', params)
   },
-  childList () { // 孩子列表
-    return axios.get('/qrzd/sys/child/list/open')
+  childList (params) { // 孩子列表
+    return axios.post('/qrzd/sys/child/list/open', params)
   },
   addressUpdate (params) { // 添加修改地址
     return axios.post('/qrzd/sys/address/update/open', params)

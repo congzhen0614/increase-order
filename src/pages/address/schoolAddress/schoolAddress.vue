@@ -1,13 +1,12 @@
 <template>
   <div class="school-address">
-    <div class="no-address-list" v-if="addressList.length === 0 || (!areaHaveSchool)">
+    <div class="no-address-list" v-if="addressList.length === 0">
       <img src="../../../assets/no-content-icon.png"/>
-      <p v-if="areaHaveSchool">暂无内容</p>
-      <p v-if="!areaHaveSchool">该地区没有孩子</p>
+      <p>暂无内容</p>
       <span v-if="!isLogin" class="go-login" @click="goLogin">去登录</span>
     </div>
-    <ul class="school-address-list" v-if="addressList.length > 0 && areaHaveSchool">
-      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="serviceArea.indexOf(item.regionName) > -1">
+    <ul class="school-address-list" v-if="addressList.length > 0">
+      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="item.seleted === 1">
         <img v-if="sex === 0" class="school-address-head" src="../../../assets/girls-icon.png"/>
         <img v-if="sex === 1" class="school-address-head" src="../../../assets/boys-icon.png"/>
         <img class="school-address-link" src="../../../assets/link-icon.png"/>
@@ -30,31 +29,24 @@ export default {
   components: {},
   data () {
     return {
-      areaHaveSchool: false,
       addressList: [],
-      serviceArea: '',
       isLogin: false,
       sex: 0
     }
   },
   created () {
-    this.loadAccountListarea()
+    this.loadChildList()
   },
   methods: {
     loadChildList () {
-      this.$axios.childList().then(res => {
+      this.$axios.childList({id: store.id}).then(res => {
         if (res.data.code === '0') {
           this.addressList = res.data.data
           this.isLogin = true
-          res.data.data.forEach(item => {
-            this.serviceArea.indexOf(item.regionName)
-            if (this.serviceArea.indexOf(item.regionName) > 0) {
-              this.areaHaveSchool = true
-            }
-          })
         } else if (res.data.code === '-6') {
           this.isLogin = false
         } else {
+          this.isLogin = true
           this.Toast.fail({
             title: res.data.msg
           })
@@ -67,20 +59,6 @@ export default {
         this.Toast.fail({
           title: err
         })
-      })
-    },
-    loadAccountListarea () {
-      this.$axios.accountListarea({id: store.id}).then(res => {
-        if (res.data.code === '0') {
-          this.serviceArea = JSON.stringify(res.data.data.area)
-          this.loadChildList()
-        } else {
-          this.Toast.fail({title: res.data.msg})
-        }
-      }, err => {
-        this.Toast.fail({title: err})
-      }).catch(err => {
-        this.Toast.fail({title: err})
       })
     },
     selectAddress (item) {

@@ -6,7 +6,7 @@
       <span v-if="!isLogin" class="go-login" @click="goLogin">去登录</span>
     </div>
     <ul class="address-list" v-if="addressList.length > 0">
-      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="item.showAddress">
+      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="item.selected === 1 || sendType === 0">
         <div class="address-list-right">
           <img src="../../../assets/link-icon.png"/>
         </div>
@@ -30,6 +30,7 @@ export default {
   components: {},
   data () {
     return {
+      sendType: this.$route.query.sendType,
       addressList: [],
       serviceArea: '',
       isLogin: false
@@ -38,31 +39,19 @@ export default {
   created () {
   },
   mounted () {
-    this.loadAccountListarea()
+    this.loadAddress()
   },
   computed: {},
   methods: {
     loadAddress () {
-      this.$axios.addressList().then(res => {
+      this.$axios.addressList({adminId: store.id}).then(res => {
         if (res.data.code === '0') {
           this.addressList = res.data.data
           this.isLogin = true
-          if (this.$route.query.sendType === 1) {
-            this.addressList.forEach(item => {
-              if (this.serviceArea.indexOf(item.regionName) > 0) {
-                item.showAddress = true
-              } else {
-                item.showAddress = false
-              }
-            })
-          } else {
-            this.addressList.forEach(item => {
-              item.showAddress = true
-            })
-          }
         } else if (res.data.code === '-6') {
           this.isLogin = false
         } else {
+          this.isLogin = true
           this.Toast.fail({
             title: res.data.msg
           })
@@ -75,20 +64,6 @@ export default {
         this.Toast.fail({
           title: err
         })
-      })
-    },
-    loadAccountListarea () {
-      this.$axios.accountListarea({id: store.id}).then(res => {
-        if (res.data.code === '0') {
-          this.serviceArea = JSON.stringify(res.data.data.area)
-          this.loadAddress()
-        } else {
-          this.Toast.fail({title: res.data.msg})
-        }
-      }, err => {
-        this.Toast.fail({title: err})
-      }).catch(err => {
-        this.Toast.fail({title: err})
       })
     },
     selectAddress (item) {
