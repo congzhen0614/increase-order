@@ -17,9 +17,9 @@
           <p class="voice-list-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
           <span class="kada" v-if="item.provider === 1">咔哒故事</span>
           <div class="voice-list-button">
-            <span @click="toBuy(item)">购买</span>
-            <span @click="toShoppingcar(item)">加入购物车</span>
-            <span @click="toList(item)">列表</span>
+            <span @click.stop="toBuy(item)">购买</span>
+            <span @click.stop="toShoppingcar(item)">加入购物车</span>
+            <span @click.stop="toList(item)">列表</span>
           </div>
         </div>
       </li>

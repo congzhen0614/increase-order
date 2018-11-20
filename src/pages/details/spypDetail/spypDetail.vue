@@ -5,7 +5,7 @@
         <div class="content-header">
           <div class="shoppingcar" @click="toShoppingcar">
             <span class="shopping-car-quantity" v-if="quantity > 0">{{ quantity }}</span>
-            <img src="../../../assets/shoppingcar-icon.png">
+            <img src="../../../assets/shop-icon.png">
           </div>
           <span class="more-list" @click="onMore">更多</span>
           <div class="header-content">
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import shoppingcar from '@/store/shoppingcar.js'
 import play from '@/components/play/play.vue'
 import BScroll from 'better-scroll'
 import store from '@/store/store.js'
@@ -195,6 +196,9 @@ export default {
       this.scroller.scrollTo(0, 0, 500) // scrollTo(x, y, time)
     },
     onBuy (item) {
+      shoppingcar.list.selectMage = []
+      shoppingcar.list.selectBook = []
+      shoppingcar.list.selectSpyp = [item]
       this.$router.push({
         path: '/order',
         query: {

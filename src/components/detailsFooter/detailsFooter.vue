@@ -20,6 +20,12 @@
       <span class="buy-now" v-if="!isShowShadow" @click="isShowShadow = true">立即购买</span>
       <span class="buy-now" v-if="isShowShadow" @click="clickBuy">去结算</span>
       <span class="add-shoppingcar" @click="addShoppingCar">加入购物车</span>
+      <div class="shoppingcar-icon" @click="$router.push({path: '/', query: {id: store.qrzdItemPackId}})">
+        <div>
+          <img src="../../assets/classify-icon.png"/>
+        </div>
+        <p>首页</p>
+      </div>
       <div class="shoppingcar-icon" @click="clickShoppingCar">
         <div>
           <span v-if="quantity > 0">{{ quantity }}</span>

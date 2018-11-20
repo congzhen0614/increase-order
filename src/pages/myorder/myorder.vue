@@ -88,6 +88,7 @@ export default {
       },
       scrollHeight: '',
       scroller: '',
+      reload: true,
       loadMore: false,
       notLogin: false,
       orderList: [],
@@ -118,7 +119,9 @@ export default {
     },
     loadMyOrderList () {
       this.$axios.myOrderList(this.params).then(res => {
+        this.reload = true
         if (res.data.code === '0') {
+          this.reload = true
           this.pages.total = res.data.data.total
           res.data.data.list.forEach(item => {
             this.orderList.push(item)
@@ -155,6 +158,7 @@ export default {
       this.scroller.on('scroll', pos => {
         if (pos.y >= 100 && this.reload) {
           this.reload = false
+          this.loadMyOrderList()
         }
         this.scrollHeight = -pos.y
       })
