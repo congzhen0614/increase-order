@@ -4,10 +4,10 @@
       <div class="order-address-bg"></div>
       <div class="order-address-content" @click="checkBookAddress(0)">
         <div class="content-left">
-          <p class="no-address" v-if="address === ''">请填写您的图书收货地址</p>
-          <span v-if="address !== ''" class="address-name">{{ address.name}}</span>
-          <span  v-if="address !== ''" class="address-phone">{{ address.mobile }}</span>
-          <p  v-if="address !== ''" class="address-content">{{ address.provinceName }}{{ address.cityName }}{{ address.regionName }}{{ address.address }}</p>
+          <p class="no-address" v-if="bookAddress === ''">请填写您的图书收货地址</p>
+          <span v-if="bookAddress !== ''" class="address-name">{{ bookAddress.name}}</span>
+          <span  v-if="bookAddress !== ''" class="address-phone">{{ bookAddress.mobile }}</span>
+          <p  v-if="bookAddress !== ''" class="address-content">{{ bookAddress.provinceName }}{{ bookAddress.cityName }}{{ bookAddress.regionName }}{{ bookAddress.address }}</p>
         </div>
         <div class="content-right">
           <img src="../../assets/link-icon.png">
@@ -120,6 +120,7 @@ export default {
       selectMage: shoppingcar.list.selectMage,
       selectBook: shoppingcar.list.selectBook,
       selectSpyp: shoppingcar.list.selectSpyp,
+      bookAddress: store.bookAddress,
       sendType: store.sendType,
       address: store.address,
       child: store.child,
@@ -181,15 +182,11 @@ export default {
       let param = {
         uid: localStorage.getItem('userId'),
         childId: store.child.id ? store.child.id : '',
+        addressId: store.address.id ? store.address.id : '',
+        bookAddressId: store.bookAddress.id ? store.bookAddress.id : '',
         qrzdItemPackId: store.qrzdId,
         remark: store.remark,
         items: this.items
-      }
-      if (this.selectBook.length > 0) {
-        param.bookAddressId = store.address.id ? store.address.id : ''
-      }
-      if (this.selectMage.length > 0 && this.sendType === 1) {
-        param.addressId = store.address.id ? store.address.id : ''
       }
       return param
     }
@@ -231,7 +228,7 @@ export default {
       this.$router.push({
         path: '/homeAddress',
         query: {
-          sendType: sendType
+          isMaga: sendType
         }
       })
     },

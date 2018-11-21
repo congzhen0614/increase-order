@@ -20,6 +20,7 @@ export default {
   total_amount: 0, // 付款成功价钱
   remark: '', // 订单留言
   address: '', // 订单选中地址
+  bookAddress: '', // 图书订单选中地址
   child: '', // 订单选中孩子
   postageSum: '', // 杂志未满多少金额
   postage: '', // 杂志需要多少邮费

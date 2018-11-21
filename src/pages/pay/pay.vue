@@ -3,16 +3,12 @@
     <div class="check-type" v-if="!isWeixin">
       <img class="type-icon" src="../../assets/alipay-icon.png"/>
       <span class="type-content">支付宝支付</span>
-      <!--<img class="check-icon" v-if="!isAlipay" @click="isAlipay = !isAlipay" src="../../assets/check-icon.png"/>-->
-      <!--<img class="check-icon" v-if="isAlipay" @click="isAlipay = !isAlipay" src="../../assets/checked-icon.png"/>-->
     </div>
     <div class="check-type" v-if="isWeixin">
       <img class="type-icon" src="../../assets/weixin-pay-icon.png"/>
       <span class="type-content">微信支付</span>
-      <!--<img class="check-icon" v-if="isAlipay" @click="isAlipay = !isAlipay" src="../../assets/check-icon.png"/>-->
-      <!--<img class="check-icon" v-if="!isAlipay" @click="isAlipay = !isAlipay" src="../../assets/checked-icon.png"/>-->
     </div>
-    <div class="pay-buyyon" @click="onSubmit">{{ isAlipay ? '支付宝支付' : '微信支付' }}{{ amount }}元</div>
+    <div class="pay-buyyon" @click="onSubmit">{{ isAlipay ? '支付宝支付' : '微信支付' }}{{ amount | getInteger }}{{ amount | getFixed1 }}元</div>
     <div ref="form" v-html="formHtml"></div>
   </div>
 </template>
@@ -31,7 +27,6 @@ export default {
   mounted () {
     if (this.isWeixin) {
       this.isAlipay = false
-      // this.weixinPay()
     }
   },
   methods: {
