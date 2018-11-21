@@ -247,18 +247,18 @@ export default {
       })
     },
     onSubmit () {
-      if (this.selectMage.length > 0 && this.sendType === 0 && this.params.child === undefined) {
+      if (this.selectMage.length > 0 && this.sendType === 0 && this.params.child === '') {
         this.Toast.warning({
           title: '请选择孩子'
         })
         return false
-      } else if (this.selectMage.length > 0 && this.sendType === 1 && this.params.addressId === undefined) {
+      } else if (this.selectMage.length > 0 && this.sendType === 1 && this.params.addressId === '') {
         this.Toast.warning({
           title: '请选择地址'
         })
         return false
       }
-      if (this.selectBook.length > 0 && this.params.addressId === undefined) {
+      if (this.selectBook.length > 0 && this.params.addressId === '') {
         this.Toast.warning({
           title: '请选择地址'
         })
