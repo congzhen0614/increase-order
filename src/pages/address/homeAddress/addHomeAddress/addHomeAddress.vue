@@ -173,6 +173,10 @@ export default {
       if (val.length === 11) {
         this.rules.phone = phone.test(val)
       }
+    },
+    linkageData () {
+      // 填充数据
+      this.picker.refill(this.linkageData)
     }
   }
 }

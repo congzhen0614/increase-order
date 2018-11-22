@@ -244,6 +244,7 @@ export default {
       })
     },
     onSubmit () {
+      console.log()
       if (this.selectMage.length > 0 && this.sendType === 0 && this.params.child === '') {
         this.Toast.warning({
           title: '请选择孩子'
@@ -255,7 +256,7 @@ export default {
         })
         return false
       }
-      if (this.selectBook.length > 0 && this.params.addressId === '') {
+      if (this.selectBook.length > 0 && this.params.bookAddressId === '') {
         this.Toast.warning({
           title: '请选择地址'
         })
