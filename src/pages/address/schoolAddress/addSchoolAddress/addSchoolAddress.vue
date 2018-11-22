@@ -25,7 +25,7 @@
       <li class="item-list">
         <span class="item-title">地区</span>
         <img class="link-icon" src="../../../../assets/link-icon.png">
-        <span class="item-content" @click="onCheckArea">{{ address || '请选择地区' }}</span>
+        <span class="item-content" @click="showPicker">{{ cityArea || '请选择地区' }}</span>
       </li>
       <li class="item-list">
         <span class="item-title">学校</span>
@@ -81,12 +81,12 @@ export default {
   name: 'add-child-address',
   data () {
     return {
+      tempIndex: [0, 0, 0],
+      areaPicker: '',
+      address: {},
+      picker: '',
+      data: [],
       isSelect: true,
-      cityIndex: 0,
-      provinces: [],
-      cities: [],
-      areas: [],
-      address: '',
       enrollmentList: [],
       enrollmentName: '',
       schoolList: [],
@@ -121,28 +121,37 @@ export default {
     }
   },
   computed: {
-    dynamicCities: {
-      get () {
-        return [this.provinces, this.cities, this.areas]
-      },
-      set (items) {
-        this.provinces.push({
-          text: items.provinceName,
-          value: items.provinceId
+    // 动态城市选择数据
+    linkageData () {
+      let provinces = []
+      let cities = []
+      let areas = []
+      this.data.forEach(item => {
+        provinces.push({
+          text: item.provinceName,
+          value: item.provinceId
         })
-        items.cities.forEach(item => {
-          this.cities.push({
-            text: item.cityName,
-            value: item.cityId
-          })
+      })
+      this.data[this.tempIndex[0]].cities.forEach(item => {
+        cities.push({
+          text: item.cityName,
+          value: item.cityId
         })
-        items.cities[this.cityIndex].regions.forEach(item => {
-          this.areas.push({
-            text: item.regionName,
-            value: item.regionId
-          })
+      })
+      this.data[this.tempIndex[0]].cities[this.tempIndex[1]].regions.forEach(item => {
+        areas.push({
+          text: item.regionName,
+          value: item.regionId
         })
+      })
+      return [provinces, cities, areas]
+    },
+    // 省市区
+    cityArea () {
+      if (!this.address.provinceName) {
+        return ''
       }
+      return this.address.provinceName + ',' + this.address.cityName + ',' + this.address.regionName
     }
   },
   created () {
@@ -157,7 +166,8 @@ export default {
     loadAccountListarea () {
       this.$axios.accountListarea({id: store.id}).then(res => {
         if (res.data.code === '0') {
-          this.dynamicCities = res.data.data.area
+          this.data = [res.data.data.area]
+          this.setPicker()
         } else {
           this.Toast.fail({title: res.data.msg})
         }
@@ -167,6 +177,46 @@ export default {
         this.Toast.fail({title: err})
       })
     },
+    setPicker () {
+      // 初始化选择器
+      this.address = {
+        provinceName: '',
+        cityName: '',
+        regionName: ''
+      }
+      this.areaPicker = new Picker({
+        data: this.linkageData,
+        selectedIndex: [0, 0, 0],
+        title: '请选择地区'
+      })
+      // 选中
+      this.areaPicker.on('picker.select', (selectedVal, selectedIndex) => {
+        this.form.cityId = selectedVal[1]
+        this.form.provinceId = selectedVal[0]
+        this.form.regionId = selectedVal[2]
+        this.address.provinceName = this.linkageData[0][selectedIndex[0]].text
+        this.address.cityName = this.linkageData[1][selectedIndex[1]].text
+        this.address.regionName = this.linkageData[2][selectedIndex[2]].text
+      })
+      // 改变
+      this.areaPicker.on('picker.change', (index, selectedIndex) => {
+        this.tempIndex[index] = selectedIndex
+        if (index > 1) {
+          return
+        }
+        if (index === 0) {
+          this.tempIndex = [selectedIndex, this.tempIndex[1], this.tempIndex[2]]
+        } else {
+          this.tempIndex = [this.tempIndex[0], selectedIndex, this.tempIndex[2]]
+        }
+        this.areaPicker.refill(this.linkageData)
+      })
+    },
+    showPicker () {
+      this.areaPicker.data = this.linkageData
+      this.areaPicker.show()
+    },
+    // 展示城市列表
     setEnrollmentList () {
       let thisYear = new Date().getFullYear()
       for (let i = thisYear; i > 1980; i--) {

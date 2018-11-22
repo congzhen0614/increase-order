@@ -26,19 +26,14 @@
 <script>
 import Picker from 'better-picker'
 import store from '@/store/store.js'
-// import area from '../../../../../static/data/area.json'
 export default {
   name: '',
   data () {
     return {
-      cityIndex: 0,
-      picker: '',
-      data: [],
       tempIndex: [0, 0, 0],
       address: {},
-      provinces: [],
-      cities: [],
-      areas: [],
+      picker: '',
+      data: [],
       rules: {
         name: false,
         phone: false
@@ -55,30 +50,29 @@ export default {
   },
   computed: {
     // 动态城市选择数据
-    linkageData: {
-      get () {
-        return [this.provinces, this.cities, this.areas]
-      },
-      set (val) {
-        val.forEach(item => {
-          this.provinces.push({
-            text: item.provinceName,
-            value: item.provinceId
-          })
+    linkageData () {
+      let provinces = []
+      let cities = []
+      let areas = []
+      this.data.forEach(item => {
+        provinces.push({
+          text: item.provinceName,
+          value: item.provinceId
         })
-        val[this.tempIndex[0]].cities.forEach(item => {
-          this.cities.push({
-            text: item.cityName,
-            value: item.cityId
-          })
+      })
+      this.data[this.tempIndex[0]].cities.forEach(item => {
+        cities.push({
+          text: item.cityName,
+          value: item.cityId
         })
-        val[this.tempIndex[0]].cities[this.tempIndex[1]].regions.forEach(item => {
-          this.areas.push({
-            text: item.regionName,
-            value: item.regionId
-          })
+      })
+      this.data[this.tempIndex[0]].cities[this.tempIndex[1]].regions.forEach(item => {
+        areas.push({
+          text: item.regionName,
+          value: item.regionId
         })
-      }
+      })
+      return [provinces, cities, areas]
     },
     // 省市区
     cityArea () {
@@ -96,7 +90,7 @@ export default {
     loadAccountListarea () {
       this.$axios.accountListarea({id: store.id}).then(res => {
         if (res.data.code === '0') {
-          this.linkageData = [res.data.data.area]
+          this.data = [res.data.data.area]
           this.setPicker()
         } else {
           this.Toast.fail({title: res.data.msg})
@@ -139,6 +133,7 @@ export default {
         } else {
           this.tempIndex = [this.tempIndex[0], selectedIndex, this.tempIndex[2]]
         }
+        this.picker.refill(this.linkageData)
       })
     },
     // 展示城市列表
