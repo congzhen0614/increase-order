@@ -170,6 +170,9 @@ export default {
       return this.originalFee - this.accounts
     }
   },
+  mounted () {
+    this.selectVerdict()
+  },
   methods: {
     goAndSee () {
       this.$router.push({

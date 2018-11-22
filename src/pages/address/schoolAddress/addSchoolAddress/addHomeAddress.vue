@@ -145,8 +145,11 @@ export default {
       this.form.address = this.$refs.textarea.innerHTML
       this.form.name = this.Trim(this.form.name)
       this.form.address = this.Trim(this.form.address)
-      if (!this.rules.name) {
+      let reg = /^[0-9]+.?[0-9]*$/
+      if (this.form.name === '') {
         this.Toast.warning({title: '请输入姓名'})
+      } else if (reg.test(this.form.name) || this.form.name.length > 12) {
+        this.Toast.warning({title: '姓名不能为纯数字，名字最多十二位'})
       } else if (!this.rules.phone) {
         this.Toast.warning({title: '请输入正确手机号'})
       } else if (this.form.regionId === '') {
@@ -178,14 +181,6 @@ export default {
     }
   },
   watch: {
-    'form.name' (val) {
-      let name = /^[\u4e00-\u9fa5]{0,}$/
-      this.rules.name = name.test(val)
-      console.log(this.rules.name)
-      if (!name.test(val)) {
-        this.form.name = val.substring(0, 4)
-      }
-    },
     'form.mobile' (val) {
       this.rules.phone = false
       let phone = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/

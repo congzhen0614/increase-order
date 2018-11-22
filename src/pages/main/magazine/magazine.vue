@@ -16,6 +16,7 @@
             {{ item.giftName }}
           </p>
           <p class="units" v-if="item.feeUnitNum">{{ item.feeUnitTypeName + item.feeUnitNum + item.feeUnitName }}</p>
+          <p class="ageName">{{ item.ageName }}</p>
           <p class="amount">
             <img @click.stop="onReduce(item)" v-if="item.quantity > 0" src="../../../assets/minus-icon.png">
             <span v-if="item.quantity > 0">{{ item.quantity }}</span>

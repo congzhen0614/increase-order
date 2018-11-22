@@ -244,17 +244,18 @@ export default {
       })
     },
     onSubmit () {
-      console.log()
-      if (this.selectMage.length > 0 && this.sendType === 0 && this.params.child === '') {
-        this.Toast.warning({
-          title: '请选择孩子'
-        })
-        return false
-      } else if (this.selectMage.length > 0 && this.sendType === 1 && this.params.addressId === '') {
-        this.Toast.warning({
-          title: '请选择地址'
-        })
-        return false
+      if (this.selectMage.length > 0) {
+        if (this.sendType === 0 && this.params.childId === '') {
+          this.Toast.warning({
+            title: '请选择孩子'
+          })
+          return false
+        } else if (this.sendType === 1 && this.params.addressId === '') {
+          this.Toast.warning({
+            title: '请选择地址'
+          })
+          return false
+        }
       }
       if (this.selectBook.length > 0 && this.params.bookAddressId === '') {
         this.Toast.warning({

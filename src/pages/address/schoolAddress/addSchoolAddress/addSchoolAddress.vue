@@ -3,7 +3,7 @@
     <ul>
       <li class="item-list">
         <span class="item-title">姓名</span>
-        <input class="item-content" type="text" placeholder="请输入孩子姓名" v-model="form.name">
+        <input class="item-content" type="text" style="width: 80%" placeholder="请输入 ‘ 孩子 ’ 真实姓名，以免影响收货" v-model="form.name">
       </li>
       <!--<li class="item-list">-->
         <!--<span class="item-title">性别</span>-->
@@ -372,10 +372,12 @@ export default {
     },
     onSubmit () {
       this.form.name = this.Trim(this.form.name)
+      let reg = /^[0-9]+.?[0-9]*$/
       if (this.form.name === '') {
         this.Toast.warning({title: '请输入姓名'})
-      }
-      if (!this.rules.phone) {
+      } else if (reg.test(this.form.name) || this.form.name.length > 12) {
+        this.Toast.warning({title: '姓名不能为纯数字，名字最多十二位'})
+      } else if (!this.rules.phone) {
         this.Toast.warning({title: '请输入正确的手机号'})
       } else {
         this.$axios.childUpdate(this.form).then(res => {

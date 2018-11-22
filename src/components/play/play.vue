@@ -52,7 +52,9 @@ export default {
   mounted () {
     this.lengthOfSong = 0
     this.lengthOfPlay = 0
-    this.clickPlay()
+    if (!this.isIos) {
+      this.clickPlay()
+    }
   },
   computed: {
     lengthOfSong: {

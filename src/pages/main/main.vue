@@ -186,10 +186,10 @@ export default {
       }
       if (!exist) {
         if (this.navType === 54) {
-          item.select = false
+          item.select = true
           item.quantity = 1
         } else {
-          item.select = false
+          item.select = true
           item.quantity = 0
         }
       }
