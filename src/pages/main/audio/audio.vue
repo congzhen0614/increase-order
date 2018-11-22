@@ -2,7 +2,7 @@
   <div class="solicit-subscription-audio">
     <div class="voice-seek">
       <p>
-        <input ref="input" type="text" v-model="packetname" placeholder="在此输入包名称">
+        <input ref="input" type="text" v-model="packetname" placeholder="在此输入电子读物名称">
         <img src="../../../assets/seek-logo.png" @click.stop="onSearch">
       </p>
     </div>

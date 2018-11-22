@@ -107,11 +107,9 @@ export default {
     // 改变
     this.picker.on('picker.change', (index, selectedIndex) => {
       this.tempIndex[index] = selectedIndex
-      if (index > 1) {
-        return
-      }
+      if (index > 1) return
       if (index === 0) {
-        this.tempIndex = [selectedIndex, this.tempIndex[1], this.tempIndex[2]]
+        this.tempIndex = [selectedIndex, 0, 0]
       } else {
         this.tempIndex = [this.tempIndex[0], selectedIndex, this.tempIndex[2]]
       }
@@ -170,7 +168,7 @@ export default {
         this.rules.phone = phone.test(val)
       }
     },
-    linkageData () {
+    linkageData (val) {
       // 填充数据
       this.picker.refill(this.linkageData)
     }
