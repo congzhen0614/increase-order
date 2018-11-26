@@ -1,7 +1,7 @@
 <template>
   <div class="play" :class="{miniPlay: mini}" @click="mini = false">
     <img class="mini-img" v-show="mini" :src="logo">
-    <audio class="my-audio" ref="myAudio">
+    <audio class="my-audio" ref="myAudio" preload="auto">
       <source :src="url" type="audio/ogg">
       <source :src="url" type="audio/mpeg">
     </audio>
@@ -85,6 +85,7 @@ export default {
     clickPlay () {
       let audio = this.$refs.myAudio
       this.play = true
+      audio.load()
       audio.play()
       this.player = setInterval(() => {
         this.lengthOfSong = audio.duration
