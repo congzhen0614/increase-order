@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import store from '@/store/store.js'
 export default {
   name: 'solicit-subscription-login',
   components: {},
@@ -79,7 +78,7 @@ export default {
     },
     onWeixinLogin () {
       // 微信登陆返回到当前页面
-      let href = window.location.href + '?id=' + store.qrzdItemPackId
+      let href = window.location.href
       let _href = encodeURIComponent(`${href}`)
       let apiUrl = 'https://www.51weixiao.com/app-api/api/user/wxLogin'
       let redirectUrl = encodeURIComponent(`${apiUrl}?finalUrl=${_href}`)

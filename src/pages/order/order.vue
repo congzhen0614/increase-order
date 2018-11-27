@@ -184,7 +184,7 @@ export default {
         childId: store.child.id ? store.child.id : '',
         addressId: store.address.id ? store.address.id : '',
         bookAddressId: store.bookAddress.id ? store.bookAddress.id : '',
-        qrzdItemPackId: store.qrzdId,
+        qrzdItemPackId: localStorage.getItem('id'),
         remark: store.remark,
         items: this.items
       }

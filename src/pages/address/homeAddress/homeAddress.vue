@@ -44,7 +44,7 @@ export default {
   computed: {},
   methods: {
     loadAddress () {
-      this.$axios.addressList({adminId: store.id}).then(res => {
+      this.$axios.addressList({adminId: localStorage.getItem('createId')}).then(res => {
         if (res.data.code === '0') {
           this.addressList = res.data.data
           this.isLogin = true

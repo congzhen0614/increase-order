@@ -164,7 +164,7 @@ export default {
   },
   methods: {
     loadAccountListarea () {
-      this.$axios.accountListarea({id: store.id}).then(res => {
+      this.$axios.accountListarea({id: localStorage.getItem('createId')}).then(res => {
         if (res.data.code === '0') {
           this.data = [res.data.data.area]
           this.setPicker()
@@ -229,7 +229,7 @@ export default {
     loadSchoolList () {
       let params = {
         schoolLevel: store.schoolLevel,
-        adminId: store.id,
+        adminId: localStorage.getItem('createId'),
         regionId: this.form.regionId
       }
       this.$axios.schoolList(params).then(res => {

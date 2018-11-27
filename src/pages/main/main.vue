@@ -70,7 +70,7 @@ export default {
     }
   },
   created () {
-    store.qrzdItemPackId = this.$route.query.id
+    localStorage.setItem('qrzdId', this.$route.query.id)
     if (this.isWeixin) {
       this.setLogin()
       this.loginInfo()
@@ -82,7 +82,7 @@ export default {
   computed: {
     params () {
       let param = {
-        itemPackId: this.$route.query.id,
+        itemPackId: localStorage.getItem('qrzdId'),
         pageNum: this.pages.pageNum,
         pageSize: this.pages.pageSize,
         cls: this.navType,
@@ -115,14 +115,14 @@ export default {
       this.$axios.itempackList(this.params).then(res => {
         this.Toast.hide()
         if (res.data.code === '0') {
-          store.id = res.data.data.createUser
-          store.qrzdId = res.data.data.id
           store.sendType = res.data.data.sendType
           store.postageSum = res.data.data.postageSum
           store.postage = res.data.data.postage
           store.postageSumBook = res.data.data.postageSumBook
           store.postageBook = res.data.data.postageBook
           store.schoolLevel = res.data.data.schoolLevel
+          localStorage.setItem('id', res.data.data.id)
+          localStorage.setItem('createId', res.data.data.createUser)
           this.hasMage = res.data.data.hasMagazine
           this.hasBook = res.data.data.hasBook
           this.hasSpyp = res.data.data.hasPacket

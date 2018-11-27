@@ -35,7 +35,7 @@ export default {
   data () {
     return {
       store: store,
-      qrzdItemPackId: store.qrzdItemPackId,
+      qrzdItemPackId: localStorage.getItem('qrzdId'),
       quantity: store.quantity
     }
   },

@@ -22,9 +22,13 @@ export default {
       t: ''
     }
   },
+  created () {
+    store.shoppingcarMage = []
+    store.shoppingcarBook = []
+    store.shoppingcarspyp = []
+  },
   mounted () {
     this.total = this.$route.query.total_amount
-    store.qrzdItemPackId = this.$route.query.id
     this.t = setInterval(() => {
       if (this.countTime === 0) {
         clearInterval(this.t)

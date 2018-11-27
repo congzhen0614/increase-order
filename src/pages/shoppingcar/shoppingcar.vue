@@ -178,7 +178,7 @@ export default {
       this.$router.push({
         path: '/',
         query: {
-          id: store.qrzdItemPackId
+          id: localStorage.getItem('qrzdId')
         }
       })
     },

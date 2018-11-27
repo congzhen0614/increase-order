@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import store from '@/store/store.js'
 export default {
   name: 'solicit-subscription-mobileLogin',
   data () {
@@ -53,7 +52,7 @@ export default {
             this.$router.push({
               path: '/',
               query: {
-                id: store.qrzdItemPackId
+                id: localStorage.getItem('qrzdId')
               }
             })
           }
@@ -76,7 +75,7 @@ export default {
           this.$router.push({
             path: '/',
             query: {
-              id: store.qrzdItemPackId
+              id: localStorage.getItem('qrzdId')
             }
           })
         } else {
