@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="detail-footer">
-      <span class="buy-now" v-if="!isShowShadow" @click="isShowShadow = true">立即购买</span>
+      <span class="buy-now" v-if="!isShowShadow" @click="clickShowQuantity">立即购买</span>
       <span class="buy-now" v-if="isShowShadow" @click="clickBuy">去结算</span>
       <span class="add-shoppingcar" @click="addShoppingCar">加入购物车</span>
       <div class="shoppingcar-icon" @click="$router.push({path: '/', query: {id: store.qrzdItemPackId}})">
@@ -59,6 +59,12 @@ export default {
     }
   },
   methods: {
+    clickShowQuantity () {
+      this.isShowShadow = true
+      if (this.detail.quantity === 0) {
+        this.detail.quantity = 1
+      }
+    },
     clickShoppingCar () {
       this.$router.push({
         path: '/shoppingCar'
