@@ -20,7 +20,7 @@
       <span class="buy-now" v-if="!isShowShadow" @click="clickShowQuantity">立即购买</span>
       <span class="buy-now" v-if="isShowShadow" @click="clickBuy">去结算</span>
       <span class="add-shoppingcar" @click="addShoppingCar">加入购物车</span>
-      <div class="shoppingcar-icon" @click="$router.push({path: '/', query: {id: localStorage.getItem('qrzdId')}})">
+      <div class="shoppingcar-icon" @click="clickToHome">
         <div>
           <img src="../../assets/classify-icon.png"/>
         </div>
@@ -59,6 +59,9 @@ export default {
     }
   },
   methods: {
+    clickToHome () {
+      this.$router.go(-1)
+    },
     clickShowQuantity () {
       this.isShowShadow = true
       if (this.detail.quantity === 0) {

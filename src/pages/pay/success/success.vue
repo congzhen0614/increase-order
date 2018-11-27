@@ -26,6 +26,7 @@ export default {
     store.shoppingcarMage = []
     store.shoppingcarBook = []
     store.shoppingcarspyp = []
+    store.quantity = 0
   },
   mounted () {
     this.total = this.$route.query.total_amount
