@@ -1,7 +1,7 @@
 <template>
   <div class="play" :class="{miniPlay: mini}" @click="mini = false">
     <img class="mini-img" v-show="mini" :src="logo">
-    <audio class="my-audio" ref="myAudio" preload="auto">
+    <audio class="my-audio" ref="myAudio" preload="load">
       <source :src="url" type="audio/ogg">
       <source :src="url" type="audio/mpeg">
     </audio>
@@ -37,8 +37,8 @@ export default {
       play: false,
       mini: false,
       player: '',
-      duration: '', // 歌曲长度
-      currentTime: '' // 播放长度
+      duration: 0, // 歌曲长度
+      currentTime: 0 // 播放长度
     }
   },
   props: {
@@ -85,10 +85,10 @@ export default {
     clickPlay () {
       let audio = this.$refs.myAudio
       this.play = true
-      audio.load()
       audio.play()
+      this.lengthOfSong = audio.duration || 0
       this.player = setInterval(() => {
-        this.lengthOfSong = audio.duration
+        this.lengthOfSong = audio.duration || 0
         this.lengthOfPlay = audio.currentTime
         let str = (audio.currentTime / audio.duration * 100).toString()
         this.playPlace = this.playWidth = str.substring(0, str.indexOf('.') + 2) + '%'
@@ -101,8 +101,8 @@ export default {
     clickPaus () {
       let audio = this.$refs.myAudio
       this.play = false
-      audio.pause()
       clearInterval(this.player)
+      audio.pause()
     },
     clickClose () {
       this.$emit('playerClose')

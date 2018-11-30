@@ -51,7 +51,9 @@ export default {
   data () {
     return {
       query: JSON.parse(this.$route.query.item),
-      detail: {},
+      detail: {
+        fee: 0
+      },
       listImg: [],
       bannerHeight: window.innerWidth * 0.6 + 'px'
     }
