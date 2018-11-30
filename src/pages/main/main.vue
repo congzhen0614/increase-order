@@ -82,7 +82,7 @@ export default {
   computed: {
     params () {
       let param = {
-        itemPackId: localStorage.getItem('qrzdId'),
+        itemPackId: this.$route.query.id,
         pageNum: this.pages.pageNum,
         pageSize: this.pages.pageSize,
         cls: this.navType,
