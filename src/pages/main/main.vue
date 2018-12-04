@@ -123,6 +123,7 @@ export default {
           store.schoolLevel = res.data.data.schoolLevel
           localStorage.setItem('id', res.data.data.id)
           localStorage.setItem('createId', res.data.data.createUser)
+          localStorage.setItem('schoolLevel', res.data.data.schoolLevel)
           this.hasMage = res.data.data.hasMagazine
           this.hasBook = res.data.data.hasBook
           this.hasSpyp = res.data.data.hasPacket

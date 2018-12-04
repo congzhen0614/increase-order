@@ -39,7 +39,7 @@
           <p class="no-address" v-if="child === ''">请填写您的孩子</p>
           <span class="address-name" v-if="child !== ''">{{ child.name }}</span>
           <span class="address-phone" v-if="child !== ''">{{ child.mobile }}</span>
-          <p class="address-content" v-if="child !== ''">{{ child.provinceName }}{{ child.cityName }}{{ child.regionName }}{{ child.schoolName }}{{ child.gradeName }}{{ child.defaultClassName }}</p>
+          <p class="address-content" v-if="child !== ''">{{ child.provinceName }}{{ child.cityName }}{{ child.regionName }}{{ child.schoolName }}{{ child.gradeName }}{{ child.defaultClassName || child.className }}</p>
         </div>
         <div class="content-right">
           <img src="../../assets/link-icon.png">

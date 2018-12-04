@@ -82,6 +82,7 @@ export default {
   data () {
     return {
       tempIndex: [0, 0, 0],
+      schoolLevel: '',
       areaPicker: '',
       address: {},
       picker: '',
@@ -237,6 +238,7 @@ export default {
           this.schoolList = []
           res.data.data.forEach(item => {
             this.schoolList.push({
+              level: item.isHighGrade,
               text: item.schoolName,
               value: item.schoolId
             })
@@ -359,16 +361,22 @@ export default {
       this.picker.show()
     },
     onCheckEnrollment () {
-      this.picker = new Picker({
-        data: [this.enrollmentList],
-        selectedIndex: 0,
-        title: '请选择入学年份'
-      })
-      this.picker.on('picker.select', (selectedVal, selectedIndex) => {
-        this.form.enrollment = selectedVal[0]
-        this.enrollmentName = this.enrollmentList[selectedIndex].text
-      })
-      this.picker.show()
+      if (this.form.schoolId === '') {
+        this.Toast.warning({
+          title: '清先选择学校'
+        })
+      } else {
+        this.picker = new Picker({
+          data: [this.enrollmentList],
+          selectedIndex: 0,
+          title: '请选择入学年份'
+        })
+        this.picker.on('picker.select', (selectedVal, selectedIndex) => {
+          this.form.enrollment = selectedVal[0]
+          this.enrollmentName = this.enrollmentList[selectedIndex].text
+        })
+        this.picker.show()
+      }
     },
     onSubmit () {
       this.form.name = this.Trim(this.form.name)
@@ -414,6 +422,80 @@ export default {
     },
     'form.regionId' () {
       this.loadSchoolList()
+    },
+    'form.schoolId' (val) {
+      this.schoolList.forEach(item => {
+        if (val === item.value) {
+          this.schoolLevel = item.level
+        }
+      })
+    },
+    'form.enrollment' (val) {
+      let thisYear = new Date().getFullYear()
+      let thisDate = new Date().getTime() // 今天毫秒数
+      let termDate = new Date(thisYear + '-09-01 00:00:00').getTime() // 九月一号毫秒数
+      let gradeStr = ''
+      let grade = ''
+      if (thisDate > termDate) {
+        grade = thisYear - val + 1
+      } else {
+        grade = thisYear - val
+      }
+      if (this.schoolLevel === 0) {
+        switch (grade) {
+          case 1:
+            gradeStr = '一年级'
+            break
+          case 2:
+            gradeStr = '二年级'
+            break
+          case 3:
+            gradeStr = '三年级'
+            break
+          case 4:
+            gradeStr = '四年级'
+            break
+          case 5:
+            gradeStr = '五年级'
+            break
+          case 6:
+            gradeStr = '六年级'
+            break
+        }
+      } else if (this.schoolLevel === 1) {
+        switch (grade) {
+          case 1:
+            gradeStr = '七年级'
+            break
+          case 2:
+            gradeStr = '八年级'
+            break
+          case 3:
+            gradeStr = '九年级'
+            break
+        }
+      } else {
+        switch (grade) {
+          case 1:
+            gradeStr = '小班'
+            break
+          case 2:
+            gradeStr = '中班'
+            break
+          case 3:
+            gradeStr = '大班'
+            break
+        }
+      }
+      if (gradeStr !== '') {
+        let that = this
+        this.gradeList.forEach(item => {
+          if (item.text === gradeStr) {
+            that.form.gradeId = item.value
+            that.gradeName = item.text
+          }
+        })
+      }
     }
   }
 }

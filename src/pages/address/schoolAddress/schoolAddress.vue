@@ -6,7 +6,7 @@
       <span v-if="!isLogin" class="go-login" @click="goLogin">去登录</span>
     </div>
     <ul class="school-address-list" v-if="addressList.length > 0">
-      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="item.seleted === 1">
+      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="item.seleted === 1 && item.isHighGrade === parseInt(schoolLevel)">
         <img v-if="sex === 0" class="school-address-head" src="../../../assets/girls-icon.png"/>
         <img v-if="sex === 1" class="school-address-head" src="../../../assets/boys-icon.png"/>
         <img class="school-address-link" src="../../../assets/link-icon.png"/>
@@ -29,6 +29,7 @@ export default {
   components: {},
   data () {
     return {
+      schoolLevel: localStorage.getItem('schoolLevel'),
       addressList: [],
       isLogin: false,
       sex: 0
