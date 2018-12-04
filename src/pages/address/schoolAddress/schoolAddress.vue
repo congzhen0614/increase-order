@@ -15,7 +15,7 @@
           <img v-if="sex === 1" class="school-address-sex" src="../../../assets/boy-icon.png"/>
           <img v-if="sex === 0" class="school-address-sex" src="../../../assets/girl-icon.png"/>
         </p>
-        <p class="school-address-content">{{ item.provinceName }}{{ item.cityName }}{{ item.regionName }}{{ item.schoolName }}{{ item.gradeName }}{{ item.defaultClassName }}</p>
+        <p class="school-address-content">{{ item.provinceName }}{{ item.cityName }}{{ item.regionName }}{{ item.schoolName }}{{ item.gradeName }}{{ item.defaultClassName || item.className }}</p>
       </li>
     </ul>
     <div class="add-adress" @click.stop="addHomeAddress()" v-if="isLogin">添加</div>

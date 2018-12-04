@@ -11,12 +11,12 @@
         </div>
         <div class="content">
           <p class="title">{{ item.name }}</p>
+          <p class="ageName">{{ item.ageName }}</p>
+          <p class="units" v-if="item.feeUnitNum">{{ item.feeUnitTypeName + item.feeUnitNum + item.feeUnitName }}</p>
           <p class="gift" v-if="item.giftName">
             <img src="../../../assets/gift-icon.png">
             {{ item.giftName }}
           </p>
-          <p class="units" v-if="item.feeUnitNum">{{ item.feeUnitTypeName + item.feeUnitNum + item.feeUnitName }}</p>
-          <p class="ageName">{{ item.ageName }}</p>
           <p class="amount">
             <img @click.stop="onReduce(item)" v-if="item.quantity > 0" src="../../../assets/minus-icon.png">
             <span v-if="item.quantity > 0">{{ item.quantity }}</span>
