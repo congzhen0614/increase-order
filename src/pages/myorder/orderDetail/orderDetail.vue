@@ -11,15 +11,6 @@
       <span class="detail-button cancel-button" v-if="detail.magazinesTradeStatus === 1" @click="cancelOrder">取消订单</span>
       <span class="detail-button cancel-button" v-if="detail.tradeStatus > 4" @click="clickDeleteOrder">删除订单</span>
     </header>
-    <main class="detail-address" v-if="detail.address">
-      <div class="address-left">
-        <img src="../../../assets/location-icon.png"/>
-      </div>
-      <div class="address-right">
-        <p><span class="address-name">{{ detail.consigneeName }}</span><span class="address-phone">{{ detail.consigneeMobile }}</span></p>
-        <p>{{ detail.addressProvinceName + detail.addressCityName + detail.addressRegionName + detail.address }}</p>
-      </div>
-    </main>
     <main class="detail-address" v-if="detail.addressMagazine">
       <div class="address-left">
         <img src="../../../assets/location-icon.png"/>
@@ -36,6 +27,15 @@
       <div class="address-right">
         <p><span class="address-name">{{ detail.childName }}</span><span class="address-phone">{{ detail.childMobile }}</span></p>
         <p>{{ detail.provinceName + detail.cityName + detail.regionName + detail.schoolName + detail.gradeName }}{{ detail.className || detail.classNameDef }}</p>
+      </div>
+    </main>
+    <main class="detail-address" v-if="detail.address">
+      <div class="address-left">
+        <img src="../../../assets/location-icon.png"/>
+      </div>
+      <div class="address-right">
+        <p><span class="address-name">{{ detail.consigneeName }}</span><span class="address-phone">{{ detail.consigneeMobile }}</span></p>
+        <p>{{ detail.addressProvinceName + detail.addressCityName + detail.addressRegionName + detail.address }}</p>
       </div>
     </main>
     <div class="leave-massage">
