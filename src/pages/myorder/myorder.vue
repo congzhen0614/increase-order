@@ -60,7 +60,7 @@
                 ￥<span class="big">{{ items.receivables | getInteger }}</span>{{ items.receivables | getFixed1 }}
                 <span class="medium">(含运费 ¥{{ items.deliveryFee }})</span>
               </p>
-              <span class="total-quantity">商品  {{ items.itemQuantity }}</span>
+              <span class="total-quantity">数量  {{ items.itemQuantity }}</span>
             </div>
             <div class="order-button" v-if="items.tradeStatus === 1">
               <span @click.stop="toPay(items)">去付款</span>
