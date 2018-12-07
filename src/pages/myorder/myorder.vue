@@ -117,10 +117,13 @@ export default {
         path: '/mobileLogin'
       })
     },
-    loadMyOrderList () {
+    loadMyOrderList (reload) {
       this.$axios.myOrderList(this.params).then(res => {
         this.reload = true
         if (res.data.code === '0') {
+          if (reload) {
+            this.orderList = []
+          }
           this.reload = true
           this.pages.total = res.data.data.total
           res.data.data.list.forEach(item => {
@@ -158,7 +161,8 @@ export default {
       this.scroller.on('scroll', pos => {
         if (pos.y >= 100 && this.reload) {
           this.reload = false
-          this.loadMyOrderList()
+          this.pages.pageNum = 1
+          this.loadMyOrderList(true)
         }
         this.scrollHeight = -pos.y
       })

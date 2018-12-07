@@ -421,6 +421,8 @@ export default {
       }
     },
     'form.regionId' () {
+      this.schoolName = ''
+      this.form.schoolId = ''
       this.loadSchoolList()
     },
     'form.schoolId' (val) {
@@ -436,6 +438,7 @@ export default {
       let termDate = new Date(thisYear + '-09-01 00:00:00').getTime() // 九月一号毫秒数
       let gradeStr = ''
       let grade = ''
+      let that = this
       if (thisDate > termDate) {
         grade = thisYear - val + 1
       } else {
@@ -488,13 +491,15 @@ export default {
         }
       }
       if (gradeStr !== '') {
-        let that = this
         this.gradeList.forEach(item => {
           if (item.text === gradeStr) {
             that.form.gradeId = item.value
             that.gradeName = item.text
           }
         })
+      } else {
+        that.form.gradeId = ''
+        that.gradeName = ''
       }
     }
   }

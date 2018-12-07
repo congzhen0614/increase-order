@@ -82,7 +82,7 @@ export default {
   computed: {
     params () {
       let param = {
-        itemPackId: this.$route.query.id,
+        itemPackId: this.$route.query.id || localStorage.getItem('qrzdId'),
         pageNum: this.pages.pageNum,
         pageSize: this.pages.pageSize,
         cls: this.navType,
@@ -240,7 +240,7 @@ export default {
             this.$router.push({
               path: '/',
               query: {
-                id: this.$route.query.id
+                id: this.$route.query.id || localStorage.getItem('qrzdId')
               }
             })
           }

@@ -1,20 +1,5 @@
 <template>
   <div class="order-list">
-    <div class="order-address" v-if="selectBook.length > 0">
-      <div class="order-address-bg"></div>
-      <div class="order-address-content" @click="checkBookAddress(0)">
-        <div class="content-left">
-          <p class="no-address" v-if="bookAddress === ''">请填写您的图书收货地址</p>
-          <span v-if="bookAddress !== ''" class="address-name">{{ bookAddress.name}}</span>
-          <span  v-if="bookAddress !== ''" class="address-phone">{{ bookAddress.mobile }}</span>
-          <p  v-if="bookAddress !== ''" class="address-content">{{ bookAddress.provinceName }}{{ bookAddress.cityName }}{{ bookAddress.regionName }}{{ bookAddress.address }}</p>
-        </div>
-        <div class="content-right">
-          <img src="../../assets/link-icon.png">
-        </div>
-      </div>
-      <div class="order-address-bg"></div>
-    </div>
     <!-- 杂志地址 -->
     <div class="order-address" v-if="selectMage.length > 0 && sendType === 1">
       <div class="order-address-bg"></div>
@@ -40,6 +25,22 @@
           <span class="address-name" v-if="child !== ''">{{ child.name }}</span>
           <span class="address-phone" v-if="child !== ''">{{ child.mobile }}</span>
           <p class="address-content" v-if="child !== ''">{{ child.provinceName }}{{ child.cityName }}{{ child.regionName }}{{ child.schoolName }}{{ child.gradeName }}{{ child.defaultClassName || child.className }}</p>
+        </div>
+        <div class="content-right">
+          <img src="../../assets/link-icon.png">
+        </div>
+      </div>
+      <div class="order-address-bg"></div>
+    </div>
+    <!-- 图书地址 -->
+    <div class="order-address" v-if="selectBook.length > 0">
+      <div class="order-address-bg"></div>
+      <div class="order-address-content" @click="checkBookAddress(0)">
+        <div class="content-left">
+          <p class="no-address" v-if="bookAddress === ''">请填写您的图书收货地址</p>
+          <span v-if="bookAddress !== ''" class="address-name">{{ bookAddress.name}}</span>
+          <span  v-if="bookAddress !== ''" class="address-phone">{{ bookAddress.mobile }}</span>
+          <p  v-if="bookAddress !== ''" class="address-content">{{ bookAddress.provinceName }}{{ bookAddress.cityName }}{{ bookAddress.regionName }}{{ bookAddress.address }}</p>
         </div>
         <div class="content-right">
           <img src="../../assets/link-icon.png">
