@@ -47,7 +47,7 @@
         <img class="checked" v-if="!isSelect" @click="isSelect = !isSelect" src="../../../../assets/check-icon.png"/>
         <img class="checked" v-if="isSelect" @click="isSelect = !isSelect" src="../../../../assets/checked-icon.png"/>
         <img class="link-icon" src="../../../../assets/link-icon.png">
-        <span class="item-content" style="color: #F8BD48" @click="onCheckClass">{{ className || '请选择孩子当前就读年级' }}</span>
+        <span class="item-content" style="color: #F8BD48" @click="onCheckClass">{{ className || '请选择孩子当前就读班级' }}</span>
       </li>
       <li class="item-list">
         <span class="item-title">自填班级</span>
