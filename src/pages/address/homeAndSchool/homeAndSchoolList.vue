@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import store from '@/store/store.js'
 export default {
   name: 'home-school-list',
   components: {},
@@ -64,14 +65,13 @@ export default {
       })
     },
     onClick (item) {
+      store.address = item
       this.$router.push({
-        path: '/addHomeAndSchool',
-        query: {
-          item: JSON.stringify(item)
-        }
+        path: '/addHomeAndSchool'
       })
     },
     onAppend () {
+      store.address = {}
       this.$router.push({
         path: '/addHomeAndSchool'
       })

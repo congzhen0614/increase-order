@@ -28,5 +28,6 @@ export default {
   postageBook: '', // 图书需要多少邮费
   quantity: 0,
   schoolLevel: '', // 学校类型
-  scroll: 0 // 滚动位置
+  scroll: 0, // 滚动位置
+  schoolFrom: {} // 学生信息
 }

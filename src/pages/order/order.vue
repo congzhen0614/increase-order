@@ -1,9 +1,9 @@
 <template>
   <div class="order-list">
     <!-- 杂志地址 -->
-    <div class="order-address" v-if="selectMage.length > 0 && sendType === 1">
+    <div class="order-address" v-if="selectMage.length > 0 && sendType !== 0">
       <div class="order-address-bg"></div>
-      <div class="order-address-content" @click="checkBookAddress('1')">
+      <div class="order-address-content" @click="checkBookAddress(sendType)">
         <div class="content-left">
           <p class="no-address" v-if="address === ''">请填写您的杂志收货地址</p>
           <span v-if="address !== ''" class="address-name">{{ address.name}}</span>
@@ -35,7 +35,7 @@
     <!-- 图书地址 -->
     <div class="order-address" v-if="selectBook.length > 0">
       <div class="order-address-bg"></div>
-      <div class="order-address-content" @click="checkBookAddress('0')">
+      <div class="order-address-content" @click="checkBookAddress(sendType)">
         <div class="content-left">
           <p class="no-address" v-if="bookAddress === ''">请填写您的图书收货地址</p>
           <span v-if="bookAddress !== ''" class="address-name">{{ bookAddress.name}}</span>
@@ -187,7 +187,8 @@ export default {
         bookAddressId: store.bookAddress.id ? store.bookAddress.id : '',
         qrzdItemPackId: localStorage.getItem('id'),
         remark: store.remark,
-        items: this.items
+        items: this.items,
+        child: store.schoolFrom
       }
       return param
     }
@@ -226,12 +227,21 @@ export default {
       }
     },
     checkBookAddress (sendType) {
-      this.$router.push({
-        path: '/homeAddress',
-        query: {
-          isMaga: sendType
-        }
-      })
+      if (sendType === 1) {
+        this.$router.push({
+          path: '/homeAddress',
+          query: {
+            isMaga: sendType.toString()
+          }
+        })
+      } else {
+        this.$router.push({
+          path: '/homeAndSchoolList',
+          query: {
+            isMaga: sendType.toString()
+          }
+        })
+      }
     },
     checkMagaAddress () {
       this.$router.push({
