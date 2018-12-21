@@ -33,9 +33,11 @@ import order from '@/pages/order/order.vue' // 提交订单
 import remarks from '@/pages/order/remarks/remarks.vue' // 订单留言
 import homeAddress from '@/pages/address/homeAddress/homeAddress.vue' // 家庭地址
 import schoolAddress from '@/pages/address/schoolAddress/schoolAddress.vue' // 学校地址
+import homeAndSchoolList from '@/pages/address/homeAndSchool/homeAndSchoolList.vue' // 学校地址
 import addHomeAddress from '@/pages/address/homeAddress/addHomeAddress/addHomeAddress.vue' // 添加家庭地址
 import addMagaAddress from '@/pages/address/schoolAddress/addSchoolAddress/addHomeAddress.vue' // 添加家庭地址
 import addSchoolAddress from '@/pages/address/schoolAddress/addSchoolAddress/addSchoolAddress.vue' // 添加学校地址
+import addHomeAndSchool from '@/pages/address/homeAndSchool/addHomeAndSchool/addHomeAndSchool.vue' // 添加地址带学校
 import pay from '@/pages/pay/pay.vue' // 支付
 import failure from '@/pages/pay/failure/failure.vue'
 import success from '@/pages/pay/success/success.vue'
@@ -155,6 +157,10 @@ export default new Router({
       name: '学校地址',
       component: schoolAddress
     }, {
+      path: '/homeAndSchoolList',
+      name: 'homeAndSchoolList',
+      component: homeAndSchoolList
+    }, {
       path: '/addHomeAddress',
       name: 'addHomeAddress',
       component: addHomeAddress
@@ -162,6 +168,10 @@ export default new Router({
       path: '/addSchoolAddress',
       name: 'addSchoolAddress',
       component: addSchoolAddress
+    }, {
+      path: '/addHomeAndSchool',
+      name: 'addHomeAndSchool',
+      component: addHomeAndSchool
     }, {
       path: '/pay',
       name: '支付页面',

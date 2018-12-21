@@ -1,0 +1,113 @@
+
+.add-home-school
+  height 100%
+  background-color #F0F0F0
+  .school-list
+    margin-top 7px
+  > ul
+    background-color #ffffff
+    > li
+      height 54px
+      line-height 54px
+      padding 0 0.32rem
+      border-bottom 1px solid #F0F0F0
+      .lable
+        width 30%
+        display block
+        color #333333
+        font-size 0.3rem
+    .input
+      display flex
+      justify-content space-between
+      > input
+        width 70%
+        text-align right
+        outline none
+        color #C7C7CC
+        font-size 0.3rem
+      > input::-webkit-input-placeholder
+        color #C7C7CC
+    .address
+      height auto
+      display flex
+      justify-content space-between
+      > p
+        display block
+        width 60%
+        float right
+        border none
+        outline none
+        color #C7C7CC
+        font-size 0.3rem
+        text-align right
+        min-height 25px
+        line-height 25px
+        margin 15px 0
+      > p:empty:before
+        content '请输入您的详细地址'
+        color #C7C7CC
+      > p:focus:before
+        content none
+    .select
+      .lable
+        float left
+      .like-input
+        width 100%
+        text-align right
+      > img
+        float right
+        width 8px
+        height 14px
+        margin-left 0.32rem
+        margin-top 20px
+      > p
+        font-size 0.3rem
+        color #C7C7CC
+    .class-name
+      .lable
+        float left
+      .select-icon
+        float left
+        width 22px
+        height 22px
+        margin-top 16px
+      .link-icon
+        float right
+        width 8px
+        height 14px
+        margin-left 0.32rem
+        margin-top 20px
+      > p
+        font-size 0.3rem
+        text-align right
+        color #C7C7CC
+      > input
+        float right
+        height 100%
+        outline none
+        color #C7C7CC
+        font-size 0.3rem
+        text-align right
+      > input::-webkit-input-placeholder
+        color #C7C7CC
+  .footer
+    position fixed
+    width 100%
+    bottom 0
+    left 0
+    display flex
+    justify-content space-between
+    height 50px
+    background rgba(255, 255, 255, 1)
+    box-shadow 0px -2px 5px 0px rgba(0, 0, 0, 0.1)
+    > span
+      display block
+      width 50%
+      height 50px
+      line-height 50px
+      text-align center
+      font-size 0.34rem
+      color #333333
+    .submit
+      background-color #F8BD48
+      color #ffffff

@@ -11,6 +11,7 @@
       <span class="detail-button cancel-button" v-if="detail.magazinesTradeStatus === 1" @click="cancelOrder">取消订单</span>
       <span class="detail-button cancel-button" v-if="detail.tradeStatus > 4" @click="clickDeleteOrder">删除订单</span>
     </header>
+    <!-- 杂志地址 -->
     <main class="detail-address" v-if="detail.addressMagazine">
       <div class="address-left">
         <img src="../../../assets/location-icon.png"/>
@@ -20,6 +21,7 @@
         <p>{{ detail.addressProvinceNameMagazine + detail.addressCityNameMagazine + detail.addressRegionNameMagazine + detail.addressMagazine }}</p>
       </div>
     </main>
+    <!-- 杂志孩子 -->
     <main class="detail-address" v-if="detail.childName">
       <div class="address-left">
         <img src="../../../assets/location-icon.png"/>
@@ -29,6 +31,7 @@
         <p>{{ detail.provinceName + detail.cityName + detail.regionName + detail.schoolName + detail.gradeName }}{{ detail.className || detail.classNameDef }}</p>
       </div>
     </main>
+    <!-- 图书地址 -->
     <main class="detail-address" v-if="detail.address">
       <div class="address-left">
         <img src="../../../assets/location-icon.png"/>

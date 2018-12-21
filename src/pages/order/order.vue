@@ -3,7 +3,7 @@
     <!-- 杂志地址 -->
     <div class="order-address" v-if="selectMage.length > 0 && sendType === 1">
       <div class="order-address-bg"></div>
-      <div class="order-address-content" @click="checkBookAddress(1)">
+      <div class="order-address-content" @click="checkBookAddress('1')">
         <div class="content-left">
           <p class="no-address" v-if="address === ''">请填写您的杂志收货地址</p>
           <span v-if="address !== ''" class="address-name">{{ address.name}}</span>
@@ -35,7 +35,7 @@
     <!-- 图书地址 -->
     <div class="order-address" v-if="selectBook.length > 0">
       <div class="order-address-bg"></div>
-      <div class="order-address-content" @click="checkBookAddress(0)">
+      <div class="order-address-content" @click="checkBookAddress('0')">
         <div class="content-left">
           <p class="no-address" v-if="bookAddress === ''">请填写您的图书收货地址</p>
           <span v-if="bookAddress !== ''" class="address-name">{{ bookAddress.name}}</span>

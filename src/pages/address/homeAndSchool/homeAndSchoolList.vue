@@ -1,12 +1,12 @@
 <template>
-  <div class="home-address">
+  <div class="home-school-list">
     <div class="no-address-list" v-if="addressList.length === 0">
       <img src="../../../assets/no-content-icon.png"/>
       <p>暂无内容</p>
-      <span v-if="!isLogin" class="go-login" @click="goLogin">去登录</span>
+      <span v-if="!isLogin" class="go-login" @click="$router.push({path: '/mobileLogin'})">去登录</span>
     </div>
     <ul class="address-list" v-if="addressList.length > 0">
-      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="item.selected === 1 || isMaga == 0">
+      <li v-for="(item, index) in addressList" :key="index" @click.stop="onClick(item)">
         <div class="address-list-right">
           <img src="../../../assets/link-icon.png"/>
         </div>
@@ -19,27 +19,24 @@
         </div>
       </li>
     </ul>
-    <div v-if="isLogin" class="add-adress" @click.stop="addHomeAddress()">添加</div>
+    <div class="add-adress" @click="onAppend">添加</div>
   </div>
 </template>
 
 <script>
-import store from '@/store/store.js'
 export default {
-  name: '',
+  name: 'home-school-list',
   components: {},
   data () {
     return {
-      isMaga: this.$route.query.isMaga,
       addressList: [],
-      serviceArea: '',
       isLogin: false
     }
   },
   created () {
+    this.loadAddress()
   },
   mounted () {
-    this.loadAddress()
   },
   computed: {},
   methods: {
@@ -66,31 +63,17 @@ export default {
         })
       })
     },
-    selectAddress (item) {
-      if (this.isMaga === '1') {
-        store.address = item
-      } else {
-        store.bookAddress = item
-      }
+    onClick (item) {
       this.$router.push({
-        path: '/order',
-        query: this.$route.query
+        path: '/addHomeAndSchool',
+        query: {
+          item: JSON.stringify(item)
+        }
       })
     },
-    addHomeAddress () {
-      if (this.isMaga === '1') {
-        this.$router.push({
-          path: '/addMagaAddress'
-        })
-      } else {
-        this.$router.push({
-          path: '/addHomeAddress'
-        })
-      }
-    },
-    goLogin () {
+    onAppend () {
       this.$router.push({
-        path: '/mobileLogin'
+        path: '/addHomeAndSchool'
       })
     }
   },
@@ -99,5 +82,5 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-    @import 'homeAddress.styl'
+    @import './homeAndSchoolList.styl'
 </style>
