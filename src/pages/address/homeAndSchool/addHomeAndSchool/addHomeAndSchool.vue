@@ -332,9 +332,17 @@ export default {
       } else if (this.form.phone === '') {
         this.Toast.warning({title: '请输入手机号'})
       } else if (this.form.regionId === '') {
-        this.Toast.warning({title: '请选择省/市/区'})
+        this.Toast.warning({title: '请选择地址省/市/区'})
       } else if (this.$refs.textarea.innerHTML === '') {
         this.Toast.warning({title: '请输入详细地址'})
+      } else if (this.schoolFrom.name === '') {
+        this.Toast.warning({title: '请填写学生姓名'})
+      } else if (this.schoolFrom.provinceId === '' || this.schoolFrom.cityId === '' || this.schoolFrom.regionId === '') {
+        this.Toast.warning({title: '请选择孩子省/市/区'})
+      } else if (this.schoolFrom.schoolId === '') {
+        this.Toast.warning({title: '请选择学校'})
+      } else if (this.schoolFrom.gradeId === '') {
+        this.Toast.warning({title: '请选择年级'})
       } else {
         this.$axios.addressUpdate(this.form).then(res => {
           if (res.data.code === '0') {
