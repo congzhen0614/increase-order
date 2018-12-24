@@ -35,6 +35,7 @@ export default {
     }
   },
   created () {
+    store.address = ''
     this.loadAddress()
   },
   mounted () {

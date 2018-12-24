@@ -3,7 +3,7 @@
     <!-- 杂志地址 -->
     <div class="order-address" v-if="selectMage.length > 0 && sendType !== 0">
       <div class="order-address-bg"></div>
-      <div class="order-address-content" @click="checkBookAddress(sendType)">
+      <div class="order-address-content" @click="checkBookAddress(sendType, 'maga')">
         <div class="content-left">
           <p class="no-address" v-if="address === ''">请填写您的杂志收货地址</p>
           <span v-if="address !== ''" class="address-name">{{ address.name}}</span>
@@ -35,7 +35,7 @@
     <!-- 图书地址 -->
     <div class="order-address" v-if="selectBook.length > 0">
       <div class="order-address-bg"></div>
-      <div class="order-address-content" @click="checkBookAddress(sendType)">
+      <div class="order-address-content" @click="checkBookAddress(sendType, 'book')">
         <div class="content-left">
           <p class="no-address" v-if="bookAddress === ''">请填写您的图书收货地址</p>
           <span v-if="bookAddress !== ''" class="address-name">{{ bookAddress.name}}</span>
@@ -132,7 +132,7 @@ export default {
   computed: {
     postage () {
       let total = 0
-      if (this.selectMage.length > 0 && store.sendType === 1) {
+      if (this.selectMage.length > 0 && store.sendType !== 0) {
         this.selectMage.forEach(item => {
           total += item.quantity * item.fee
         })
@@ -226,17 +226,17 @@ export default {
         })
       }
     },
-    checkBookAddress (sendType) {
-      if (sendType === 1) {
+    checkBookAddress (sendType, type) {
+      if (sendType === 2 && type === 'maga') {
         this.$router.push({
-          path: '/homeAddress',
+          path: '/homeAndSchoolList',
           query: {
             isMaga: sendType.toString()
           }
         })
       } else {
         this.$router.push({
-          path: '/homeAndSchoolList',
+          path: '/homeAddress',
           query: {
             isMaga: sendType.toString()
           }
@@ -261,7 +261,7 @@ export default {
             title: '请选择孩子'
           })
           return false
-        } else if (this.sendType === 1 && this.params.addressId === '') {
+        } else if (this.sendType !== 0 && this.params.addressId === '') {
           this.Toast.warning({
             title: '请选择地址'
           })

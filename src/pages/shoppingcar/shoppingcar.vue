@@ -10,7 +10,7 @@
           <img v-if="!selectMage" @click="selectMage = true" src="../../assets/check-icon.png">
           <img v-if="selectMage" @click="selectMage = false" src="../../assets/checked-icon.png">
           <span>刊物</span>
-          <span class="postage" v-if="sendType === 1">满{{ postageSum }}元包邮,还差{{ shortPrice | getFixed2 }}元</span>
+          <span class="postage" v-if="sendType !== 0">满{{ postageSum }}元包邮,还差{{ shortPrice | getFixed2 }}元</span>
         </header>
         <ul>
           <li v-for="(item, index) in mageList" :key="item.id" :class="{lastChild: mageLength === index + 1}">
