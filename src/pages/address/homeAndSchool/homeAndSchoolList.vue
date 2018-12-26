@@ -6,7 +6,7 @@
       <span v-if="!isLogin" class="go-login" @click="$router.push({path: '/mobileLogin'})">去登录</span>
     </div>
     <ul class="address-list" v-if="addressList.length > 0">
-      <li v-for="(item, index) in addressList" :key="index" @click.stop="onClick(item)">
+      <li v-for="(item, index) in addressList" :key="index" @click.stop="onClick(item)" v-if="item.selected === 1">
         <div class="address-list-right">
           <img src="../../../assets/link-icon.png"/>
         </div>

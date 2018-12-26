@@ -5,40 +5,40 @@
       <p class="detail-date">日<span class="yin">隐</span>期: <span>{{ detailItem.createdAt | timeFormat }}</span></p>
       <p class="detail-no">订单号: <span>{{ detailItem.no }}</span></p>
       <p class="detail-amount">总金额: <span>￥{{ detailItem.totalFee }}</span></p>
-      <p class="detail-postage">邮<span class="yin">隐</span>费: <span>￥{{ detailItem.deliveryFee }}</span></p>
+      <p class="detail-postage">运<span class="yin">隐</span>费: <span>￥{{ detailItem.deliveryFee }}</span></p>
       <p class="detail-actual">实付款: <span>￥{{ detailItem.receivables }}</span></p>
       <span class="detail-button pay-button" v-if="detail.magazinesTradeStatus === 1" @click="toPay">去付款</span>
       <span class="detail-button cancel-button" v-if="detail.magazinesTradeStatus === 1" @click="cancelOrder">取消订单</span>
       <span class="detail-button cancel-button" v-if="detail.tradeStatus > 4" @click="clickDeleteOrder">删除订单</span>
     </header>
     <!-- 杂志地址 -->
-    <main class="detail-address" v-if="detail.addressMagazine">
+    <main class="detail-address" v-if="detail.magAddress">
       <div class="address-left">
         <img src="../../../assets/location-icon.png"/>
       </div>
       <div class="address-right">
-        <p><span class="address-name">{{ detail.consigneeNameMagazine }}</span><span class="address-phone">{{ detail.consigneeMobileMagazine }}</span></p>
-        <p>{{ detail.addressProvinceNameMagazine + detail.addressCityNameMagazine + detail.addressRegionNameMagazine + detail.addressMagazine }}</p>
+        <p><span class="address-name">{{ detail.magAddress.name }}</span><span class="address-phone">{{ detail.magAddress.mobile }}</span></p>
+        <p>{{ detail.magAddress.addess }}</p>
       </div>
     </main>
     <!-- 杂志孩子 -->
-    <main class="detail-address" v-if="detail.childName">
-      <div class="address-left">
-        <img src="../../../assets/location-icon.png"/>
-      </div>
-      <div class="address-right">
-        <p><span class="address-name">{{ detail.childName }}</span><span class="address-phone">{{ detail.childMobile }}</span></p>
-        <p>{{ detail.provinceName + detail.cityName + detail.regionName + detail.schoolName + detail.gradeName }}{{ detail.className || detail.classNameDef }}</p>
-      </div>
-    </main>
+    <!--<main class="detail-address" v-if="detail.childName">-->
+      <!--<div class="address-left">-->
+        <!--<img src="../../../assets/location-icon.png"/>-->
+      <!--</div>-->
+      <!--<div class="address-right">-->
+        <!--<p><span class="address-name">{{ detail.childName }}</span><span class="address-phone">{{ detail.childMobile }}</span></p>-->
+        <!--<p>{{ detail.provinceName + detail.cityName + detail.regionName + detail.schoolName + detail.gradeName }}{{ detail.className || detail.classNameDef }}</p>-->
+      <!--</div>-->
+    <!--</main>-->
     <!-- 图书地址 -->
-    <main class="detail-address" v-if="detail.address">
+    <main class="detail-address" v-if="detail.bookAddress">
       <div class="address-left">
         <img src="../../../assets/location-icon.png"/>
       </div>
       <div class="address-right">
-        <p><span class="address-name">{{ detail.consigneeName }}</span><span class="address-phone">{{ detail.consigneeMobile }}</span></p>
-        <p>{{ detail.addressProvinceName + detail.addressCityName + detail.addressRegionName + detail.address }}</p>
+        <p><span class="address-name">{{ detail.bookAddress.name }}</span><span class="address-phone">{{ detail.bookAddress.mobile }}</span></p>
+        <p>{{ detail.bookAddress.addess }}</p>
       </div>
     </main>
     <div class="leave-massage">

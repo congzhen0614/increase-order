@@ -67,11 +67,17 @@ export default {
         openid: localStorage.getItem('wxOpenId')
       }
       this.$axios.getOfficialAccountPrepayInfo(_data).then(res => {
-        if (this.isIos) {
-          this.weixinConfig(res.data.data.map)
-          return
+        if (res.data.code === '0') {
+          if (this.isIos) {
+            this.weixinConfig(res.data.data.map)
+          } else {
+            this.upWeixinPay(res.data.data.map)
+          }
+        } else {
+          this.Toast.fail({
+            title: res.data.msg
+          })
         }
-        this.upWeixinPay(res.data.data.map)
       }, err => {
         this.Toast.fail(err)
       })

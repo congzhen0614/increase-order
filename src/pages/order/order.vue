@@ -181,7 +181,7 @@ export default {
     },
     params () {
       let param = {
-        uid: localStorage.getItem('userId'),
+        // uid: localStorage.getItem('userId'),
         childId: store.child.id ? store.child.id : '',
         addressId: store.address.id ? store.address.id : '',
         bookAddressId: store.bookAddress.id ? store.bookAddress.id : '',
@@ -276,6 +276,10 @@ export default {
       }
       this.$axios.tradeConfirm(this.params).then(res => {
         if (res.data.code === '0') {
+          store.bookAddress = ''
+          store.address = ''
+          store.remark = ''
+          store.child = ''
           this.$router.push({
             path: '/pay',
             query: {

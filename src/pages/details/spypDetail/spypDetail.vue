@@ -16,7 +16,7 @@
               <p class="header-title">{{ query.name }}</p>
               <p class="header-brief">{{ query.introductions }}</p>
               <p class="header-price">￥<span class="big">{{ query.fee | getInteger }}</span>{{ query.fee | getFixed1 }}</p>
-              <p class="header-kada" v-if="query.provider === 1">咔哒故事</p>
+              <!--<p class="header-kada" v-if="query.provider === 1">咔哒故事</p>-->
               <div class="header-button">
                 <span @click="onBuy(query)" class="buy-button">购买</span>
                 <span @click="toShoppingCar(query)">加入购物车</span>
