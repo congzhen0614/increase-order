@@ -6,7 +6,7 @@
       <span v-if="!isLogin" class="go-login" @click="goLogin">去登录</span>
     </div>
     <ul class="address-list" v-if="addressList.length > 0">
-      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="item.selected === 1 || isMaga == 0">
+      <li v-for="(item, index) in addressList" :key="index" @click.stop="selectAddress(item)" v-if="item.selected === 1 || isMaga">
         <div class="address-list-right">
           <img src="../../../assets/link-icon.png"/>
         </div>
@@ -30,7 +30,7 @@ export default {
   components: {},
   data () {
     return {
-      isMaga: this.$route.query.isMaga,
+      isMaga: this.$route.query.isMaga === 'maga',
       addressList: [],
       serviceArea: '',
       isLogin: false
@@ -67,7 +67,7 @@ export default {
       })
     },
     selectAddress (item) {
-      if (this.isMaga === '1') {
+      if (this.isMaga) {
         store.address = item
       } else {
         store.bookAddress = item
@@ -78,7 +78,7 @@ export default {
       })
     },
     addHomeAddress () {
-      if (this.isMaga === '1') {
+      if (this.isMaga) {
         this.$router.push({
           path: '/addMagaAddress'
         })

@@ -231,14 +231,15 @@ export default {
         this.$router.push({
           path: '/homeAndSchoolList',
           query: {
-            isMaga: sendType.toString()
+            isMaga: type
           }
         })
       } else {
+        alert(type)
         this.$router.push({
           path: '/homeAddress',
           query: {
-            isMaga: sendType.toString()
+            isMaga: type
           }
         })
       }

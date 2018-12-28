@@ -151,5 +151,9 @@ export default {
   kadaResource (params) {
     let param = qs.stringify(params)
     return axios.get(`/api/kada/resource?${param}`)
+  },
+  tradeExpress (params) {
+    let param = qs.stringify(params)
+    return axios.get(`/api/trade/express?${param}`)
   }
 }

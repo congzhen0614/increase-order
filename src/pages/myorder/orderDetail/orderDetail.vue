@@ -12,6 +12,15 @@
       <span class="detail-button cancel-button" v-if="detail.tradeStatus > 4" @click="clickDeleteOrder">删除订单</span>
     </header>
     <!-- 杂志地址 -->
+    <main class="detail-flow" @click="toLogistics">
+      <div class="flow-left">
+        <img src="../../../assets/car-icon.png"/>
+      </div>
+      <div class="flow-right">
+        <p>【杭州市】下城区春雨巷街道西湖文化广场15部派件员：李蕾蕾为您派件中18600361588</p>
+        <p>2017年8月2日 10:56:06</p>
+      </div>
+    </main>
     <main class="detail-address" v-if="detail.magAddress">
       <div class="address-left">
         <img src="../../../assets/location-icon.png"/>
@@ -41,7 +50,7 @@
         <p>{{ detail.bookAddress.addess }}</p>
       </div>
     </main>
-    <div class="leave-massage">
+    <div class="leave-massage" v-if="detail.userRemark">
       <p>{{ detail.userRemark }}</p>
     </div>
     <div class="detail-list" v-if="magaList.length > 0">
@@ -284,6 +293,11 @@ export default {
             this.Toast.fail({title: err})
           })
         }
+      })
+    },
+    toLogistics () {
+      this.$router.push({
+        path: '/Logistics'
       })
     }
   },

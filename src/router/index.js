@@ -14,6 +14,7 @@ import register from '@/pages/login/register/register.vue' // 注册
 import main from '@/pages/main/main.vue' // 首页
 import shoppingCar from '@/pages/shoppingcar/shoppingcar.vue' // 购物车
 import myOrder from '@/pages/myorder/myorder.vue' // 我的订单
+import Logistics from '@/pages/myorder/Logistics/Logistics.vue' // 我的订单
 import orderDetail from '@/pages/myorder/orderDetail/orderDetail.vue' // 订单详情
 import refundList from '@/pages/myOrder/refundList/refundList.vue' // 申请退款列表
 import applyRefund from '@/pages/myOrder/applyRefund/applyRefund.vue' // 申请退款
@@ -88,6 +89,10 @@ export default new Router({
       path: '/myOrder',
       name: '我的订单',
       component: myOrder
+    }, {
+      path: '/Logistics',
+      name: '物流详情',
+      component: Logistics
     }, {
       path: '/aboutUs',
       name: '关于我们',
