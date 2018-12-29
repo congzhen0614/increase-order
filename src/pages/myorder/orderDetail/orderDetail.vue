@@ -11,16 +11,27 @@
       <span class="detail-button cancel-button" v-if="detail.magazinesTradeStatus === 1" @click="cancelOrder">取消订单</span>
       <span class="detail-button cancel-button" v-if="detail.tradeStatus > 4" @click="clickDeleteOrder">删除订单</span>
     </header>
-    <!-- 杂志地址 -->
-    <main class="detail-flow" @click="toLogistics">
+    <!-- 杂志物流 -->
+    <main class="detail-flow" @click="toLogistics(detail.logisticCode, detail.shipperCode)" v-if="magaLogistic">
       <div class="flow-left">
         <img src="../../../assets/car-icon.png"/>
       </div>
       <div class="flow-right">
-        <p>【杭州市】下城区春雨巷街道西湖文化广场15部派件员：李蕾蕾为您派件中18600361588</p>
-        <p>2017年8月2日 10:56:06</p>
+        <p>{{ magaLogistic.accept_station }}</p>
+        <p>{{ magaLogistic.accept_time }}</p>
       </div>
     </main>
+    <!-- 图书物流 -->
+    <main class="detail-flow" @click="toLogistics(detail.logisticCodeMagazine, detail.shipperCodeMagazine)" v-if="bookLogistic">
+      <div class="flow-left">
+        <img src="../../../assets/car-icon.png"/>
+      </div>
+      <div class="flow-right">
+        <p>{{ bookLogistic.accept_station }}</p>
+        <p>{{ bookLogistic.accept_time }}</p>
+      </div>
+    </main>
+    <!-- 杂志地址 -->
     <main class="detail-address" v-if="detail.magAddress">
       <div class="address-left">
         <img src="../../../assets/location-icon.png"/>
@@ -145,7 +156,9 @@ export default {
       spypStatusName: '',
       magaList: [],
       bookList: [],
-      spypList: []
+      spypList: [],
+      magaLogistic: '',
+      bookLogistic: ''
     }
   },
   created () {
@@ -157,12 +170,46 @@ export default {
       this.$axios.myOrderDeteil(this.detailItem.id).then(res => {
         if (res.data.code === '0') {
           this.detail = res.data.data
+          if (res.data.data.shipperCode && res.data.data.logisticCode) {
+            this.loadBookTradeExpress()
+          }
+          if (res.data.data.shipperCodeMagazine && res.data.data.logisticCodeMagazine) {
+            this.loadMagaTradeExpress()
+          }
         } else {
           this.Toast.fail({title: res.data.msg})
         }
       }, err => {
         this.Toast.fail({title: err})
       }).catch(err => {
+        this.Toast.fail({title: err})
+      })
+    },
+    loadMagaTradeExpress () {
+      this.$axios.tradeExpress({
+        logistic_code: this.detail.logisticCode, // 单号
+        shipper_code: this.detail.shipperCode // 运营商
+      }).then(res => {
+        if (res.data.result.status === '0') {
+          this.magaLogistic = res.data.expressList[0]
+        } else {
+          this.Toast.fail({title: res.data.result.msg})
+        }
+      }, err => {
+        this.Toast.fail({title: err})
+      })
+    },
+    loadBookTradeExpress () {
+      this.$axios.tradeExpress({
+        logistic_code: this.detail.logisticCodeMagazine, // 单号
+        shipper_code: this.detail.shipperCodeMagazine // 运营商
+      }).then(res => {
+        if (res.data.result.status === '0') {
+          this.bookLogistic = res.data.expressList[0]
+        } else {
+          this.Toast.fail({title: res.data.result.msg})
+        }
+      }, err => {
         this.Toast.fail({title: err})
       })
     },
@@ -295,9 +342,13 @@ export default {
         }
       })
     },
-    toLogistics () {
+    toLogistics (logisticCode, shipperCode) {
       this.$router.push({
-        path: '/Logistics'
+        path: '/Logistics',
+        query: {
+          logistic_code: logisticCode,
+          shipper_code: shipperCode
+        }
       })
     }
   },

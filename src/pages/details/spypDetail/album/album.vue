@@ -15,9 +15,9 @@
           </div>
         </div>
         <ul>
-          <li class="album-list" v-for="(item, index) in listData" :key="item.id">
+          <li class="album-list" v-for="(item, index) in listData" :key="item.id" @click="onPlay(item, index)">
             <span class="serial">{{ index + 1 }}</span>
-            <div class="try-play" v-show="item.preview === 1" @click="onPlay(item, index)">
+            <div class="try-play" v-show="item.preview === 1">
               <img v-if="!item.isPlay" src="../../../../assets/play-icon.png">
               <img v-if="item.isPlay" src="../../../../assets/paus-icon.png">
               <audio ref="audio" :src="item.url"></audio>

@@ -1,6 +1,6 @@
 <template>
   <div class="play" :class="{miniPlay: mini}" @click="mini = false">
-    <img class="mini-img" v-show="mini" :src="logo">
+    <img class="mini-img" :class="{rotate: play}" v-show="mini" :src="logo">
     <audio class="my-audio" ref="myAudio" preload="load">
       <source :src="url" type="audio/ogg">
       <source :src="url" type="audio/mpeg">
@@ -197,5 +197,22 @@ export default {
   }
   .progress-bar-et {
     right: 0.3rem;
+  }
+  @-webkit-keyframes myRotate{
+    from{-webkit-transform: rotate(0deg)}
+    to{-webkit-transform: rotate(360deg)}
+  }
+  @-moz-keyframes myRotate{
+    from{-moz-transform: rotate(0deg)}
+    to{-moz-transform: rotate(359deg)}
+  }
+  @keyframes myRotate{
+    from{transform: rotate(0deg)}
+    to{transform: rotate(359deg)}
+  }
+  .rotate {
+    animation: myRotate 10s linear infinite;
+    -moz-animation: myRotate 10s linear infinite;
+    -webkit-animation: myRotate 10s linear infinite;
   }
 </style>

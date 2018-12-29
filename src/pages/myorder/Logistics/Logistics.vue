@@ -54,8 +54,8 @@ export default {
   methods: {
     loadTradeExpress () {
       this.$axios.tradeExpress({
-        logistic_code: '541979913954', // 单号
-        shipper_code: 'zto' // 运营商
+        logistic_code: this.$route.query.logistic_code, // 单号
+        shipper_code: this.$route.query.shipper_code // 运营商
       }).then(res => {
         if (res.data.result.status === '0') {
           this.list = res.data.expressList
