@@ -11,7 +11,7 @@
             </p>
             <p class="explain">{{ catalogue.tip }}</p>
           </header>
-          <nav>
+          <nav v-if="hasLength > 1" :class="{nav2: hasLength === 2}">
             <span :class="{activity: navType === 1}"  @click="navType = 1"  v-if="hasMage === 1">刊物</span>
             <span :class="{activity: navType === 2}"  @click="navType = 2"  v-if="hasBook === 1">图书</span>
             <span :class="{activity: navType === 54}" @click="navType = 54" v-if="hasSpyp === 1">电子读物</span>
@@ -62,6 +62,7 @@ export default {
       hasMage: 0,
       hasBook: 0,
       hasSpyp: 0,
+      hasLength: 0,
       pages: {
         pageNum: 1,
         pageSize: 10,
@@ -127,6 +128,16 @@ export default {
           this.hasMage = res.data.data.hasMagazine
           this.hasBook = res.data.data.hasBook
           this.hasSpyp = res.data.data.hasPacket
+          this.hasLength = 0
+          if (this.hasMage === 1) {
+            this.hasLength += 1
+          }
+          if (this.hasBook === 1) {
+            this.hasLength += 1
+          }
+          if (this.hasSpyp === 1) {
+            this.hasLength += 1
+          }
           this.catalogue.title = res.data.data.title
           this.catalogue.linkman = res.data.data.linkman
           this.catalogue.linkmobile = res.data.data.linkmobile
