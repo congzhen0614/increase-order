@@ -15,7 +15,10 @@
           <p class="voice-list-title">{{ item.name }}</p>
           <p class="voice-list-descr">{{ item.introductions }}</p>
           <p class="voice-list-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
-          <!--<span class="kada" v-if="item.provider === 1">咔哒故事</span>-->
+          <span class="album-number">
+            <img src="./album-icon.png" />
+            <span>10</span>
+          </span>
           <div class="voice-list-button">
             <span @click.stop="toBuy(item)">购买</span>
             <span @click.stop="toShoppingcar(item)">加入购物车</span>

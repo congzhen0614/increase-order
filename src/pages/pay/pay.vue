@@ -42,18 +42,21 @@ export default {
       let host = window.location.host
       let href = `${protocol}//${host}/zd/success?id=${localStorage.getItem('qrzdId')}`
       let returnUrl = `${href}`
-      this.Toast.loading({
-        title: '提交中...'
-      })
       let _data = {
         cls: this.$route.query.cls,
         no: this.$route.query.no,
         returnUrl: returnUrl
       }
       this.$axios.getWapOrderInfoByAliPay(_data).then((res) => {
-        this.$refs.form.innerHTML = res.data.data.form
-        if (document.forms && document.forms.length) {
-          document.forms[0].submit()
+        if (res.data.code === '0') {
+          this.$refs.form.innerHTML = res.data.data.form
+          if (document.forms && document.forms.length) {
+            document.forms[0].submit()
+          }
+        } else {
+          this.Toast.fail({
+            title: res.data.msg
+          })
         }
       }, err => {
         this.Toast.fail(err)

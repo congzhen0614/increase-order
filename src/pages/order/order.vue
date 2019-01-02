@@ -235,7 +235,6 @@ export default {
           }
         })
       } else {
-        alert(type)
         this.$router.push({
           path: '/homeAddress',
           query: {
@@ -256,6 +255,7 @@ export default {
       })
     },
     onSubmit () {
+      console.log(this.params)
       if (this.selectMage.length > 0) {
         if (this.sendType === 0 && this.params.childId === '') {
           this.Toast.warning({

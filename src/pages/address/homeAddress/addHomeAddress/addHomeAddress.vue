@@ -25,6 +25,7 @@
 
 <script>
 import Picker from 'better-picker'
+import store from '@/store/store.js'
 import area from '../../../../../static/data/area.json'
 export default {
   name: '',
@@ -142,7 +143,12 @@ export default {
             this.Toast.success({
               title: '操作成功'
             })
-            this.$router.goBack()
+            store.bookAddressId.id = res.data.data.id
+            store.bookAddress = this.form
+            console.log(store)
+            this.$router.push({
+              path: '/order'
+            })
           } else {
             this.Toast.fail({
               title: res.data.msg
