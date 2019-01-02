@@ -17,7 +17,7 @@
           <p class="voice-list-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
           <span class="album-number">
             <img src="./album-icon.png" />
-            <span>10</span>
+            <span>{{ item.albumnum }}</span>
           </span>
           <div class="voice-list-button">
             <span @click.stop="toBuy(item)">购买</span>

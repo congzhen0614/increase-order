@@ -25,6 +25,7 @@
 
 <script>
 import Picker from 'better-picker'
+import store from '@/store/store.js'
 export default {
   name: '',
   data () {
@@ -161,7 +162,19 @@ export default {
             this.Toast.success({
               title: '操作成功'
             })
-            this.$router.goBack()
+            store.address = {
+              id: res.data.data.id,
+              name: this.form.name,
+              mobile: this.form.mobile,
+              provinceName: this.address.provinceName,
+              provinceId: this.form.provinceId,
+              cityName: this.address.cityName,
+              cityId: this.form.cityId,
+              regionName: this.address.regionName,
+              regionId: this.form.regionId,
+              address: this.form.address
+            }
+            this.$router.push({path: '/order'})
           } else {
             this.Toast.fail({
               title: res.data.msg

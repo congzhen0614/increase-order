@@ -12,7 +12,7 @@
       <span class="detail-button cancel-button" v-if="detail.tradeStatus > 4" @click="clickDeleteOrder">删除订单</span>
     </header>
     <!-- 杂志物流 -->
-    <main class="detail-flow" @click="toLogistics(detail.logisticCode, detail.shipperCode)" v-if="magaLogistic">
+    <main class="detail-flow" @click="toLogistics(detail.logisticCodeMagazine, detail.shipperCodeMagazine)" v-if="magaLogistic">
       <div class="flow-left">
         <img src="../../../assets/car-icon.png"/>
       </div>
@@ -22,7 +22,7 @@
       </div>
     </main>
     <!-- 图书物流 -->
-    <main class="detail-flow" @click="toLogistics(detail.logisticCodeMagazine, detail.shipperCodeMagazine)" v-if="bookLogistic">
+    <main class="detail-flow" @click="toLogistics(detail.logisticCode, detail.shipperCode)" v-if="bookLogistic">
       <div class="flow-left">
         <img src="../../../assets/car-icon.png"/>
       </div>
@@ -187,8 +187,8 @@ export default {
     },
     loadMagaTradeExpress () {
       this.$axios.tradeExpress({
-        logistic_code: this.detail.logisticCode, // 单号
-        shipper_code: this.detail.shipperCode // 运营商
+        logistic_code: this.detail.logisticCodeMagazine, // 单号
+        shipper_code: this.detail.shipperCodeMagazine // 运营商
       }).then(res => {
         if (res.data.result.status === '0') {
           this.magaLogistic = res.data.expressList[0]
@@ -201,8 +201,8 @@ export default {
     },
     loadBookTradeExpress () {
       this.$axios.tradeExpress({
-        logistic_code: this.detail.logisticCodeMagazine, // 单号
-        shipper_code: this.detail.shipperCodeMagazine // 运营商
+        logistic_code: this.detail.logisticCode, // 单号
+        shipper_code: this.detail.shipperCode // 运营商
       }).then(res => {
         if (res.data.result.status === '0') {
           this.bookLogistic = res.data.expressList[0]

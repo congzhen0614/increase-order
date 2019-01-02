@@ -18,7 +18,7 @@
               <p class="header-price">￥<span class="big">{{ query.fee | getInteger }}</span>{{ query.fee | getFixed1 }}</p>
               <span class="album-number">
                 <img src="./album-icon.png" />
-                <span>10</span>
+                <span>{{ query.albumnum }}</span>
               </span>
               <div class="header-button">
                 <span @click="onBuy(query)" class="buy-button">购买</span>
@@ -41,7 +41,7 @@
               <p class="spyp-list-price">￥<span class="big">{{ item.fee | getInteger }}</span>{{ item.fee | getFixed1 }}</p>
               <span class="album-number">
                 <img src="./audio-icon.png" />
-                <span>10</span>
+                <span>{{ item.num }}</span>
               </span>
               <span class="chapter" @click="toChapter(item)">章节</span>
               <!--<img v-if="!item.isPlay && (item.freeUrls.length > 0 || item.kadaFree)" @click="onPlay(item, index)" class="play-icons" src="../../../assets/play-icon.png"/>-->

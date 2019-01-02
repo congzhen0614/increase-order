@@ -75,8 +75,8 @@
 
 <script>
 import Picker from 'better-picker'
-import relation from '../../../../../static/data/relation.json'
 import store from '@/store/store.js'
+import relation from '../../../../../static/data/relation.json'
 export default {
   name: 'add-child-address',
   data () {
@@ -390,10 +390,19 @@ export default {
       } else {
         this.$axios.childUpdate(this.form).then(res => {
           if (res.data.code === '0') {
-            this.$router.push({
-              path: '/schoolAddress',
-              query: this.$route.query
-            })
+            store.child = {
+              id: res.data.data.id,
+              name: this.form.name,
+              mobile: this.form.mobile,
+              provinceName: this.provinceName,
+              cityName: this.cityName,
+              regionName: this.regionName,
+              schoolName: this.schoolName,
+              gradeName: this.gradeName,
+              defaultClassName: this.form.className,
+              className: this.className
+            }
+            this.$router.push({path: '/order'})
           } else {
             this.Toast.fail({title: res.data.msg})
           }
