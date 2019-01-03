@@ -3,20 +3,20 @@
     <div class="order-Logistics-head">
       <p>
         <span>货运单号:</span>
-        <span>2017088656986</span>
+        <span>{{ logisticCode }}</span>
       </p>
       <p>
         <span>承运来源:</span>
-        <span>顺丰快递</span>
+        <span>{{ logisticCompany }}</span>
       </p>
       <p>
         <span>物流客服:</span>
-        <span>400-847-8888</span>
+        <span>{{ logisticLinkPhone }}</span>
         <img src="../../../assets/phone-icon.png" />
       </p>
       <p>
         <span>商品类型:</span>
-        <span>刊物</span>
+        <span>{{ type }}</span>
       </p>
     </div>
     <div class="order-Logistics-info">
@@ -42,7 +42,11 @@ export default {
   components: {},
   data () {
     return {
-      list: []
+      list: [],
+      logisticCode: '',
+      logisticCompany: '',
+      logisticLinkPhone: '',
+      type: this.$route.query.type
     }
   },
   created () {
@@ -58,6 +62,9 @@ export default {
         shipper_code: this.$route.query.shipper_code // 运营商
       }).then(res => {
         if (res.data.result.status === '0') {
+          this.logisticCode = res.data.logisticCode
+          this.logisticCompany = res.data.logisticCompany
+          this.logisticLinkPhone = res.data.logisticLinkPhone
           this.list = res.data.expressList
         } else {
           this.Toast.fail({title: res.data.result.msg})

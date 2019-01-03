@@ -12,7 +12,7 @@
       <span class="detail-button cancel-button" v-if="detail.tradeStatus > 4" @click="clickDeleteOrder">删除订单</span>
     </header>
     <!-- 杂志物流 -->
-    <main class="detail-flow" @click="toLogistics(detail.logisticCodeMagazine, detail.shipperCodeMagazine)" v-if="magaLogistic">
+    <main class="detail-flow" @click="toLogistics(detail.logisticCodeMagazine, detail.shipperCodeMagazine, '刊物')" v-if="magaLogistic">
       <div class="flow-left">
         <img src="../../../assets/car-icon.png"/>
       </div>
@@ -22,7 +22,7 @@
       </div>
     </main>
     <!-- 图书物流 -->
-    <main class="detail-flow" @click="toLogistics(detail.logisticCode, detail.shipperCode)" v-if="bookLogistic">
+    <main class="detail-flow" @click="toLogistics(detail.logisticCode, detail.shipperCode, '图书')" v-if="bookLogistic">
       <div class="flow-left">
         <img src="../../../assets/car-icon.png"/>
       </div>
@@ -342,12 +342,13 @@ export default {
         }
       })
     },
-    toLogistics (logisticCode, shipperCode) {
+    toLogistics (logisticCode, shipperCode, type) {
       this.$router.push({
         path: '/Logistics',
         query: {
           logistic_code: logisticCode,
-          shipper_code: shipperCode
+          shipper_code: shipperCode,
+          type: type
         }
       })
     }
